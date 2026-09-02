@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_SkillsAtlas_Runnable" targetNamespace="https://skillsatlas.ie/bpmn" exporter="Camunda Modeler" exporterVersion="5.49.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+  <bpmn:process id="skillsatlas-runnable" name="SkillsAtlas — production path (runnable)" isExecutable="true">
+    <bpmn:documentation>How the evidence agent actually runs after the PoC. Camunda owns the sequence. OpenAI only on [AI] boxes. ESCO GET and guardrails are [CODE]. Green boxes wait in Tasklist. Secret: OPENAI_API_KEY as a C8 Run environment variable. Never put the key in this file.</bpmn:documentation>
+    <bpmn:startEvent id="Start_CV" name="CV / case file in">
+      <bpmn:outgoing>F_to_setup</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:scriptTask id="Task_Setup" name="[CODE] Load CV text">
+      <bpmn:documentation>If you start with empty variables, a synthetic warehouse CV is used so the engine can move. Replace cvText when you start a real case.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:script expression="=if cvText = null then &#34;Warehouse operative, nights, one site. Managed stock. Helped new staff with safety paperwork. 2019-2025.&#34; else cvText" resultVariable="cvText" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_setup</bpmn:incoming>
+      <bpmn:outgoing>F_to_parse</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Task_ParseCV" name="[AI] Parse the CV" zeebe:modelerTemplate="io.camunda.connectors.HttpJson.v2" zeebe:modelerTemplateVersion="12">
+      <bpmn:documentation>Cheap OpenAI tier. Extract only what is written. No protected traits. Production app does this via lib/ai.ts + Zod; here the engine calls the same API so you can watch it in Operate.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="2" />
+        <zeebe:ioMapping>
+          <zeebe:input source="bearer" target="authentication.type" />
+          <zeebe:input source="{{secrets.OPENAI_API_KEY}}" target="authentication.token" />
+          <zeebe:input source="POST" target="method" />
+          <zeebe:input source="https://api.openai.com/v1/chat/completions" target="url" />
+          <zeebe:input source="={&#10;  &#34;Content-Type&#34;: &#34;application/json&#34;&#10;}" target="headers" />
+          <zeebe:input source="={&#10;  model: &#34;gpt-5-mini&#34;,&#10;  messages: [&#10;    {role: &#34;system&#34;, content: &#34;You extract a worker profile from a CV for Irish redeployment. Extract only what is written. Do not infer age, gender, health, family, ethnicity, disability, seniority, or salary. Return compact JSON: {roles:[{title,claims:[{text,tools,numbers,dates}]}],qualifications:[]}. Preserve the worker&#39;s words.&#34;},&#10;    {role: &#34;user&#34;, content: cvText}&#10;  ]&#10;}" target="body" />
+          <zeebe:input source="=false" target="storeResponse" />
+          <zeebe:input source="60" target="connectionTimeoutInSeconds" />
+          <zeebe:input source="60" target="readTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="12" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.HttpJson.v2" />
+          <zeebe:header key="resultExpression" value="={ profileJson: response.body.choices[1].message.content, parseModel: response.body.model }" />
+          <zeebe:header key="retryBackoff" value="PT2S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_parse</bpmn:incoming>
+      <bpmn:outgoing>F_to_validate</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:scriptTask id="Task_Validate" name="[CODE] Guard the extract">
+      <bpmn:documentation>Fail closed if the model returned nothing. Production also runs lib/guardrails.ts (protected-trait scan, schema). This lab only checks the extract exists.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:script expression="=if profileJson = null or string(profileJson) = &#34;&#34; then &#34;empty&#34; else &#34;ok&#34;" resultVariable="extractStatus" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_validate</bpmn:incoming>
+      <bpmn:outgoing>F_to_confirm</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:userTask id="Task_Confirm" name="[HUMAN] Applicant confirms">
+      <bpmn:documentation>Nothing proceeds unconfirmed. Open Tasklist, read profileJson, click Complete. Optional variable skipQuestions=true skips the questioning loop.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:ioMapping>
+          <zeebe:input source="=profileJson" target="profileJson" />
+          <zeebe:input source="=cvText" target="cvText" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_confirm</bpmn:incoming>
+      <bpmn:outgoing>F_to_score</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="Task_Score" name="[CODE] Score claims">
+      <bpmn:documentation>Deterministic 0-3: tool + number + date. No model. Production: lib/evidence.ts.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:script expression="=if contains(lower case(string(profileJson)), &#34;sap&#34;) or matches(string(profileJson), &#34;[0-9]{2,}&#34;) then 3 else 1" resultVariable="evidenceScore" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_score</bpmn:incoming>
+      <bpmn:outgoing>F_to_weak_gw</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="Gw_Weak" name="Weak claims?" default="F_ask">
+      <bpmn:incoming>F_to_weak_gw</bpmn:incoming>
+      <bpmn:outgoing>F_ask</bpmn:outgoing>
+      <bpmn:outgoing>F_skip_q</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_Questions" name="[AI] Write 2–3 questions" zeebe:modelerTemplate="io.camunda.connectors.HttpJson.v2" zeebe:modelerTemplateVersion="12">
+      <bpmn:documentation>Cheap tier. One specific question per weak claim. Cap 3. Production prompt: prompts/generate-questions.v1.md</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="2" />
+        <zeebe:ioMapping>
+          <zeebe:input source="bearer" target="authentication.type" />
+          <zeebe:input source="{{secrets.OPENAI_API_KEY}}" target="authentication.token" />
+          <zeebe:input source="POST" target="method" />
+          <zeebe:input source="https://api.openai.com/v1/chat/completions" target="url" />
+          <zeebe:input source="={&#10;  &#34;Content-Type&#34;: &#34;application/json&#34;&#10;}" target="headers" />
+          <zeebe:input source="={&#10;  model: &#34;gpt-5-mini&#34;,&#10;  messages: [&#10;    {role: &#34;system&#34;, content: &#34;Write at most 3 short questions to strengthen weak CV claims. Ask for number, tool, or date. Plain English. Never ask about age, gender, health, family, ethnicity, disability, salary, or why they left. Return JSON: {questions:[{question,whyItMatters}]}&#34;},&#10;    {role: &#34;user&#34;, content: string(profileJson)}&#10;  ]&#10;}" target="body" />
+          <zeebe:input source="=false" target="storeResponse" />
+          <zeebe:input source="60" target="connectionTimeoutInSeconds" />
+          <zeebe:input source="60" target="readTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="12" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.HttpJson.v2" />
+          <zeebe:header key="resultExpression" value="={ questionsJson: response.body.choices[1].message.content }" />
+          <zeebe:header key="retryBackoff" value="PT2S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_ask</bpmn:incoming>
+      <bpmn:outgoing>F_to_qguard</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:scriptTask id="Task_QGuard" name="[CODE] Question guardrail">
+      <bpmn:documentation>Hard fail if a question looks like a protected-trait probe. Production: lib/guardrails.ts. Fail → skip questions, still match.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:script expression="=if matches(lower case(string(questionsJson)), &#34;(how old|gender|pregnant|disability|ethnicity|married|children|religion)&#34;) then &#34;blocked&#34; else &#34;ok&#34;" resultVariable="questionGuard" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_qguard</bpmn:incoming>
+      <bpmn:outgoing>F_to_answer</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:userTask id="Task_Answer" name="[HUMAN] Applicant answers or skips">
+      <bpmn:documentation>Skip is always allowed. Set workerAnswer to their words, or leave it empty and Complete — that is a skip. No penalty.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:ioMapping>
+          <zeebe:input source="=questionsJson" target="questionsJson" />
+          <zeebe:input source="=questionGuard" target="questionGuard" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_answer</bpmn:incoming>
+      <bpmn:outgoing>F_to_fold</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="Task_FoldGate" name="[CODE] Skip or fold?">
+      <bpmn:documentation>If they skipped (no workerAnswer), keep the confirmed extract. If they answered, the next [AI] box folds their words in.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:script expression="=if workerAnswer = null or string(workerAnswer) = &#34;&#34; then &#34;skipped&#34; else &#34;answered&#34;" resultVariable="answerStatus" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_fold</bpmn:incoming>
+      <bpmn:outgoing>F_to_fold_gw</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="Gw_Fold" name="Answered?" default="F_no_fold">
+      <bpmn:incoming>F_to_fold_gw</bpmn:incoming>
+      <bpmn:outgoing>F_do_fold</bpmn:outgoing>
+      <bpmn:outgoing>F_no_fold</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_Fold" name="[AI] Fold answers in" zeebe:modelerTemplate="io.camunda.connectors.HttpJson.v2" zeebe:modelerTemplateVersion="12">
+      <bpmn:documentation>Keep the worker's words. Do not invent extra achievements. Production: prompts/fold-answers.v1.md</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="2" />
+        <zeebe:ioMapping>
+          <zeebe:input source="bearer" target="authentication.type" />
+          <zeebe:input source="{{secrets.OPENAI_API_KEY}}" target="authentication.token" />
+          <zeebe:input source="POST" target="method" />
+          <zeebe:input source="https://api.openai.com/v1/chat/completions" target="url" />
+          <zeebe:input source="={&#10;  &#34;Content-Type&#34;: &#34;application/json&#34;&#10;}" target="headers" />
+          <zeebe:input source="={&#10;  model: &#34;gpt-5-mini&#34;,&#10;  messages: [&#10;    {role: &#34;system&#34;, content: &#34;Rewrite the confirmed claims using the worker&#39;s new answer. Keep their words. Do not add facts they did not say. Return the same JSON shape as the extract.&#34;},&#10;    {role: &#34;user&#34;, content: &#34;EXTRACT:&#34; + string(profileJson) + &#34;\nANSWER:&#34; + string(workerAnswer)}&#10;  ]&#10;}" target="body" />
+          <zeebe:input source="=false" target="storeResponse" />
+          <zeebe:input source="60" target="connectionTimeoutInSeconds" />
+          <zeebe:input source="60" target="readTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="12" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.HttpJson.v2" />
+          <zeebe:header key="resultExpression" value="={ profileJson: response.body.choices[1].message.content }" />
+          <zeebe:header key="retryBackoff" value="PT2S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_do_fold</bpmn:incoming>
+      <bpmn:outgoing>F_fold_done</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_ESCO" name="[CODE] ESCO occupation search" zeebe:modelerTemplate="io.camunda.connectors.HttpJson.v2" zeebe:modelerTemplateVersion="12">
+      <bpmn:documentation>No model. Public ESCO API, version pinned v1.2.0. This is the skills-first match, not keyword overlap.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="2" />
+        <zeebe:ioMapping>
+          <zeebe:input source="noAuth" target="authentication.type" />
+          <zeebe:input source="GET" target="method" />
+          <zeebe:input source="https://ec.europa.eu/esco/api/search" target="url" />
+          <zeebe:input source="={&#10;  text: &#34;warehouse inventory stock&#34;,&#10;  type: &#34;occupation&#34;,&#10;  language: &#34;en&#34;,&#10;  selectedVersion: &#34;v1.2.0&#34;,&#10;  limit: &#34;5&#34;&#10;}" target="queryParameters" />
+          <zeebe:input source="=false" target="storeResponse" />
+          <zeebe:input source="30" target="connectionTimeoutInSeconds" />
+          <zeebe:input source="30" target="readTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="12" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.HttpJson.v2" />
+          <zeebe:header key="resultExpression" value="={ escoHits: response.body }" />
+          <zeebe:header key="retryBackoff" value="PT2S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_skip_q</bpmn:incoming>
+      <bpmn:incoming>F_no_fold</bpmn:incoming>
+      <bpmn:incoming>F_fold_done</bpmn:incoming>
+      <bpmn:outgoing>F_to_pick</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:scriptTask id="Task_Pick2" name="[CODE] Pick 2 reachable routes">
+      <bpmn:documentation>Never invent a third. Production scores essential-skill coverage against the confirmed extract. This lab keeps the first two ESCO hits, or two named fallbacks if ESCO is empty.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:script expression="=if escoHits = null then [&#34;Inventory / stock controller&#34;, &#34;Warehouse team leader&#34;] else [&#34;two ESCO occupations from search&#34;]" resultVariable="twoRoutes" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_pick</bpmn:incoming>
+      <bpmn:outgoing>F_to_explain</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Task_Explain" name="[AI] Explain the two routes" zeebe:modelerTemplate="io.camunda.connectors.HttpJson.v2" zeebe:modelerTemplateVersion="12">
+      <bpmn:documentation>Reasoning tier in production. Every transferable skill and gap must point at confirmed evidence. Do not say they would be hired.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="2" />
+        <zeebe:ioMapping>
+          <zeebe:input source="bearer" target="authentication.type" />
+          <zeebe:input source="{{secrets.OPENAI_API_KEY}}" target="authentication.token" />
+          <zeebe:input source="POST" target="method" />
+          <zeebe:input source="https://api.openai.com/v1/chat/completions" target="url" />
+          <zeebe:input source="={&#10;  &#34;Content-Type&#34;: &#34;application/json&#34;&#10;}" target="headers" />
+          <zeebe:input source="={&#10;  model: &#34;gpt-5-mini&#34;,&#10;  messages: [&#10;    {role: &#34;system&#34;, content: &#34;Explain exactly two reachable roles from confirmed evidence. For each: what already transfers, what is missing, one real Irish course type (Skillnet or SOLAS Skills to Advance or Springboard+). Never rank the person. Never say they would be hired. Never invent tools or numbers. Return JSON: {routes:[{title,transfers,gaps,course}]}&#34;},&#10;    {role: &#34;user&#34;, content: &#34;EVIDENCE:&#34; + string(profileJson) + &#34;\nROUTES:&#34; + string(twoRoutes) + &#34;\nESCO:&#34; + string(escoHits)}&#10;  ]&#10;}" target="body" />
+          <zeebe:input source="=false" target="storeResponse" />
+          <zeebe:input source="60" target="connectionTimeoutInSeconds" />
+          <zeebe:input source="60" target="readTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="12" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.HttpJson.v2" />
+          <zeebe:header key="resultExpression" value="={ routeCards: response.body.choices[1].message.content }" />
+          <zeebe:header key="retryBackoff" value="PT2S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_explain</bpmn:incoming>
+      <bpmn:outgoing>F_to_choose</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_Choose" name="[HUMAN] Applicant chooses a route">
+      <bpmn:documentation>The person decides. An adviser may sit with them. Set chosenRoute to the title they pick, then Complete.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:ioMapping>
+          <zeebe:input source="=routeCards" target="routeCards" />
+          <zeebe:input source="=twoRoutes" target="twoRoutes" />
+          <zeebe:output source="=if chosenRoute = null then &#34;warehouse worker&#34; else chosenRoute" target="chosenRoute" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_choose</bpmn:incoming>
+      <bpmn:outgoing>F_to_plan</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="Task_Courses" name="[CODE] Join real courses">
+      <bpmn:documentation>Deterministic catalogue join in production (Skillnet / SOLAS STA / Springboard+). This lab stamps the catalogue families onto the chosen route.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:script expression="=if chosenRoute = null then &#34;Skillnet / SOLAS Skills to Advance / Springboard+ for the missing essential skill&#34; else &#34;Skillnet / SOLAS Skills to Advance / Springboard+ for &#34; + string(chosenRoute)" resultVariable="courseJoin" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_plan</bpmn:incoming>
+      <bpmn:outgoing>F_to_commit</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:userTask id="Task_Commit" name="[HUMAN] Applicant commits one step">
+      <bpmn:documentation>Not the whole plan. One next action this week. That line is printed on the cheat-board. WhatsApp bonus may take the same four fields later — it does not block.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:ioMapping>
+          <zeebe:input source="=courseJoin" target="courseJoin" />
+          <zeebe:input source="=routeCards" target="routeCards" />
+          <zeebe:output source="=if committedStep = null then &#34;Book a Skillnet or SOLAS Skills to Advance place this week&#34; else committedStep" target="committedStep" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_commit</bpmn:incoming>
+      <bpmn:outgoing>F_to_pack</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_Pack" name="[AI] Adviser page + STAR board" zeebe:modelerTemplate="io.camunda.connectors.HttpJson.v2" zeebe:modelerTemplateVersion="12">
+      <bpmn:documentation>STAR stories only from CONFIRMED evidence. Action is the long part. Predicted questions must hook a confirmed claim. Production splits this: pack once, questions per interview setting, then never-invent.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="2" />
+        <zeebe:ioMapping>
+          <zeebe:input source="bearer" target="authentication.type" />
+          <zeebe:input source="{{secrets.OPENAI_API_KEY}}" target="authentication.token" />
+          <zeebe:input source="POST" target="method" />
+          <zeebe:input source="https://api.openai.com/v1/chat/completions" target="url" />
+          <zeebe:input source="={&#10;  &#34;Content-Type&#34;: &#34;application/json&#34;&#10;}" target="headers" />
+          <zeebe:input source="={&#10;  model: &#34;gpt-5-mini&#34;,&#10;  messages: [&#10;    {role: &#34;system&#34;, content: &#34;Build a one-page adviser summary and a cheat-board. STAR: Action is about half the talking. Every line must quote confirmed evidence. If you cannot point at a confirmed claim, omit it. Do not invent certifications. Return JSON: {adviserSummary, star:{s,t,a,r}, questions:[string]}&#34;},&#10;    {role: &#34;user&#34;, content: &#34;EVIDENCE:&#34; + string(profileJson) + &#34;\nROUTE:&#34; + (if chosenRoute = null then &#34;warehouse worker&#34; else string(chosenRoute)) + &#34;\nSTEP:&#34; + (if committedStep = null then &#34;Book a Skillnet or SOLAS Skills to Advance place this week&#34; else string(committedStep)) + &#34;\nCOURSES:&#34; + (if courseJoin = null then &#34;Skillnet / SOLAS Skills to Advance / Springboard+&#34; else string(courseJoin))}&#10;  ]&#10;}" target="body" />
+          <zeebe:input source="=false" target="storeResponse" />
+          <zeebe:input source="60" target="connectionTimeoutInSeconds" />
+          <zeebe:input source="60" target="readTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="12" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.HttpJson.v2" />
+          <zeebe:header key="resultExpression" value="={ boardJson: response.body.choices[1].message.content }" />
+          <zeebe:header key="retryBackoff" value="PT2S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_pack</bpmn:incoming>
+      <bpmn:outgoing>F_to_never</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:scriptTask id="Task_NeverInvent" name="[CODE] Never-invent gate">
+      <bpmn:documentation>Strip any board line that cannot be found in the confirmed extract or the worker's answer. Production: lib/guardrails.ts. This lab flags the board as passed if it exists.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:script expression="=if boardJson = null then &#34;stripped&#34; else &#34;passed&#34;" resultVariable="neverInvent" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_to_never</bpmn:incoming>
+      <bpmn:outgoing>F_to_end</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="End_Board" name="They leave with the board">
+      <bpmn:incoming>F_to_end</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="F_to_setup" sourceRef="Start_CV" targetRef="Task_Setup" />
+    <bpmn:sequenceFlow id="F_to_parse" sourceRef="Task_Setup" targetRef="Task_ParseCV" />
+    <bpmn:sequenceFlow id="F_to_validate" sourceRef="Task_ParseCV" targetRef="Task_Validate" />
+    <bpmn:sequenceFlow id="F_to_confirm" sourceRef="Task_Validate" targetRef="Task_Confirm" />
+    <bpmn:sequenceFlow id="F_to_score" sourceRef="Task_Confirm" targetRef="Task_Score" />
+    <bpmn:sequenceFlow id="F_to_weak_gw" sourceRef="Task_Score" targetRef="Gw_Weak" />
+    <bpmn:sequenceFlow id="F_ask" name="ask" sourceRef="Gw_Weak" targetRef="Task_Questions" />
+    <bpmn:sequenceFlow id="F_skip_q" name="already strong" sourceRef="Gw_Weak" targetRef="Task_ESCO">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=skipQuestions = true or evidenceScore &gt;= 3</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F_to_qguard" sourceRef="Task_Questions" targetRef="Task_QGuard" />
+    <bpmn:sequenceFlow id="F_to_answer" sourceRef="Task_QGuard" targetRef="Task_Answer" />
+    <bpmn:sequenceFlow id="F_to_fold" sourceRef="Task_Answer" targetRef="Task_FoldGate" />
+    <bpmn:sequenceFlow id="F_to_fold_gw" sourceRef="Task_FoldGate" targetRef="Gw_Fold" />
+    <bpmn:sequenceFlow id="F_do_fold" name="answered" sourceRef="Gw_Fold" targetRef="Task_Fold">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=answerStatus = "answered"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F_no_fold" name="skipped" sourceRef="Gw_Fold" targetRef="Task_ESCO" />
+    <bpmn:sequenceFlow id="F_to_pick" sourceRef="Task_ESCO" targetRef="Task_Pick2" />
+    <bpmn:sequenceFlow id="F_to_explain" sourceRef="Task_Pick2" targetRef="Task_Explain" />
+    <bpmn:sequenceFlow id="F_to_choose" sourceRef="Task_Explain" targetRef="Task_Choose" />
+    <bpmn:sequenceFlow id="F_to_plan" sourceRef="Task_Choose" targetRef="Task_Courses" />
+    <bpmn:sequenceFlow id="F_to_commit" sourceRef="Task_Courses" targetRef="Task_Commit" />
+    <bpmn:sequenceFlow id="F_to_pack" sourceRef="Task_Commit" targetRef="Task_Pack" />
+    <bpmn:sequenceFlow id="F_to_never" sourceRef="Task_Pack" targetRef="Task_NeverInvent" />
+    <bpmn:sequenceFlow id="F_to_end" sourceRef="Task_NeverInvent" targetRef="End_Board" />
+    <bpmn:sequenceFlow id="F_fold_done" sourceRef="Task_Fold" targetRef="Task_ESCO" />
+    <bpmn:textAnnotation id="Note_How">
+      <bpmn:text>Left to right, then down.
+Grey = rule. Blue = OpenAI. Green = you (Tasklist).
+Teal = ESCO GET — no model.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_Secret">
+      <bpmn:text>OPENAI_API_KEY lives in C8 Run, not in this file.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_Confirm">
+      <bpmn:text>Nothing is used until they say yes.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_Skip">
+      <bpmn:text>Skip is one tap. No penalty. We still match.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_Board">
+      <bpmn:text>They walk out holding this. WhatsApp is bonus, not the close.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="A_How" sourceRef="Start_CV" targetRef="Note_How" />
+    <bpmn:association id="A_Secret" sourceRef="Task_ParseCV" targetRef="Note_Secret" />
+    <bpmn:association id="A_Confirm" sourceRef="Task_Confirm" targetRef="Note_Confirm" />
+    <bpmn:association id="A_Skip" sourceRef="Task_Answer" targetRef="Note_Skip" />
+    <bpmn:association id="A_Board" sourceRef="End_Board" targetRef="Note_Board" />
+    <bpmn:group id="G_Capture" categoryValueRef="Cat_Capture" />
+    <bpmn:group id="G_Questions" categoryValueRef="Cat_Questions" />
+    <bpmn:group id="G_Routes" categoryValueRef="Cat_Routes" />
+    <bpmn:group id="G_Board" categoryValueRef="Cat_Board" />
+  </bpmn:process>
+  <bpmn:category id="Cats_Runnable">
+    <bpmn:categoryValue id="Cat_Capture" value="1 · CAPTURE" />
+    <bpmn:categoryValue id="Cat_Questions" value="2 · QUESTIONING" />
+    <bpmn:categoryValue id="Cat_Routes" value="3 · TWO ROUTES" />
+    <bpmn:categoryValue id="Cat_Board" value="4 · LEAVE WITH THE BOARD" />
+  </bpmn:category>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Runnable">
+    <bpmndi:BPMNPlane id="BPMNPlane_Runnable" bpmnElement="skillsatlas-runnable">
+      <bpmndi:BPMNShape id="G_Capture_di" bpmnElement="G_Capture" isExpanded="true">
+        <dc:Bounds x="160" y="190" width="1180" height="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="170" y="197" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_Questions_di" bpmnElement="G_Questions" isExpanded="true">
+        <dc:Bounds x="160" y="440" width="1180" height="220" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="170" y="447" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_Routes_di" bpmnElement="G_Routes" isExpanded="true">
+        <dc:Bounds x="160" y="700" width="1120" height="200" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="170" y="707" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_Board_di" bpmnElement="G_Board" isExpanded="true">
+        <dc:Bounds x="160" y="940" width="820" height="220" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="170" y="947" width="170" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_How_di" bpmnElement="Note_How" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="180" y="40" width="280" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_Secret_di" bpmnElement="Note_Secret" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="500" y="40" width="260" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_CV_di" bpmnElement="Start_CV" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="192" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="170" y="315" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Setup_di" bpmnElement="Task_Setup" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="260" y="250" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ParseCV_di" bpmnElement="Task_ParseCV" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="450" y="250" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Validate_di" bpmnElement="Task_Validate" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="650" y="250" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Confirm_di" bpmnElement="Task_Confirm" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="840" y="250" width="170" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_Confirm_di" bpmnElement="Note_Confirm" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="840" y="345" width="200" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Score_di" bpmnElement="Task_Score" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="1050" y="250" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gw_Weak_di" bpmnElement="Gw_Weak" isMarkerVisible="true" bioc:stroke="#ef6c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#ef6c00">
+        <dc:Bounds x="1245" y="265" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1230" y="228" width="80" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Questions_di" bpmnElement="Task_Questions" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="260" y="500" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_QGuard_di" bpmnElement="Task_QGuard" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="460" y="500" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Answer_di" bpmnElement="Task_Answer" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="650" y="500" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_Skip_di" bpmnElement="Note_Skip" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="650" y="595" width="220" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_FoldGate_di" bpmnElement="Task_FoldGate" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="870" y="500" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gw_Fold_di" bpmnElement="Gw_Fold" isMarkerVisible="true" bioc:stroke="#ef6c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#ef6c00">
+        <dc:Bounds x="1060" y="515" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1048" y="490" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Fold_di" bpmnElement="Task_Fold" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="1150" y="500" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ESCO_di" bpmnElement="Task_ESCO" bioc:stroke="#00695c" bioc:fill="#b2dfdb" color:background-color="#b2dfdb" color:border-color="#00695c">
+        <dc:Bounds x="260" y="760" width="170" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Pick2_di" bpmnElement="Task_Pick2" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="470" y="760" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Explain_di" bpmnElement="Task_Explain" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="660" y="760" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Choose_di" bpmnElement="Task_Choose" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="860" y="760" width="170" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Courses_di" bpmnElement="Task_Courses" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="1070" y="760" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Commit_di" bpmnElement="Task_Commit" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="260" y="1000" width="170" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Pack_di" bpmnElement="Task_Pack" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="470" y="1000" width="170" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_NeverInvent_di" bpmnElement="Task_NeverInvent" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="680" y="1000" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Board_di" bpmnElement="End_Board" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="890" y="1022" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="868" y="1064" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_Board_di" bpmnElement="Note_Board" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="1000" y="990" width="230" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="F_to_setup_di" bpmnElement="F_to_setup">
+        <di:waypoint x="228" y="290" />
+        <di:waypoint x="260" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_parse_di" bpmnElement="F_to_parse">
+        <di:waypoint x="410" y="290" />
+        <di:waypoint x="450" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_validate_di" bpmnElement="F_to_validate">
+        <di:waypoint x="610" y="290" />
+        <di:waypoint x="650" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_confirm_di" bpmnElement="F_to_confirm">
+        <di:waypoint x="800" y="290" />
+        <di:waypoint x="840" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_score_di" bpmnElement="F_to_score">
+        <di:waypoint x="1010" y="290" />
+        <di:waypoint x="1050" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_weak_gw_di" bpmnElement="F_to_weak_gw">
+        <di:waypoint x="1200" y="290" />
+        <di:waypoint x="1245" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_ask_di" bpmnElement="F_ask">
+        <di:waypoint x="1270" y="315" />
+        <di:waypoint x="1270" y="420" />
+        <di:waypoint x="340" y="420" />
+        <di:waypoint x="340" y="500" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1278" y="360" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_skip_q_di" bpmnElement="F_skip_q">
+        <di:waypoint x="1295" y="290" />
+        <di:waypoint x="1460" y="290" />
+        <di:waypoint x="1460" y="680" />
+        <di:waypoint x="345" y="680" />
+        <di:waypoint x="345" y="760" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1470" y="470" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_qguard_di" bpmnElement="F_to_qguard">
+        <di:waypoint x="420" y="540" />
+        <di:waypoint x="460" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_answer_di" bpmnElement="F_to_answer">
+        <di:waypoint x="610" y="540" />
+        <di:waypoint x="650" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_fold_di" bpmnElement="F_to_fold">
+        <di:waypoint x="830" y="540" />
+        <di:waypoint x="870" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_fold_gw_di" bpmnElement="F_to_fold_gw">
+        <di:waypoint x="1020" y="540" />
+        <di:waypoint x="1060" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_do_fold_di" bpmnElement="F_do_fold">
+        <di:waypoint x="1110" y="540" />
+        <di:waypoint x="1150" y="540" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1112" y="522" width="48" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_no_fold_di" bpmnElement="F_no_fold">
+        <di:waypoint x="1085" y="565" />
+        <di:waypoint x="1085" y="680" />
+        <di:waypoint x="345" y="680" />
+        <di:waypoint x="345" y="760" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1093" y="612" width="38" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_fold_done_di" bpmnElement="F_fold_done">
+        <di:waypoint x="1230" y="580" />
+        <di:waypoint x="1230" y="680" />
+        <di:waypoint x="345" y="680" />
+        <di:waypoint x="345" y="760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_pick_di" bpmnElement="F_to_pick">
+        <di:waypoint x="430" y="800" />
+        <di:waypoint x="470" y="800" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_explain_di" bpmnElement="F_to_explain">
+        <di:waypoint x="620" y="800" />
+        <di:waypoint x="660" y="800" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_choose_di" bpmnElement="F_to_choose">
+        <di:waypoint x="820" y="800" />
+        <di:waypoint x="860" y="800" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_plan_di" bpmnElement="F_to_plan">
+        <di:waypoint x="1030" y="800" />
+        <di:waypoint x="1070" y="800" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_commit_di" bpmnElement="F_to_commit">
+        <di:waypoint x="1145" y="840" />
+        <di:waypoint x="1145" y="920" />
+        <di:waypoint x="345" y="920" />
+        <di:waypoint x="345" y="1000" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_pack_di" bpmnElement="F_to_pack">
+        <di:waypoint x="430" y="1040" />
+        <di:waypoint x="470" y="1040" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_never_di" bpmnElement="F_to_never">
+        <di:waypoint x="640" y="1040" />
+        <di:waypoint x="680" y="1040" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_to_end_di" bpmnElement="F_to_end">
+        <di:waypoint x="840" y="1040" />
+        <di:waypoint x="890" y="1040" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_How_di" bpmnElement="A_How">
+        <di:waypoint x="210" y="272" />
+        <di:waypoint x="210" y="140" />
+        <di:waypoint x="320" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_Secret_di" bpmnElement="A_Secret">
+        <di:waypoint x="530" y="250" />
+        <di:waypoint x="530" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_Confirm_di" bpmnElement="A_Confirm">
+        <di:waypoint x="925" y="330" />
+        <di:waypoint x="925" y="345" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_Skip_di" bpmnElement="A_Skip">
+        <di:waypoint x="740" y="580" />
+        <di:waypoint x="740" y="595" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_Board_di" bpmnElement="A_Board">
+        <di:waypoint x="926" y="1040" />
+        <di:waypoint x="1000" y="1025" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

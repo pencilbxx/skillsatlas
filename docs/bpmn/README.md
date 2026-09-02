@@ -139,19 +139,16 @@ The accountability partner is already built. This process is **bonus** — the 9
 
 ```
 [EXT] WhatsApp accountability partner (existing system)
-  │  daily check-in, reflective MI-style conversation
-  │  catches the repeating thought, names it back
+  │  four fields only: workerId, routeId, committedStep, cadence
+  │  partner tracks the plan. It does not advise on the person.
   ▼
-Message event: "Check-in completed / decision made / plan updated"
+Ack: partner received the step
   │
   ▼
-SERVICE TASK [CODE]: Update pathway progress (starts, completions)   ← "Learn" step
-  │
-  ▼
-EXCLUSIVE GATEWAY: Appointment due? (timer P21D)
-  ├─ no  → loop, keep partner active
-  └─ yes → message worker back into Process 1 with new evidence
+END bonus  —  nothing the worker says to the partner comes back into scoring
 ```
+
+The 21-day gap is a new session started by the worker or adviser (new CV / new evidence), not a data path from WhatsApp.
 
 **What the demo shows if the bonus is on:** one receipt — the partner thread getting the committed step and the first check-in. Nothing more is built here. If the bonus is off, Screen 4 still ends on the cheat-board.
 

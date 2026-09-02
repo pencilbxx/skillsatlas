@@ -29,6 +29,18 @@ Every number here has a source and a date. The deck quotes from this file and no
 - Springboard+ 2026: 7,274 places across 244 courses; free for unemployed, 10% fee for employed (springboardcourses.ie, Mar 2026).
 - SkillsFuture Singapore: international precedent for a common skills language with multi-party validation (SkillsAtlas deck, source 08).
 
+## Scale path (Proposed — plan, not users we have)
+
+Mentors asked how we get **10 → 20 → 200**. These are sitting-counts (workers who leave with a board), not app installs. Do not say them as traction.
+
+| Gate | Meaning | Kill-point |
+| --- | --- | --- |
+| 10 | First sitting, one adviser | No adviser will sit with us |
+| 20 | One office copies the next week | They will not repeat without us in the room |
+| 200 | ~10 small/mid-tier offices copy the sitting | Next office needs HQ AI programme or a 12-month tender |
+
+Defensibility (mentor): large enterprises **can** build this — they have internal AI teams. Beachhead is small and mid-tier providers whose infrastructure is still a printout and a three-week gap. Not a patent claim.
+
 ## The one-sentence pitch (Proposed)
 
 > For the worker who has just been told their role is gone — and the adviser who sees them once every three weeks — SkillsAtlas is an evidence agent that turns what they have actually done into two credible next roles, a plan they can afford, and proof they can carry into an interview, unlike the assessment-and-course-list handoff that leaves them alone with a printout.

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#102b3f" />
+  <title>SkillsAtlas — 90s demo wireframes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./demo.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand">SKILLS <span>Atlas</span></div>
+      <nav aria-label="Demo screens">
+        <button type="button" data-go="1" aria-current="true"><span class="nav-num">01</span><span class="nav-name">Problem</span></button>
+        <button type="button" data-go="2"><span class="nav-num">02</span><span class="nav-name">Evidence</span></button>
+        <button type="button" data-go="3"><span class="nav-num">03</span><span class="nav-name">Routes</span></button>
+        <button type="button" data-go="4"><span class="nav-num">04</span><span class="nav-name">Board</span></button>
+      </nav>
+      <div class="hdr-meta">
+        <span class="chip chip-wire">Wireframe</span>
+        <span class="chip chip-accent">90s demo</span>
+        <span class="keys">Keys 1–4</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- SCREEN 1 -->
+      <section class="screen on" id="s1" data-say="This is the handoff Ireland actually does. You’ve been assessed. Here’s a course list. See you in three weeks. We are going to do something else with the same CV.">
+        <p class="kicker">01 / Station · The problem</p>
+        <div class="hero-dark">
+          <h1>You’ve been <em>assessed.</em><br />Here’s a course list.</h1>
+          <p>Then they are left alone. About three weeks until the next appointment. Nothing sits with them. They can see job titles — not their evidence, not a small next step.</p>
+          <div class="statline">
+            <div><strong>1 · Assessed</strong><span>The usual first meeting</span></div>
+            <div><strong>2 · Course list</strong><span>Keywords + a PDF</span></div>
+            <div><strong>3 · Silent weeks</strong><span>Next sit in ~3 weeks</span></div>
+          </div>
+          <p class="cite">Not a jobs deficit — 2.83m in work · CSO LFS Q4 2025</p>
+        </div>
+        <aside class="journey">
+          <p class="tiny">How the file gets here</p>
+          <p><strong>Already assessed.</strong> Same CV into this session. They confirm every line before anything is used.</p>
+          <p class="muted">The adviser may already have the file, or the person brings it. This demo is seeded — no upload form.</p>
+        </aside>
+        <div class="grid g2">
+          <article class="card">
+            <p class="tiny">After assessment · same file</p>
+            <h2>Warehouse operative</h2>
+            <p class="muted">Synthetic persona. Not a real worker.</p>
+            <ul class="plain">
+              <li>Managed stock</li>
+              <li>Helped new staff with safety</li>
+              <li>Worked nights, one site, long spell</li>
+            </ul>
+            <p class="muted" style="margin-top:0.8rem">Recommended: generic digital skills PDF. See you in three weeks.</p>
+          </article>
+          <article class="card navy">
+            <p class="tiny" style="color:var(--accent)">What we replace it with</p>
+            <h2 style="color:#fff">Evidence → two routes → a board they hold</h2>
+            <p>Not another catalogue. Not “you would be hired.” The agent proposes. The person confirms, skips, and chooses. Every line on the board must point at something they confirmed.</p>
+            <div class="row" style="margin-top:1rem">
+              <button class="btn primary" type="button" data-go="2">Same CV, this time as evidence →</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- SCREEN 2 -->
+      <section class="screen" id="s2" data-say="The agent reads the CV. The worker confirms — nothing is used until they say it is true. Watch this weak line. Two questions. Skip is always allowed. Now it is evidence. That is not a keyword.">
+        <p class="kicker">02 / Station · Experience becomes evidence</p>
+        <h1>Nothing is used until they <em>say yes</em></h1>
+        <p class="lead">Extract. Confirm. Then 2–3 questions that fit this person — not a form. Skip is one tap, no penalty.</p>
+        <div class="grid g3">
+          <div>
+            <article class="card" style="margin-bottom:1rem">
+              <div class="row" style="justify-content:space-between">
+                <p class="tiny">Extracted claims</p>
+                <span class="chip chip-rep">Reported · CV</span>
+              </div>
+              <button type="button" class="claim" id="c-train" aria-pressed="false">
+                <div class="row"><strong>Helped new staff with safety paperwork</strong><span class="chip chip-obs">Score 2</span></div>
+                <p class="muted" style="margin:0.3rem 0 0">Has a task. Still thin on number and date. Tap to confirm.</p>
+              </button>
+              <button type="button" class="claim weak" id="c-stock" aria-pressed="false">
+                <div class="row"><strong>Managed stock</strong><span class="chip chip-rep" id="stock-score">Score 1 · weak · load-bearing</span></div>
+                <p class="muted" style="margin:0.3rem 0 0">No number, no system, no date. Matters for a reachable inventory route — tap to confirm, then we ask.</p>
+              </button>
+              <div class="row" style="margin-top:0.75rem">
+                <button class="btn primary" type="button" id="btn-confirm">Confirm these lines</button>
+                <span class="muted" id="confirm-state">Not confirmed yet · tap a line or this button</span>
+              </div>
+            </article>
+            <article class="card" id="q-panel" hidden>
+              <p class="tiny">Question 1 of 2 · skip is always fine</p>
+              <div class="qbox">
+                <p id="q-text" style="margin:0 0 0.8rem"><strong>When you managed stock, roughly how many product lines — and did you use any system?</strong></p>
+                <p class="muted" id="q-why">Why it matters: a number and a system turn a duty into something an employer can check.</p>
+                <div class="row" style="margin-top:0.8rem">
+                  <button class="btn primary" type="button" id="btn-answer">Answer (demo)</button>
+                  <button class="btn skip" type="button" id="btn-skip">Skip — no penalty</button>
+                  <button class="btn primary" type="button" id="btn-to-routes" hidden data-go="3">See two routes →</button>
+                </div>
+              </div>
+            </article>
+          </div>
+          <aside class="card navy">
+            <p class="tiny" style="color:var(--accent)">After they answer</p>
+            <h2 style="color:#fff" id="after-title">Still a keyword</h2>
+            <p id="after-body">Confirm first. Then the agent asks. The guardrail already ran: no protected traits, no repeats, simple English.</p>
+            <p class="muted" id="after-class">PROPOSED questions never look like fact until they answer and confirm the enrichment.</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- SCREEN 3 -->
+      <section class="screen" id="s3" data-say="Exactly two reachable roles. Not a job board. Not you would be hired. These skills already transfer. These gaps have a real Irish course. The person chooses. We do not rank them.">
+        <p class="kicker">03 / Station · Two reachable routes</p>
+        <h1>Exactly two next roles — <em>not a job board</em></h1>
+        <p class="lead">ESCO-mapped from confirmed evidence only. Not “jobs available now.” Not a ranking of the person. Catalogue entries below are labelled example until seed data is live.</p>
+        <div class="grid g-route" id="routes">
+          <article class="card" data-route="a" tabindex="0">
+            <div class="row" style="justify-content:space-between">
+              <p class="tiny">Route A · reachable</p>
+              <span class="chip chip-obs">Confirmed evidence</span>
+            </div>
+            <h2>Inventory / stock controller</h2>
+            <p class="muted">What already transfers</p>
+            <ul class="plain">
+              <li>Stock control (enriched claim)</li>
+              <li>Showed new starters a safety checklist</li>
+            </ul>
+            <p class="muted" style="margin-top:0.7rem">Still missing</p>
+            <ul class="plain">
+              <li>WMS reporting beyond day-to-day counts</li>
+            </ul>
+            <div class="course">
+              <span class="chip chip-human">Example catalogue</span>
+              <p style="margin:0.4rem 0 0"><strong>Logistics Skillnet</strong> — inventory &amp; WMS fundamentals · time/cost on the live card</p>
+            </div>
+            <button class="btn" type="button" data-pick="a" style="margin-top:0.7rem">Choose this path</button>
+          </article>
+          <article class="card" data-route="b" tabindex="0">
+            <div class="row" style="justify-content:space-between">
+              <p class="tiny">Route B · reachable</p>
+              <span class="chip chip-obs">Confirmed evidence</span>
+            </div>
+            <h2>Team lead · warehouse operations</h2>
+            <p class="muted">What already transfers</p>
+            <ul class="plain">
+              <li>On-the-job safety briefing for new people</li>
+              <li>Shift coordination (from CV, confirmed)</li>
+            </ul>
+            <p class="muted" style="margin-top:0.7rem">Still missing</p>
+            <ul class="plain">
+              <li>Documented people-planning / rota tools</li>
+            </ul>
+            <div class="course">
+              <span class="chip chip-human">Example catalogue</span>
+              <p style="margin:0.4rem 0 0"><strong>SOLAS Skills to Advance</strong> — supervisory skills for operatives · ETB-delivered</p>
+            </div>
+            <button class="btn" type="button" data-pick="b" style="margin-top:0.7rem">Choose this path</button>
+          </article>
+        </div>
+        <p class="muted" style="margin-top:0.9rem">We never say “you would be hired.” Adviser can sit with them. The applicant decides.</p>
+      </section>
+
+      <!-- SCREEN 4 -->
+      <section class="screen" id="s4" data-say="One next step this week. An adviser page they can forward. They say who is in the room — a screen is not a hiring-manager panel. This is the cheat-board. Flip the setting: same evidence, different questions.">
+        <p class="kicker">04 / Station · Leave with the board</p>
+        <h1>They walk out holding <em>proof</em></h1>
+        <p class="lead">One step this week. A page for the adviser. Then the board. Flip who is in the room — stories stay, questions change. Not seniority.</p>
+        <div class="grid g2" style="margin-bottom:1rem">
+          <article class="card">
+            <p class="tiny">Applicant commits</p>
+            <h2>One step this week</h2>
+            <p>Not the whole plan. This line is printed on the board. WhatsApp may take the same four fields later — it does not block this screen.</p>
+            <p style="margin:0.8rem 0 0"><strong id="step-text">Book the Skillnet WMS intro for Thursday (example).</strong></p>
+          </article>
+          <article class="card navy">
+            <p class="tiny" style="color:var(--accent)">Adviser receives</p>
+            <h2 style="color:#fff">One page they can keep</h2>
+            <p>Confirmed evidence, chosen route, the plan, what is still open. They may sit with the applicant. The live demo does not wait for an approve click.</p>
+          </article>
+        </div>
+        <article class="board">
+          <div class="row" style="justify-content:space-between;margin-bottom:0.8rem">
+            <p class="tiny">Cheat-board · confirmed claims only</p>
+            <span class="chip chip-prop">proposed never looks like fact</span>
+          </div>
+          <h2 id="board-title">Interview board · inventory / stock controller</h2>
+          <p class="tiny" style="margin:0.8rem 0 0.4rem">Interview setting — they choose</p>
+          <div class="row" id="stage">
+            <button type="button" class="opt on" data-val="screen">Phone screen</button>
+            <button type="button" class="opt" data-val="first">First interview</button>
+            <button type="button" class="opt" data-val="panel">Panel</button>
+          </div>
+          <div class="row" id="who" style="margin-top:0.4rem">
+            <button type="button" class="opt on" data-val="recruiter">Recruiter</button>
+            <button type="button" class="opt" data-val="hm">Hiring manager</button>
+          </div>
+          <p class="muted" style="margin:0.85rem 0 0.4rem">STAR story (once) · Action is the long part</p>
+          <div class="star">
+            <b>S 10%</b><span>Night shift, one site, stock was the job.</span>
+            <b>T 10%</b><span>Keep lines moving without a written WMS story.</span>
+            <b>A 50%</b><span id="star-a">Ran counts on about 2,400 lines in SAP, monthly cycle counts — their words, confirmed.</span>
+            <b>R 30%</b><span>Can stand over number, system, date. Do not claim a certification that is not on the CV.</span>
+          </div>
+          <p class="tiny" style="margin:1rem 0 0.35rem">Predicted questions · this room only</p>
+          <p id="pq" style="margin:0"><strong>Walk me through how you knew a count was off.</strong> Hook: stock claim (confirmed).</p>
+          <p class="muted" id="pq-note">A phone screen stays short. A hiring-manager panel asks for the story. Same evidence.</p>
+        </article>
+        <p class="muted" style="margin-top:0.85rem">Bonus, not the close: WhatsApp accountability partner gets workerId, routeId, committedStep, cadence — nothing else, nothing comes back.</p>
+      </section>
+    </main>
+
+    <div class="say" id="say-bar" role="note">
+      <div class="say-body">
+        <div class="lab">Say this · 90s script</div>
+        <p id="say-line">This is the handoff Ireland actually does. You’ve been assessed. Here’s a course list. See you in three weeks. We are going to do something else with the same CV.</p>
+      </div>
+      <button type="button" class="say-toggle" id="say-toggle" aria-expanded="false">More</button>
+    </div>
+  </div>
+  <script src="./demo.js"></script>
+</body>
+</html>

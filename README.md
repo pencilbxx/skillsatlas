@@ -13,7 +13,10 @@ This repo is the **kit**. The Next.js app is not scaffolded yet. Open this folde
 | `docs/bpmn/skillsatlas-4-screens.bpmn` | Team picture. Four rows in plain English. Board is the close. |
 | `docs/bpmn/skillsatlas-evidence-agent.bpmn` | Full step map. WhatsApp is a bonus side path. |
 | `docs/demo-script.md` | 90-second narration. Draft. Freeze on day 10. |
+| `docs/wireframes/demo.html` | Clickable 4-screen mock. Live: https://skillsatlas.vercel.app — how-to: `docs/wireframes/README.md`. |
 | `docs/evidence-base.md` | The only numbers the deck may quote. |
+| `docs/pitch-contents.md` | Ten-slide argument + 4-min speech + research split. Contents only. |
+| `docs/SkillsAtlas_Pitch_Contents_Team_Pack.docx` | Same pack as a Word file to send the team. Rebuild: `python docs/build-pitch-pack.py`. |
 | `prompts/cursor-kickoff-prompts.md` | Paste P0, then P1… in order. |
 
 ## What exists vs what does not

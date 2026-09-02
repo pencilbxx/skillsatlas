@@ -6,6 +6,7 @@ dist/
 .env.local
 .env*.local
 .vercel
+docs/wireframes/.deploy-b64/
 *.log
 .DS_Store
 Thumbs.db

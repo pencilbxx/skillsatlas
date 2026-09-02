@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_SkillsAtlas_Spine" targetNamespace="https://skillsatlas.ie/bpmn" exporter="Camunda Modeler" exporterVersion="5.49.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+  <bpmn:process id="Process_DemoSpine" name="SkillsAtlas — what happens in 90 seconds" isExecutable="false">
+    <bpmn:documentation>For a first-time viewer, not a developer. Four screens. Read each row left to right, then down. The full technical map is skillsatlas-evidence-agent.bpmn.</bpmn:documentation>
+    <bpmn:startEvent id="S_Start" name="Someone just lost their role">
+      <bpmn:outgoing>F_00</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="S1_Assessed" name="You’ve been assessed">
+      <bpmn:documentation>The usual first meeting. Forms, a conversation, then a printout.</bpmn:documentation>
+      <bpmn:incoming>F_00</bpmn:incoming>
+      <bpmn:outgoing>F_01</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="S1_CourseList" name="Here’s a course list. See you in three weeks.">
+      <bpmn:documentation>This is the silent gap. Motivation decays. Nothing sits with them between appointments.</bpmn:documentation>
+      <bpmn:incoming>F_01</bpmn:incoming>
+      <bpmn:outgoing>F_12</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:userTask id="S2_Share" name="They share what they have actually done">
+      <bpmn:documentation>A CV or a story of the work. In the demo this is a made-up person, not a real worker.</bpmn:documentation>
+      <bpmn:incoming>F_12</bpmn:incoming>
+      <bpmn:outgoing>F_21</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="S2_Confirm" name="They check every line. Nothing is used until they say yes.">
+      <bpmn:documentation>They can edit or remove anything. This is the trust step.</bpmn:documentation>
+      <bpmn:incoming>F_21</bpmn:incoming>
+      <bpmn:outgoing>F_22</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="S2_Questions" name="2 or 3 sharp questions. Skip is always fine.">
+      <bpmn:documentation>Not a test. “You wrote managed stock — roughly how many lines, and what system?”</bpmn:documentation>
+      <bpmn:incoming>F_22</bpmn:incoming>
+      <bpmn:outgoing>F_23</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="S2_Stronger" name="A weak line becomes evidence they can stand over">
+      <bpmn:documentation>Example: “managed stock” becomes “2,400 product lines in SAP, with a date.”</bpmn:documentation>
+      <bpmn:incoming>F_23</bpmn:incoming>
+      <bpmn:outgoing>F_34</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="S3_TwoRoles" name="Exactly two next roles — not a job board">
+      <bpmn:documentation>Roles they can actually reach from this evidence. Not “jobs available now.” Not a ranking of the person.</bpmn:documentation>
+      <bpmn:incoming>F_34</bpmn:incoming>
+      <bpmn:outgoing>F_31</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:task id="S3_Transfer" name="What already transfers, and what is still missing">
+      <bpmn:documentation>Each card shows skills they already proved, and the small gaps.</bpmn:documentation>
+      <bpmn:incoming>F_31</bpmn:incoming>
+      <bpmn:outgoing>F_32</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="S3_Courses" name="A real Irish course for each gap">
+      <bpmn:documentation>Skillnet, SOLAS Skills to Advance, or Springboard+. Live links. Honest time and cost.</bpmn:documentation>
+      <bpmn:incoming>F_32</bpmn:incoming>
+      <bpmn:outgoing>F_45</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:userTask id="S4_Commit" name="They pick one step they will do this week">
+      <bpmn:documentation>Not the whole plan. One next action they can keep.</bpmn:documentation>
+      <bpmn:incoming>F_45</bpmn:incoming>
+      <bpmn:outgoing>F_41</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="S4_Adviser" name="A one-page note their adviser can actually use">
+      <bpmn:documentation>What was confirmed, which route, the plan, what is still open. A person still decides.</bpmn:documentation>
+      <bpmn:incoming>F_41</bpmn:incoming>
+      <bpmn:outgoing>F_42</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="S4_Setting" name="They choose the interview setting">
+      <bpmn:documentation>Screen, first interview, or panel. Recruiter or hiring manager. They choose. We do not guess how senior they are.</bpmn:documentation>
+      <bpmn:incoming>F_42</bpmn:incoming>
+      <bpmn:incoming>F_ToggleYes</bpmn:incoming>
+      <bpmn:outgoing>F_SettingToBoard</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sendTask id="S4_Board" name="The cheat-board they walk out holding">
+      <bpmn:documentation>Stories stay. Questions match this room. Every line points at something they confirmed.</bpmn:documentation>
+      <bpmn:incoming>F_SettingToBoard</bpmn:incoming>
+      <bpmn:outgoing>F_43</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:exclusiveGateway id="S4_Toggle" name="Flip the setting?" default="F_ToggleNo">
+      <bpmn:documentation>Same evidence. Different questions.</bpmn:documentation>
+      <bpmn:incoming>F_43</bpmn:incoming>
+      <bpmn:outgoing>F_ToggleYes</bpmn:outgoing>
+      <bpmn:outgoing>F_ToggleNo</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="S_End" name="They leave with proof">
+      <bpmn:incoming>F_ToggleNo</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="F_00" sourceRef="S_Start" targetRef="S1_Assessed" />
+    <bpmn:sequenceFlow id="F_01" sourceRef="S1_Assessed" targetRef="S1_CourseList" />
+    <bpmn:sequenceFlow id="F_12" sourceRef="S1_CourseList" targetRef="S2_Share" />
+    <bpmn:sequenceFlow id="F_21" sourceRef="S2_Share" targetRef="S2_Confirm" />
+    <bpmn:sequenceFlow id="F_22" sourceRef="S2_Confirm" targetRef="S2_Questions" />
+    <bpmn:sequenceFlow id="F_23" sourceRef="S2_Questions" targetRef="S2_Stronger" />
+    <bpmn:sequenceFlow id="F_34" sourceRef="S2_Stronger" targetRef="S3_TwoRoles" />
+    <bpmn:sequenceFlow id="F_31" sourceRef="S3_TwoRoles" targetRef="S3_Transfer" />
+    <bpmn:sequenceFlow id="F_32" sourceRef="S3_Transfer" targetRef="S3_Courses" />
+    <bpmn:sequenceFlow id="F_45" sourceRef="S3_Courses" targetRef="S4_Commit" />
+    <bpmn:sequenceFlow id="F_41" sourceRef="S4_Commit" targetRef="S4_Adviser" />
+    <bpmn:sequenceFlow id="F_42" sourceRef="S4_Adviser" targetRef="S4_Setting" />
+    <bpmn:sequenceFlow id="F_SettingToBoard" sourceRef="S4_Setting" targetRef="S4_Board" />
+    <bpmn:sequenceFlow id="F_43" sourceRef="S4_Board" targetRef="S4_Toggle" />
+    <bpmn:sequenceFlow id="F_ToggleYes" name="same evidence, new questions" sourceRef="S4_Toggle" targetRef="S4_Setting" />
+    <bpmn:sequenceFlow id="F_ToggleNo" name="done" sourceRef="S4_Toggle" targetRef="S_End" />
+    <bpmn:textAnnotation id="N_How">
+      <bpmn:text>How to read this (90 seconds)
+Each row is one screen. Left to right, then down.
+Amber = the old broken handoff.
+Green = the person decides.
+Blue = the agent helps.
+Purple = they take this home.
+We do not rank people. We do not invent stories.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="N_S1">
+      <bpmn:text>This is the mess we replace. Assessed — then left alone.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="N_S2">
+      <bpmn:text>They stay in control. Skip any question. Correct any line. Watch a vague duty become something an employer can check.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="N_S3">
+      <bpmn:text>Two paths they can reach. The person chooses. We never say “you would be hired.”</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="N_S4">
+      <bpmn:text>The last thing in the room is the board. Flip the setting: same evidence, different questions.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="A_How" sourceRef="S_Start" targetRef="N_How" />
+    <bpmn:association id="A_S1" sourceRef="S1_CourseList" targetRef="N_S1" />
+    <bpmn:association id="A_S2" sourceRef="S2_Questions" targetRef="N_S2" />
+    <bpmn:association id="A_S3" sourceRef="S3_TwoRoles" targetRef="N_S3" />
+    <bpmn:association id="A_S4" sourceRef="S4_Board" targetRef="N_S4" />
+    <bpmn:group id="G1" categoryValueRef="Cat1" />
+    <bpmn:group id="G2" categoryValueRef="Cat2" />
+    <bpmn:group id="G3" categoryValueRef="Cat3" />
+    <bpmn:group id="G4" categoryValueRef="Cat4" />
+  </bpmn:process>
+  <bpmn:category id="Cats">
+    <bpmn:categoryValue id="Cat1" value="SCREEN 1 · The problem" />
+    <bpmn:categoryValue id="Cat2" value="SCREEN 2 · Experience becomes evidence" />
+    <bpmn:categoryValue id="Cat3" value="SCREEN 3 · Two roles they can actually reach" />
+    <bpmn:categoryValue id="Cat4" value="SCREEN 4 · They leave with the board" />
+  </bpmn:category>
+  <bpmndi:BPMNDiagram id="D1">
+    <bpmndi:BPMNPlane id="P1" bpmnElement="Process_DemoSpine">
+      <bpmndi:BPMNShape id="S_Start_di" bpmnElement="S_Start" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="438" y="277" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="413" y="318" width="88" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S1_Assessed_di" bpmnElement="S1_Assessed" bioc:stroke="#ef6c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#ef6c00">
+        <dc:Bounds x="510" y="250" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S1_CourseList_di" bpmnElement="S1_CourseList" bioc:stroke="#ef6c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#ef6c00">
+        <dc:Bounds x="760" y="250" width="230" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S2_Share_di" bpmnElement="S2_Share" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="430" y="480" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S2_Confirm_di" bpmnElement="S2_Confirm" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="680" y="480" width="230" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S2_Questions_di" bpmnElement="S2_Questions" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="950" y="480" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S2_Stronger_di" bpmnElement="S2_Stronger" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="1200" y="480" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S3_TwoRoles_di" bpmnElement="S3_TwoRoles" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="430" y="710" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S3_Transfer_di" bpmnElement="S3_Transfer" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="680" y="710" width="220" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S3_Courses_di" bpmnElement="S3_Courses" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="940" y="710" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S4_Commit_di" bpmnElement="S4_Commit" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="430" y="940" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S4_Adviser_di" bpmnElement="S4_Adviser" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="680" y="940" width="220" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S4_Setting_di" bpmnElement="S4_Setting" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="940" y="940" width="210" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S4_Board_di" bpmnElement="S4_Board" bioc:stroke="#6a1b9a" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#6a1b9a">
+        <dc:Bounds x="1190" y="940" width="220" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S4_Toggle_di" bpmnElement="S4_Toggle" isMarkerVisible="true" bioc:stroke="#ef6c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#ef6c00">
+        <dc:Bounds x="1450" y="960" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1436" y="1014" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_End_di" bpmnElement="S_End" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="1550" y="967" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1530" y="1008" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="N_How_di" bpmnElement="N_How" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="1070" y="80" width="340" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="N_S1_di" bpmnElement="N_S1" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="1070" y="255" width="220" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="N_S2_di" bpmnElement="N_S2" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="1200" y="330" width="230" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="N_S3_di" bpmnElement="N_S3" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="160" y="780" width="230" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="N_S4_di" bpmnElement="N_S4" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="1310" y="750" width="250" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G1_di" bpmnElement="G1" isExpanded="true">
+        <dc:Bounds x="410" y="205" width="620" height="195" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="678" y="216" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G2_di" bpmnElement="G2" isExpanded="true">
+        <dc:Bounds x="410" y="435" width="1020" height="195" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="899" y="435" width="62" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G3_di" bpmnElement="G3" isExpanded="true">
+        <dc:Bounds x="410" y="665" width="780" height="195" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="758" y="665" width="85" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G4_di" bpmnElement="G4" isExpanded="true">
+        <dc:Bounds x="410" y="870" width="1220" height="240" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="945" y="890" width="90" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="F_00_di" bpmnElement="F_00">
+        <di:waypoint x="474" y="295" />
+        <di:waypoint x="510" y="295" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_01_di" bpmnElement="F_01">
+        <di:waypoint x="720" y="295" />
+        <di:waypoint x="760" y="295" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_12_di" bpmnElement="F_12">
+        <di:waypoint x="875" y="340" />
+        <di:waypoint x="875" y="420" />
+        <di:waypoint x="535" y="420" />
+        <di:waypoint x="535" y="480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_21_di" bpmnElement="F_21">
+        <di:waypoint x="640" y="525" />
+        <di:waypoint x="680" y="525" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_22_di" bpmnElement="F_22">
+        <di:waypoint x="910" y="525" />
+        <di:waypoint x="950" y="525" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_23_di" bpmnElement="F_23">
+        <di:waypoint x="1160" y="525" />
+        <di:waypoint x="1200" y="525" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_34_di" bpmnElement="F_34">
+        <di:waypoint x="1305" y="570" />
+        <di:waypoint x="1305" y="650" />
+        <di:waypoint x="535" y="650" />
+        <di:waypoint x="535" y="710" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_31_di" bpmnElement="F_31">
+        <di:waypoint x="640" y="755" />
+        <di:waypoint x="680" y="755" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_32_di" bpmnElement="F_32">
+        <di:waypoint x="900" y="755" />
+        <di:waypoint x="940" y="755" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_45_di" bpmnElement="F_45">
+        <di:waypoint x="1045" y="800" />
+        <di:waypoint x="1045" y="880" />
+        <di:waypoint x="535" y="880" />
+        <di:waypoint x="535" y="940" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_41_di" bpmnElement="F_41">
+        <di:waypoint x="640" y="985" />
+        <di:waypoint x="680" y="985" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_42_di" bpmnElement="F_42">
+        <di:waypoint x="900" y="985" />
+        <di:waypoint x="940" y="985" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_SettingToBoard_di" bpmnElement="F_SettingToBoard">
+        <di:waypoint x="1150" y="985" />
+        <di:waypoint x="1190" y="985" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_43_di" bpmnElement="F_43">
+        <di:waypoint x="1410" y="985" />
+        <di:waypoint x="1450" y="985" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_ToggleYes_di" bpmnElement="F_ToggleYes">
+        <di:waypoint x="1475" y="960" />
+        <di:waypoint x="1475" y="890" />
+        <di:waypoint x="1045" y="890" />
+        <di:waypoint x="1045" y="940" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1145" y="872" width="151" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F_ToggleNo_di" bpmnElement="F_ToggleNo">
+        <di:waypoint x="1500" y="985" />
+        <di:waypoint x="1550" y="985" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1513" y="966" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_How_di" bpmnElement="A_How">
+        <di:waypoint x="456" y="277" />
+        <di:waypoint x="456" y="140" />
+        <di:waypoint x="1070" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_S1_di" bpmnElement="A_S1">
+        <di:waypoint x="990" y="295" />
+        <di:waypoint x="1070" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_S2_di" bpmnElement="A_S2">
+        <di:waypoint x="1133" y="480" />
+        <di:waypoint x="1229" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_S3_di" bpmnElement="A_S3">
+        <di:waypoint x="430" y="781" />
+        <di:waypoint x="390" y="791" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="A_S4_di" bpmnElement="A_S4">
+        <di:waypoint x="1336" y="940" />
+        <di:waypoint x="1392" y="860" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

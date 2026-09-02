@@ -1,0 +1,38 @@
+---
+description: Core project context and hard constraints for the SkillsAtlas Evidence Agent challenge build
+alwaysApply: true
+---
+
+# SkillsAtlas — ground rules
+
+Two-week competition PoC. Demo = 4 screens, 90 seconds, live URL. Slides due 13 Sep 2pm — building stops before that. Judges score the problem, the demo and the team; nobody reads the code.
+
+## The four screens (the whole scope)
+
+1. Problem: synthetic CV + the "assessed and left alone" mess.
+2. Evidence + questioning: parse → worker confirms → agent asks 2–3 contextual questions that strengthen weak evidence.
+3. Routes: exactly two reachable role paths with transferable skills, gaps, evidence classes, and a gap plan pointing at real Skillnet / SOLAS Skills to Advance / Springboard+ courses.
+4. Leave with the board: adviser summary + one committed step + the cheat-board they walk out holding. Bonus: WhatsApp accountability partner receives that same step.
+
+Work that does not serve these screens is out of scope. Say so and stop.
+
+## Never do
+
+- No custom auth, no Kubernetes, no fine-tuning, no heavy agent frameworks, no multi-agent handoffs.
+- No protected-trait inference (age, gender, health, family, ethnicity, disability) — the schema has no such fields; do not add them.
+- No ranking of human worth or employability. Agent proposes with evidence; humans decide.
+- No personality tests, SWOT intake, competency-seniority ladders, ATS keyword matching, or employer “culture” questions as product features. Teammate HR examples inform copy and the deck only (`docs/bridget-hr-feedback.md`).
+- No invented stories, metrics, tools, or company internals. Interview-pack claims must trace to CONFIRMED evidence.
+- No model IDs from memory — all models pinned in `lib/models.ts`.
+- No model calls from client components. No raw provider fetch outside `lib/ai.ts`.
+- No inline prompt strings — prompts live in `prompts/` as versioned markdown.
+- Do not break the accountability-partner privacy boundary: the partner receives the plan only; nothing said to it flows back into scoring.
+
+## Always do
+
+- Worker confirms extracted evidence before use; worker can skip any question without penalty.
+- Validate every AI output with `lib/guardrails.ts` before it reaches a screen or the DB. Fail → regenerate once → degrade gracefully.
+- Deterministic before AI: SQL, ESCO GET, or rule table first. `[CODE]` steps in `docs/bpmn/` never become model calls.
+- Evidence classes: OBSERVED / REPORTED / PROPOSED / HUMAN_REVIEW. PROPOSED never looks like fact in the UI.
+- Cheap model for extraction/classification; expensive model only for route-explanation reasoning.
+- TypeScript strict, no `any`. `main` always deployable. Feature-flag half-built work.

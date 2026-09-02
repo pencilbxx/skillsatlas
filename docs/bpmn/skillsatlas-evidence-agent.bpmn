@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_SkillsAtlas" targetNamespace="https://skillsatlas.ie/bpmn" exporter="Camunda Modeler" exporterVersion="5.49.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+  <bpmn:process id="Process_EvidenceAgent" name="SkillsAtlas — full map (how it works)" isExecutable="false">
+    <bpmn:documentation>Design-only. Happy path ends on the cheat-board. WhatsApp is a bonus side path and does not block the close. Grey [CODE] = rule. Blue [AI] = model. Green [HUMAN] = the applicant. The adviser receives the summary page and may sit with the applicant on the two routes — they do not have to click for the demo to finish. Purple [EXT] = other system.</bpmn:documentation>
+    <bpmn:startEvent id="StartEvent_CV" name="CV arrives">
+      <bpmn:documentation>Worker referred by a provider, or the demo loads a synthetic persona CV.</bpmn:documentation>
+      <bpmn:outgoing>Flow_00</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_ParseCV" name="[AI] Parse the CV">
+      <bpmn:documentation>LLM extracts into WorkerProfile JSON. Schema has no protected-trait fields.</bpmn:documentation>
+      <bpmn:incoming>Flow_00</bpmn:incoming>
+      <bpmn:outgoing>Flow_01</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:businessRuleTask id="Task_ValidateProfile" name="[CODE] Check the extract">
+      <bpmn:documentation>Required fields present? Dates parse? If not, send the gaps back to parse once.</bpmn:documentation>
+      <bpmn:incoming>Flow_01</bpmn:incoming>
+      <bpmn:outgoing>Flow_02</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:userTask id="Task_ConfirmProfile" name="[HUMAN] Applicant confirms">
+      <bpmn:documentation>The applicant. Nothing proceeds unconfirmed.</bpmn:documentation>
+      <bpmn:incoming>Flow_02</bpmn:incoming>
+      <bpmn:outgoing>Flow_03</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_StoreEvidence" name="[CODE] Store evidence">
+      <bpmn:documentation>Supabase insert with provenance and evidence class.</bpmn:documentation>
+      <bpmn:incoming>Flow_03</bpmn:incoming>
+      <bpmn:outgoing>Flow_04</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:businessRuleTask id="Task_ScoreEvidence" name="[CODE] Score each claim">
+      <bpmn:documentation>Deterministic 0–3: tool + number + date. No model call.</bpmn:documentation>
+      <bpmn:incoming>Flow_04</bpmn:incoming>
+      <bpmn:incoming>Flow_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_05</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="Gateway_WeakClaims" name="Weak claims that matter?" default="Flow_07">
+      <bpmn:documentation>Score under 2 AND the skill is essential on a reachable route. Cap 3 questions.</bpmn:documentation>
+      <bpmn:incoming>Flow_05</bpmn:incoming>
+      <bpmn:outgoing>Flow_06</bpmn:outgoing>
+      <bpmn:outgoing>Flow_07</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_GenerateQuestions" name="[AI] Write 2–3 questions">
+      <bpmn:documentation>One specific question per weak claim.</bpmn:documentation>
+      <bpmn:incoming>Flow_06</bpmn:incoming>
+      <bpmn:outgoing>Flow_08</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:businessRuleTask id="Task_QuestionGuardrail" name="[CODE] Guardrail check">
+      <bpmn:documentation>No protected traits, no repeats, simple English.</bpmn:documentation>
+      <bpmn:incoming>Flow_08</bpmn:incoming>
+      <bpmn:outgoing>Flow_09</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:userTask id="Task_WorkerAnswers" name="[HUMAN] Applicant answers or skips">
+      <bpmn:documentation>The applicant. Skip is one tap and never penalised.</bpmn:documentation>
+      <bpmn:incoming>Flow_09</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_FoldAnswers" name="[AI] Fold answers in">
+      <bpmn:documentation>Keep the worker’s words in claim. AI rewrite goes to enriched.</bpmn:documentation>
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_11</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_LoopCheck" name="Loop again? (max 2)" default="Flow_13">
+      <bpmn:incoming>Flow_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_12</bpmn:outgoing>
+      <bpmn:outgoing>Flow_13</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_NormaliseESCO" name="[AI+CODE] Map skills to ESCO">
+      <bpmn:documentation>LLM suggests labels; ESCO search pins the URI. Version v1.2.0. Cache first.</bpmn:documentation>
+      <bpmn:incoming>Flow_07</bpmn:incoming>
+      <bpmn:incoming>Flow_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_14</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_RetrieveOccupations" name="[CODE] Find candidate roles">
+      <bpmn:documentation>ESCO graph, then the fixed demo role set. Not “jobs available now”.</bpmn:documentation>
+      <bpmn:incoming>Flow_14</bpmn:incoming>
+      <bpmn:outgoing>Flow_15</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:businessRuleTask id="Task_ScoreRoutes" name="[CODE] Pick 2 reachable routes">
+      <bpmn:documentation>Never invent a third route.</bpmn:documentation>
+      <bpmn:incoming>Flow_15</bpmn:incoming>
+      <bpmn:outgoing>Flow_16</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:serviceTask id="Task_ExplainBridge" name="[AI] Explain the bridge">
+      <bpmn:documentation>Expensive model. Every claim has a source.</bpmn:documentation>
+      <bpmn:incoming>Flow_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_17</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_InspectRoutes" name="[HUMAN] Applicant inspects routes">
+      <bpmn:documentation>The applicant decides. An adviser may sit with them. The agent does not rank the person.</bpmn:documentation>
+      <bpmn:incoming>Flow_17</bpmn:incoming>
+      <bpmn:outgoing>Flow_18</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_ResolveCourses" name="[CODE] Find real courses">
+      <bpmn:documentation>Skillnet / SOLAS Skills to Advance / Springboard+.</bpmn:documentation>
+      <bpmn:incoming>Flow_18</bpmn:incoming>
+      <bpmn:outgoing>Flow_19</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_AssemblePlan" name="[AI] Sequence the plan">
+      <bpmn:documentation>Smallest credible steps, with time and cost realism.</bpmn:documentation>
+      <bpmn:incoming>Flow_19</bpmn:incoming>
+      <bpmn:outgoing>Flow_20</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_CommitStep" name="[HUMAN] Applicant commits one step">
+      <bpmn:documentation>The applicant. This step goes on the cheat-board. WhatsApp bonus may also take it.</bpmn:documentation>
+      <bpmn:incoming>Flow_20</bpmn:incoming>
+      <bpmn:outgoing>Flow_21</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Partner</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_AdviserSummary" name="[AI] Page for the adviser">
+      <bpmn:documentation>One readable page for the case worker: evidence, route, plan, open questions. The adviser may discuss it. The 90-second path does not wait for their click.</bpmn:documentation>
+      <bpmn:incoming>Flow_21</bpmn:incoming>
+      <bpmn:outgoing>Flow_22</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_EvidencePack" name="[AI] Interview pack (STAR stories)">
+      <bpmn:documentation>STAR stories only, from CONFIRMED evidence. Runs once. Does not write interview questions — that is Task_PredictQuestions, after the applicant picks a setting.</bpmn:documentation>
+      <bpmn:incoming>Flow_22</bpmn:incoming>
+      <bpmn:outgoing>Flow_25</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_ChooseSetting" name="[HUMAN] Applicant chooses setting">
+      <bpmn:documentation>The applicant picks stage (screen / first / panel) and who is in the room (recruiter / hiring manager). Never inferred from the CV. Not a seniority ranking of the person.</bpmn:documentation>
+      <bpmn:incoming>Flow_25</bpmn:incoming>
+      <bpmn:incoming>Flow_ToggleYes</bpmn:incoming>
+      <bpmn:outgoing>Flow_SettingToCache</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:businessRuleTask id="Task_CacheQuestions" name="[CODE] Cache check for this setting">
+      <bpmn:documentation>Key: route + stage + who-is-in-the-room + confirmed evidence ids. Hit → reuse. Miss → predict. No model call.</bpmn:documentation>
+      <bpmn:incoming>Flow_SettingToCache</bpmn:incoming>
+      <bpmn:outgoing>Flow_CacheToGw</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="Gateway_CacheHit" name="Questions already cached?" default="Flow_CacheMiss">
+      <bpmn:incoming>Flow_CacheToGw</bpmn:incoming>
+      <bpmn:outgoing>Flow_CacheMiss</bpmn:outgoing>
+      <bpmn:outgoing>Flow_CacheHit</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_PredictQuestions" name="[AI] Predict interview questions">
+      <bpmn:documentation>5–7 questions for this setting. Each has an evidenceHook to a CONFIRMED claim. Cheap tier. prompts/predict-questions.v1.md</bpmn:documentation>
+      <bpmn:incoming>Flow_CacheMiss</bpmn:incoming>
+      <bpmn:outgoing>Flow_PredictToGuard</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:businessRuleTask id="Task_PredictGuardrail" name="[CODE] Guardrail predicted questions">
+      <bpmn:documentation>No protected traits. Every question has a CONFIRMED evidenceHook. Cap 5–7. Fail → regenerate once, else drop the question.</bpmn:documentation>
+      <bpmn:incoming>Flow_PredictToGuard</bpmn:incoming>
+      <bpmn:incoming>Flow_CacheHit</bpmn:incoming>
+      <bpmn:outgoing>Flow_GuardToNever</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:businessRuleTask id="Task_NeverInvent" name="[CODE] Never-invent gate">
+      <bpmn:documentation>Stories and questions must trace to CONFIRMED evidence. Untraceable content is stripped and logged.</bpmn:documentation>
+      <bpmn:incoming>Flow_GuardToNever</bpmn:incoming>
+      <bpmn:outgoing>Flow_26</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sendTask id="Task_CheatBoard" name="[EXT] Cheat-board — they leave with this">
+      <bpmn:documentation>The close. CASE fields from confirmed evidence only. Toggle on this screen regenerates questions, not stories.</bpmn:documentation>
+      <bpmn:incoming>Flow_26</bpmn:incoming>
+      <bpmn:outgoing>Flow_27</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:exclusiveGateway id="Gateway_ToggleSetting" name="Change setting?" default="Flow_ToggleNo">
+      <bpmn:documentation>Live wow: same evidence, different questions. Stories stay.</bpmn:documentation>
+      <bpmn:incoming>Flow_27</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToggleYes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ToggleNo</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="EndEvent_Ready" name="They leave with the board">
+      <bpmn:documentation>Two routes, a plan, an adviser page, the cheat-board. WhatsApp is optional.</bpmn:documentation>
+      <bpmn:incoming>Flow_ToggleNo</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="Task_HandoffPartner" name="[EXT] WhatsApp partner (bonus)">
+      <bpmn:documentation>Four fields only: workerId, routeId, committedStep, cadence. Does not block the board.</bpmn:documentation>
+      <bpmn:incoming>Flow_Partner</bpmn:incoming>
+      <bpmn:outgoing>Flow_23</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:intermediateCatchEvent id="Catch_PartnerAck" name="Partner received it">
+      <bpmn:incoming>Flow_23</bpmn:incoming>
+      <bpmn:outgoing>Flow_24</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MsgDef_PartnerAck" messageRef="Message_PartnerAck" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="EndEvent_BonusPartner" name="Partner live (bonus)">
+      <bpmn:incoming>Flow_24</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_00" sourceRef="StartEvent_CV" targetRef="Task_ParseCV" />
+    <bpmn:sequenceFlow id="Flow_01" sourceRef="Task_ParseCV" targetRef="Task_ValidateProfile" />
+    <bpmn:sequenceFlow id="Flow_02" sourceRef="Task_ValidateProfile" targetRef="Task_ConfirmProfile" />
+    <bpmn:sequenceFlow id="Flow_03" sourceRef="Task_ConfirmProfile" targetRef="Task_StoreEvidence" />
+    <bpmn:sequenceFlow id="Flow_04" sourceRef="Task_StoreEvidence" targetRef="Task_ScoreEvidence" />
+    <bpmn:sequenceFlow id="Flow_05" sourceRef="Task_ScoreEvidence" targetRef="Gateway_WeakClaims" />
+    <bpmn:sequenceFlow id="Flow_06" name="yes" sourceRef="Gateway_WeakClaims" targetRef="Task_GenerateQuestions" />
+    <bpmn:sequenceFlow id="Flow_07" name="no — skip questions" sourceRef="Gateway_WeakClaims" targetRef="Task_NormaliseESCO" />
+    <bpmn:sequenceFlow id="Flow_08" sourceRef="Task_GenerateQuestions" targetRef="Task_QuestionGuardrail" />
+    <bpmn:sequenceFlow id="Flow_09" sourceRef="Task_QuestionGuardrail" targetRef="Task_WorkerAnswers" />
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="Task_WorkerAnswers" targetRef="Task_FoldAnswers" />
+    <bpmn:sequenceFlow id="Flow_11" sourceRef="Task_FoldAnswers" targetRef="Gateway_LoopCheck" />
+    <bpmn:sequenceFlow id="Flow_12" name="once more" sourceRef="Gateway_LoopCheck" targetRef="Task_ScoreEvidence" />
+    <bpmn:sequenceFlow id="Flow_13" name="done" sourceRef="Gateway_LoopCheck" targetRef="Task_NormaliseESCO" />
+    <bpmn:sequenceFlow id="Flow_14" sourceRef="Task_NormaliseESCO" targetRef="Task_RetrieveOccupations" />
+    <bpmn:sequenceFlow id="Flow_15" sourceRef="Task_RetrieveOccupations" targetRef="Task_ScoreRoutes" />
+    <bpmn:sequenceFlow id="Flow_16" sourceRef="Task_ScoreRoutes" targetRef="Task_ExplainBridge" />
+    <bpmn:sequenceFlow id="Flow_17" sourceRef="Task_ExplainBridge" targetRef="Task_InspectRoutes" />
+    <bpmn:sequenceFlow id="Flow_18" sourceRef="Task_InspectRoutes" targetRef="Task_ResolveCourses" />
+    <bpmn:sequenceFlow id="Flow_19" sourceRef="Task_ResolveCourses" targetRef="Task_AssemblePlan" />
+    <bpmn:sequenceFlow id="Flow_20" sourceRef="Task_AssemblePlan" targetRef="Task_CommitStep" />
+    <bpmn:sequenceFlow id="Flow_21" sourceRef="Task_CommitStep" targetRef="Task_AdviserSummary" />
+    <bpmn:sequenceFlow id="Flow_Partner" sourceRef="Task_CommitStep" targetRef="Task_HandoffPartner" />
+    <bpmn:sequenceFlow id="Flow_22" sourceRef="Task_AdviserSummary" targetRef="Task_EvidencePack" />
+    <bpmn:sequenceFlow id="Flow_23" sourceRef="Task_HandoffPartner" targetRef="Catch_PartnerAck" />
+    <bpmn:sequenceFlow id="Flow_24" sourceRef="Catch_PartnerAck" targetRef="EndEvent_BonusPartner" />
+    <bpmn:sequenceFlow id="Flow_25" sourceRef="Task_EvidencePack" targetRef="Task_ChooseSetting" />
+    <bpmn:sequenceFlow id="Flow_SettingToCache" sourceRef="Task_ChooseSetting" targetRef="Task_CacheQuestions" />
+    <bpmn:sequenceFlow id="Flow_CacheToGw" sourceRef="Task_CacheQuestions" targetRef="Gateway_CacheHit" />
+    <bpmn:sequenceFlow id="Flow_CacheMiss" name="new setting — generate" sourceRef="Gateway_CacheHit" targetRef="Task_PredictQuestions" />
+    <bpmn:sequenceFlow id="Flow_CacheHit" name="same setting — reuse" sourceRef="Gateway_CacheHit" targetRef="Task_PredictGuardrail" />
+    <bpmn:sequenceFlow id="Flow_PredictToGuard" sourceRef="Task_PredictQuestions" targetRef="Task_PredictGuardrail" />
+    <bpmn:sequenceFlow id="Flow_GuardToNever" sourceRef="Task_PredictGuardrail" targetRef="Task_NeverInvent" />
+    <bpmn:sequenceFlow id="Flow_26" sourceRef="Task_NeverInvent" targetRef="Task_CheatBoard" />
+    <bpmn:sequenceFlow id="Flow_27" sourceRef="Task_CheatBoard" targetRef="Gateway_ToggleSetting" />
+    <bpmn:sequenceFlow id="Flow_ToggleYes" name="regenerate" sourceRef="Gateway_ToggleSetting" targetRef="Task_ChooseSetting" />
+    <bpmn:sequenceFlow id="Flow_ToggleNo" name="done" sourceRef="Gateway_ToggleSetting" targetRef="EndEvent_Ready" />
+    <bpmn:textAnnotation id="Note_Legend">
+      <bpmn:text>HOW TO READ
+Grey [CODE] = a rule. No model.
+Blue [AI] = a model call. Always followed by a grey gate.
+Green [HUMAN] = the applicant.
+Purple [EXT] = they leave with this, or a bonus system.
+Teal = AI draft + ESCO pin.
+Happy path ends on the cheat-board. WhatsApp is a side path.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_Who">
+      <bpmn:text>WHO IS IN THE LOOP
+Applicant (every green box): confirms evidence, answers or skips, inspects the two routes, commits one step, chooses the interview setting.
+Adviser / case worker: receives the blue “page for the adviser.” May sit with the applicant on the two routes. Does not rank the person. Does not have to click for the demo to finish.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_Confirm">
+      <bpmn:text>Nothing is used until the applicant says it is true.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_Skip">
+      <bpmn:text>Skip is one tap. No penalty. If they skip all, we still match.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_TwoRoutes">
+      <bpmn:text>Applicant decides. Adviser can sit with them. Agent does not rank the person.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_Adviser">
+      <bpmn:text>Adviser receives this page. They may discuss it. The demo does not wait for their click.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_Privacy">
+      <bpmn:text>Bonus only. Four fields out. Nothing said to the partner comes back.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_BonusParallel">
+      <bpmn:text>Leaves above the main path. Does not block the board.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_Invent">
+      <bpmn:text>If a story or question cannot point at a CONFIRMED claim, it is deleted.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_StageToggle">
+      <bpmn:text>Same evidence. Different questions. A first-round screen is not a hiring-manager panel. We do not guess how senior the person is.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Assoc_Legend" sourceRef="StartEvent_CV" targetRef="Note_Legend" />
+    <bpmn:association id="Assoc_Who" sourceRef="Task_ConfirmProfile" targetRef="Note_Who" />
+    <bpmn:association id="Assoc_Confirm" sourceRef="Task_ConfirmProfile" targetRef="Note_Confirm" />
+    <bpmn:association id="Assoc_Skip" sourceRef="Task_WorkerAnswers" targetRef="Note_Skip" />
+    <bpmn:association id="Assoc_Two" sourceRef="Task_InspectRoutes" targetRef="Note_TwoRoutes" />
+    <bpmn:association id="Assoc_Adviser" sourceRef="Task_AdviserSummary" targetRef="Note_Adviser" />
+    <bpmn:association id="Assoc_Privacy" sourceRef="Task_HandoffPartner" targetRef="Note_Privacy" />
+    <bpmn:association id="Assoc_BonusParallel" sourceRef="Task_HandoffPartner" targetRef="Note_BonusParallel" />
+    <bpmn:association id="Assoc_Invent" sourceRef="Task_NeverInvent" targetRef="Note_Invent" />
+    <bpmn:association id="Assoc_Stage" sourceRef="Task_ChooseSetting" targetRef="Note_StageToggle" />
+    <bpmn:group id="Group_Capture" categoryValueRef="Cat_Capture" />
+    <bpmn:group id="Group_Questions" categoryValueRef="Cat_Questions" />
+    <bpmn:group id="Group_Routes" categoryValueRef="Cat_Routes" />
+    <bpmn:group id="Group_Handoff" categoryValueRef="Cat_Handoff" />
+    <bpmn:group id="Group_Artefact" categoryValueRef="Cat_Artefact" />
+    <bpmn:group id="Group_Bonus" categoryValueRef="Cat_Bonus" />
+  </bpmn:process>
+  <bpmn:message id="Message_PartnerAck" name="Partner acknowledgement" />
+  <bpmn:category id="Cat_Stages">
+    <bpmn:categoryValue id="Cat_Capture" value="1 · CAPTURE  —  demo screen 2" />
+    <bpmn:categoryValue id="Cat_Questions" value="2 · QUESTIONING  —  demo screen 2" />
+    <bpmn:categoryValue id="Cat_Routes" value="3 · TWO ROUTES  —  demo screen 3" />
+    <bpmn:categoryValue id="Cat_Handoff" value="4a · PLAN + ADVISER  —  still demo screen 4" />
+    <bpmn:categoryValue id="Cat_Artefact" value="4b · CHEAT-BOARD  —  they leave with this (still screen 4)" />
+    <bpmn:categoryValue id="Cat_Bonus" value="BONUS · WhatsApp partner (feature-flagged)" />
+  </bpmn:category>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Full">
+    <bpmndi:BPMNPlane id="BPMNPlane_Full" bpmnElement="Process_EvidenceAgent">
+      <bpmndi:BPMNShape id="StartEvent_CV_di" bpmnElement="StartEvent_CV" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="452" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="445" y="325" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ParseCV_di" bpmnElement="Task_ParseCV" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="520" y="260" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ValidateProfile_di" bpmnElement="Task_ValidateProfile" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="720" y="260" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ConfirmProfile_di" bpmnElement="Task_ConfirmProfile" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="920" y="260" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_StoreEvidence_di" bpmnElement="Task_StoreEvidence" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="1120" y="260" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ScoreEvidence_di" bpmnElement="Task_ScoreEvidence" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="450" y="510" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_WeakClaims_di" bpmnElement="Gateway_WeakClaims" isMarkerVisible="true" bioc:stroke="#ef6c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#ef6c00">
+        <dc:Bounds x="665" y="525" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="628" y="586" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_GenerateQuestions_di" bpmnElement="Task_GenerateQuestions" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="770" y="510" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_QuestionGuardrail_di" bpmnElement="Task_QuestionGuardrail" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="970" y="510" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_WorkerAnswers_di" bpmnElement="Task_WorkerAnswers" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="1170" y="510" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_FoldAnswers_di" bpmnElement="Task_FoldAnswers" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="1370" y="510" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_LoopCheck_di" bpmnElement="Gateway_LoopCheck" isMarkerVisible="true" bioc:stroke="#ef6c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#ef6c00">
+        <dc:Bounds x="1585" y="525" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1545" y="586" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_NormaliseESCO_di" bpmnElement="Task_NormaliseESCO" bioc:stroke="#00695c" bioc:fill="#b2dfdb" color:background-color="#b2dfdb" color:border-color="#00695c">
+        <dc:Bounds x="450" y="770" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RetrieveOccupations_di" bpmnElement="Task_RetrieveOccupations" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="650" y="770" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ScoreRoutes_di" bpmnElement="Task_ScoreRoutes" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="850" y="770" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ExplainBridge_di" bpmnElement="Task_ExplainBridge" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="1050" y="770" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_InspectRoutes_di" bpmnElement="Task_InspectRoutes" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="1250" y="770" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ResolveCourses_di" bpmnElement="Task_ResolveCourses" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="450" y="1000" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AssemblePlan_di" bpmnElement="Task_AssemblePlan" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="650" y="1000" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CommitStep_di" bpmnElement="Task_CommitStep" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="850" y="1000" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AdviserSummary_di" bpmnElement="Task_AdviserSummary" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="1050" y="1000" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_EvidencePack_di" bpmnElement="Task_EvidencePack" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="450" y="1225" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ChooseSetting_di" bpmnElement="Task_ChooseSetting" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="650" y="1225" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CacheQuestions_di" bpmnElement="Task_CacheQuestions" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="850" y="1225" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_CacheHit_di" bpmnElement="Gateway_CacheHit" isMarkerVisible="true" bioc:stroke="#ef6c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#ef6c00">
+        <dc:Bounds x="1060" y="1240" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1041" y="1198" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PredictQuestions_di" bpmnElement="Task_PredictQuestions" bioc:stroke="#1565c0" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#1565c0">
+        <dc:Bounds x="1160" y="1225" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PredictGuardrail_di" bpmnElement="Task_PredictGuardrail" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="450" y="1445" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_NeverInvent_di" bpmnElement="Task_NeverInvent" bioc:stroke="#455a64" bioc:fill="#eceff1" color:background-color="#eceff1" color:border-color="#455a64">
+        <dc:Bounds x="650" y="1445" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CheatBoard_di" bpmnElement="Task_CheatBoard" bioc:stroke="#6a1b9a" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#6a1b9a">
+        <dc:Bounds x="850" y="1445" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ToggleSetting_di" bpmnElement="Gateway_ToggleSetting" isMarkerVisible="true" bioc:stroke="#ef6c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#ef6c00">
+        <dc:Bounds x="1060" y="1460" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1045" y="1515" width="81" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Ready_di" bpmnElement="EndEvent_Ready" bioc:stroke="#2e7d32" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#2e7d32">
+        <dc:Bounds x="1170" y="1467" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1150" y="1510" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_HandoffPartner_di" bpmnElement="Task_HandoffPartner" bioc:stroke="#6a1b9a" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#6a1b9a">
+        <dc:Bounds x="1380" y="1000" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Catch_PartnerAck_di" bpmnElement="Catch_PartnerAck" bioc:stroke="#6a1b9a" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#6a1b9a">
+        <dc:Bounds x="1589" y="1002" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1565" y="1045" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_BonusPartner_di" bpmnElement="EndEvent_BonusPartner" bioc:stroke="#6a1b9a" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#6a1b9a">
+        <dc:Bounds x="1675" y="1002" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1666" y="1045" width="56" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Assoc_Adviser_di" bpmnElement="Assoc_Adviser">
+        <di:waypoint x="1050" y="1049" />
+        <di:waypoint x="400" y="1112" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Note_Legend_di" bpmnElement="Note_Legend" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="1360" y="80" width="320" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_Who_di" bpmnElement="Note_Who" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="1360" y="255" width="320" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_Confirm_di" bpmnElement="Note_Confirm" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="920" y="150" width="200" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_Skip_di" bpmnElement="Note_Skip" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="1150" y="605" width="230" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_TwoRoutes_di" bpmnElement="Note_TwoRoutes" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="1500" y="760" width="220" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_Privacy_di" bpmnElement="Note_Privacy" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="1700" y="840" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_BonusParallel_di" bpmnElement="Note_BonusParallel" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="1380" y="850" width="240" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_Invent_di" bpmnElement="Note_Invent" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="620" y="1600" width="240" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_StageToggle_di" bpmnElement="Note_StageToggle" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="160" y="1370" width="250" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_Capture_di" bpmnElement="Group_Capture" isExpanded="true">
+        <dc:Bounds x="420" y="210" width="900" height="200" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="825" y="216" width="90" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_Questions_di" bpmnElement="Group_Questions" isExpanded="true">
+        <dc:Bounds x="420" y="440" width="1360" height="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1063" y="460" width="90" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_Routes_di" bpmnElement="Group_Routes" isExpanded="true">
+        <dc:Bounds x="420" y="720" width="1060" height="190" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="905" y="720" width="90" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_Handoff_di" bpmnElement="Group_Handoff" isExpanded="true">
+        <dc:Bounds x="420" y="950" width="860" height="190" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="809" y="950" width="83" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_Artefact_di" bpmnElement="Group_Artefact" isExpanded="true">
+        <dc:Bounds x="420" y="1180" width="960" height="420" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="775" y="1183" width="152" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_Bonus_di" bpmnElement="Group_Bonus" isExpanded="true">
+        <dc:Bounds x="1310" y="930" width="500" height="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1515" y="940" width="89" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_00_di" bpmnElement="Flow_00">
+        <di:waypoint x="488" y="300" />
+        <di:waypoint x="520" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_di" bpmnElement="Flow_01">
+        <di:waypoint x="680" y="300" />
+        <di:waypoint x="720" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_di" bpmnElement="Flow_02">
+        <di:waypoint x="880" y="300" />
+        <di:waypoint x="920" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03_di" bpmnElement="Flow_03">
+        <di:waypoint x="1080" y="300" />
+        <di:waypoint x="1120" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04_di" bpmnElement="Flow_04">
+        <di:waypoint x="1200" y="340" />
+        <di:waypoint x="1200" y="425" />
+        <di:waypoint x="530" y="425" />
+        <di:waypoint x="530" y="510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05_di" bpmnElement="Flow_05">
+        <di:waypoint x="610" y="550" />
+        <di:waypoint x="665" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06_di" bpmnElement="Flow_06">
+        <di:waypoint x="715" y="550" />
+        <di:waypoint x="770" y="550" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="730" y="532" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07_di" bpmnElement="Flow_07">
+        <di:waypoint x="690" y="575" />
+        <di:waypoint x="690" y="700" />
+        <di:waypoint x="530" y="700" />
+        <di:waypoint x="530" y="770" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="723" y="672" width="49" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08_di" bpmnElement="Flow_08">
+        <di:waypoint x="930" y="550" />
+        <di:waypoint x="970" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09_di" bpmnElement="Flow_09">
+        <di:waypoint x="1130" y="550" />
+        <di:waypoint x="1170" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10">
+        <di:waypoint x="1330" y="550" />
+        <di:waypoint x="1370" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11">
+        <di:waypoint x="1530" y="550" />
+        <di:waypoint x="1585" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12_di" bpmnElement="Flow_12">
+        <di:waypoint x="1635" y="550" />
+        <di:waypoint x="1675" y="550" />
+        <di:waypoint x="1675" y="460" />
+        <di:waypoint x="530" y="460" />
+        <di:waypoint x="530" y="510" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1082" y="442" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13_di" bpmnElement="Flow_13">
+        <di:waypoint x="1610" y="575" />
+        <di:waypoint x="1610" y="700" />
+        <di:waypoint x="530" y="700" />
+        <di:waypoint x="530" y="770" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1619" y="672" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14_di" bpmnElement="Flow_14">
+        <di:waypoint x="610" y="810" />
+        <di:waypoint x="650" y="810" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15_di" bpmnElement="Flow_15">
+        <di:waypoint x="810" y="810" />
+        <di:waypoint x="850" y="810" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16_di" bpmnElement="Flow_16">
+        <di:waypoint x="1010" y="810" />
+        <di:waypoint x="1050" y="810" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17_di" bpmnElement="Flow_17">
+        <di:waypoint x="1210" y="810" />
+        <di:waypoint x="1250" y="810" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18_di" bpmnElement="Flow_18">
+        <di:waypoint x="1330" y="850" />
+        <di:waypoint x="1330" y="930" />
+        <di:waypoint x="530" y="930" />
+        <di:waypoint x="530" y="1000" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19_di" bpmnElement="Flow_19">
+        <di:waypoint x="610" y="1040" />
+        <di:waypoint x="650" y="1040" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_20_di" bpmnElement="Flow_20">
+        <di:waypoint x="810" y="1040" />
+        <di:waypoint x="850" y="1040" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_21_di" bpmnElement="Flow_21">
+        <di:waypoint x="1010" y="1040" />
+        <di:waypoint x="1050" y="1040" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Partner_di" bpmnElement="Flow_Partner">
+        <di:waypoint x="930" y="1000" />
+        <di:waypoint x="930" y="920" />
+        <di:waypoint x="1460" y="920" />
+        <di:waypoint x="1460" y="1000" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_22_di" bpmnElement="Flow_22">
+        <di:waypoint x="1130" y="1080" />
+        <di:waypoint x="1130" y="1165" />
+        <di:waypoint x="530" y="1165" />
+        <di:waypoint x="530" y="1225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_23_di" bpmnElement="Flow_23">
+        <di:waypoint x="1540" y="1040" />
+        <di:waypoint x="1565" y="1040" />
+        <di:waypoint x="1565" y="1020" />
+        <di:waypoint x="1589" y="1020" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_24_di" bpmnElement="Flow_24">
+        <di:waypoint x="1625" y="1020" />
+        <di:waypoint x="1675" y="1020" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_25_di" bpmnElement="Flow_25">
+        <di:waypoint x="610" y="1265" />
+        <di:waypoint x="650" y="1265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_SettingToCache_di" bpmnElement="Flow_SettingToCache">
+        <di:waypoint x="810" y="1265" />
+        <di:waypoint x="850" y="1265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_CacheToGw_di" bpmnElement="Flow_CacheToGw">
+        <di:waypoint x="1010" y="1265" />
+        <di:waypoint x="1060" y="1265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_CacheMiss_di" bpmnElement="Flow_CacheMiss">
+        <di:waypoint x="1110" y="1265" />
+        <di:waypoint x="1160" y="1265" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1088" y="1246" width="130" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_CacheHit_di" bpmnElement="Flow_CacheHit">
+        <di:waypoint x="1085" y="1290" />
+        <di:waypoint x="1085" y="1400" />
+        <di:waypoint x="530" y="1400" />
+        <di:waypoint x="530" y="1445" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="748" y="1382" width="130" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_PredictToGuard_di" bpmnElement="Flow_PredictToGuard">
+        <di:waypoint x="1240" y="1305" />
+        <di:waypoint x="1240" y="1400" />
+        <di:waypoint x="530" y="1400" />
+        <di:waypoint x="530" y="1445" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_GuardToNever_di" bpmnElement="Flow_GuardToNever">
+        <di:waypoint x="610" y="1485" />
+        <di:waypoint x="650" y="1485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_26_di" bpmnElement="Flow_26">
+        <di:waypoint x="810" y="1485" />
+        <di:waypoint x="850" y="1485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_27_di" bpmnElement="Flow_27">
+        <di:waypoint x="1010" y="1485" />
+        <di:waypoint x="1060" y="1485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToggleYes_di" bpmnElement="Flow_ToggleYes">
+        <di:waypoint x="1085" y="1460" />
+        <di:waypoint x="1085" y="1195" />
+        <di:waypoint x="730" y="1195" />
+        <di:waypoint x="730" y="1225" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="884" y="1163" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ToggleNo_di" bpmnElement="Flow_ToggleNo">
+        <di:waypoint x="1110" y="1485" />
+        <di:waypoint x="1170" y="1485" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1129" y="1466" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_Legend_di" bpmnElement="Assoc_Legend">
+        <di:waypoint x="470" y="282" />
+        <di:waypoint x="470" y="140" />
+        <di:waypoint x="1360" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_Who_di" bpmnElement="Assoc_Who">
+        <di:waypoint x="1080" y="260" />
+        <di:waypoint x="1360" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_Confirm_di" bpmnElement="Assoc_Confirm">
+        <di:waypoint x="1000" y="260" />
+        <di:waypoint x="1000" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_Skip_di" bpmnElement="Assoc_Skip">
+        <di:waypoint x="1250" y="590" />
+        <di:waypoint x="1250" y="605" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_Two_di" bpmnElement="Assoc_Two">
+        <di:waypoint x="1410" y="810" />
+        <di:waypoint x="1500" y="795" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_Privacy_di" bpmnElement="Assoc_Privacy">
+        <di:waypoint x="1539" y="1007" />
+        <di:waypoint x="1709" y="920" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_BonusParallel_di" bpmnElement="Assoc_BonusParallel">
+        <di:waypoint x="1460" y="1000" />
+        <di:waypoint x="1500" y="910" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_Invent_di" bpmnElement="Assoc_Invent">
+        <di:waypoint x="730" y="1525" />
+        <di:waypoint x="730" y="1600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_Stage_di" bpmnElement="Assoc_Stage">
+        <di:waypoint x="650" y="1292" />
+        <di:waypoint x="410" y="1373" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Note_Adviser_di" bpmnElement="Note_Adviser" bioc:stroke="#f9a825" bioc:fill="#fff9c4" color:background-color="#fff9c4" color:border-color="#f9a825">
+        <dc:Bounds x="160" y="1080" width="240" height="90" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

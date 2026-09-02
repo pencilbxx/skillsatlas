@@ -1,0 +1,24 @@
+---
+description: UI conventions for the four demo screens
+alwaysApply: false
+globs: app/**/*.tsx, components/**/*.tsx
+---
+
+# UI conventions
+
+shadcn/ui + Tailwind. Change the accent colour and font once, then stop. Ugly and consistent beats bespoke and half-finished.
+
+## Screen rules
+
+- Type big enough to read from the back of a hub room: body ≥ `text-lg`, key numbers ≥ `text-4xl`.
+- Every screen has designed empty, loading, and error states. A judge must never see a spinner with no story or a raw error.
+- Evidence classes are visible everywhere evidence appears: a small coloured chip — OBSERVED (teal), REPORTED (amber), PROPOSED (outlined, italic label "proposed"), HUMAN REVIEW (green). PROPOSED content is visually distinct from fact — this is a governance requirement, not a style choice.
+- Every AI-generated card shows its provenance: which evidence items it drew from, with the worker able to tap through to the source claim.
+- The questioning UI is a chat-style card, one question at a time, with a visible "Skip — no penalty" action on every question.
+- The route explorer shows exactly two route cards. Each card: transferable skills (confirmed), missing capabilities, the bridge explanation, courses with real provider names (Skillnet / SOLAS Skills to Advance / Springboard+), time and cost realism.
+- Screen 4 is the leave-the-room artefact: adviser summary, the committed next step, and the cheat-board (big enough to read from the back). The board has a visible **interview setting** control (stage + who is in the room). Changing it regenerates questions only, not stories. Do not label it “seniority.” Do not show a Basic→Advanced year-band ladder. STAR stories may hint Situation / Task / Action / Result (Action is the long part). Do not add a second CAR worksheet. WhatsApp partner receipt is bonus, behind a flag — if shown, list what was sent and what was NOT sent.
+
+## Demo resilience
+
+- The demo must survive a dead model API: every screen can render from the seeded `demo_run` table (a pre-computed golden run). A `?replay=golden` query param forces it. Build this on day 2, not day 12.
+- Number keys 1–4 jump between the four screens during the live demo.

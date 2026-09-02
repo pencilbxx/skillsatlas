@@ -1,0 +1,30 @@
+---
+description: Synthetic personas, fixed role set, course catalogue, and seed data rules
+alwaysApply: false
+globs: data/**, supabase/**, scripts/**
+---
+
+# Data rules
+
+## Synthetic personas (data/personas/)
+
+Two personas, per the challenge's credible-prototype requirement:
+
+1. `persona-redundant-worker.json` — warehouse operative after a long spell in one site, made redundant; strong on stock, team coordination, safety documentation; weak on digital-systems vocabulary.
+2. `persona-qualification-gap.json` — jobseeker whose qualification was issued outside Ireland and does not map cleanly to Irish job titles; strong real capability, weak credential recognition.
+
+Personas are fiction but must be realistic: written from the research base in `docs/evidence-base.md`, reviewed by the problem owner. Never use a real person's data. Never give a persona a protected trait (age, gender, health, family, ethnicity, disability, nationality-as-plot) as a story hook. Tenure, role, tools, and the qualification-recognition problem are enough.
+
+## Fixed role set (data/roles/)
+
+Six to ten roles total, each with: title, ESCO occupation URI (pinned v1.2.0), essential skills list (from the ESCO API, cached), regulated-role flag, and sector tab (Care & Health / Digital & Data / Built Environment / Professional Services — matching the SkillsAtlas deck). This is deliberately thin: the demo shows reasoning quality, not catalogue size. Do not replace ESCO with a 16-row competency matrix or ATS keyword list. If a public job spec is used as flavour text, take the skills/competencies section; treat years and qualifications as guidelines. Do not paste a named employer’s confidential spec unless the problem owner confirms it is public.
+
+## Course catalogue (data/courses/)
+
+Real, current, linkable entries only: Skillnet network programmes, SOLAS Skills to Advance (ETB-delivered), Springboard+ 2026 courses. Each entry: skill labels it closes, provider, level, cost to the worker, duration, eligibility notes, URL. If a course's details cannot be verified, it does not enter the catalogue — a dead link on stage is worse than a smaller list.
+
+## Seeds
+
+`pnpm db:seed` must produce a database that makes the app look used, not empty: both personas fully run through the pipeline, plus one golden `demo_run` per persona for the replay fallback. Seeds run idempotently — running twice never duplicates rows.
+
+The seed script must also **warm the ESCO cache completely**: pre-fetch and store every occupation and skill resource the fixed role set references, so no demo-path code ever needs a live ESCO call. Verify by running the demo with network access to `ec.europa.eu` blocked.

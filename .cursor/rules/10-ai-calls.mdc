@@ -1,0 +1,41 @@
+---
+description: How to make LLM calls — schemas, prompts, guardrails, model routing
+alwaysApply: false
+globs: app/api/**/*.ts, lib/**/*.ts
+---
+
+# LLM call conventions
+
+Every model call follows the same five-step shape. Do not deviate.
+
+```ts
+// app/api/questions/route.ts — the canonical pattern
+import { generateObject } from 'ai';
+import { models } from '@/lib/models';
+import { QuestionsOutput } from '@/lib/schemas';
+import { loadPrompt } from '@/lib/prompts';
+import { checkQuestions } from '@/lib/guardrails';
+
+export async function POST(req: Request) {
+  const input = await req.json();                       // 1. validate input with Zod first
+  const system = await loadPrompt('generate-questions.v1');
+  const { object } = await generateObject({             // 2. structured output, never free text
+    model: models.extraction,                           // 3. cheap tier — see lib/models.ts
+    system,
+    prompt: buildQuestionPrompt(input),
+    schema: QuestionsOutput,
+  });
+  const checked = checkQuestions(object, input);        // 4. deterministic guardrail
+  if (!checked.ok) { /* regenerate once, else degrade */ }
+  return Response.json(checked.value);                  // 5. typed response
+}
+```
+
+## Rules
+
+- `generateObject` + Zod schema for everything. Free-text generation only for the route-explanation card, and even that returns structured sections.
+- Model selection via `models.extraction` / `models.reasoning` from `lib/models.ts` only.
+- Prompts: `await loadPrompt('name.vN')` from `prompts/`. Bump the version when you change behaviour; keep old versions.
+- Every prompt must state: the task, the exact output schema, what the model must NOT do (no protected traits, no invented facts, no ranking), and 1–2 few-shot examples from the personas in `data/personas/`.
+- Log every call: model ID, token counts, latency, schema-valid yes/no. One `console.info` line via `lib/ai.ts` — this is the observability you will need on day 12.
+- Timeout: 25s per call, one retry on schema-invalid, zero retries on guardrail violation (regenerate with the violation noted instead).

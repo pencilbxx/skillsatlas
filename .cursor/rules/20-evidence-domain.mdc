@@ -1,0 +1,52 @@
+---
+description: Evidence model, ESCO usage, and the questioning engine domain rules
+alwaysApply: false
+globs: lib/evidence.ts, lib/esco.ts, lib/schemas.ts, app/api/match/**/*.ts, app/api/questions/**/*.ts, data/**
+---
+
+# Evidence domain rules
+
+## The evidence model
+
+An `EvidenceItem` is the atomic unit. Fields: `id`, `workerId`, `claim` (the worker's words), `skills[]` (ESCO URIs once normalised), `source` (`cv | interview | adviser`), `evidenceClass` (`OBSERVED | REPORTED | PROPOSED | HUMAN_REVIEW`), `status` (`EXTRACTED | CONFIRMED | REJECTED`), `score` (0–3), `confirmedAt`, `confirmedBy`, `createdAt`.
+
+- Nothing with `status != CONFIRMED` may reach matching, planning, or the interview pack.
+- `PROPOSED` is for system hypotheses (e.g. a suggested adjacency). It is never presented as fact and never enters the never-invent gate's allowed set.
+- The worker's own words are preserved in `claim`. AI rewriting goes to a separate `enriched` field; the original is immutable.
+
+## Evidence scoring rubric (deterministic — lib/evidence.ts)
+
+Score each claim 0–3: +1 if it names a tool/system, +1 if it has a number or scale, +1 if it has a date or recency. Claims scoring < 2 that are load-bearing (essential skill on a reachable route) become questioning candidates. Cap: 3 questions per session, 2 loop iterations. These caps are the agency guardrail — do not raise them without a team decision recorded in `docs/decisions.md`.
+
+### Loop failure states (the demo must never dead-end)
+
+- A generated question fails the guardrail check twice → skip that claim silently, log it, move on.
+- The worker skips every question → proceed to matching with existing evidence and show a visible, non-judgemental note: "evidence could be stronger — you can answer questions later."
+- The fold-answers call fails schema validation twice → keep the original claim, discard the enrichment, log it.
+
+## ESCO usage (lib/esco.ts)
+
+- Base: `https://ec.europa.eu/esco/api`. No key. Always pass `language=en` and `selectedVersion=v1.2.0` — the hosted API defaults to an old revision.
+- `search?text=...&type=skill|occupation` for candidate resolution; `resource/occupation?uri=...` for `hasEssentialSkill` / `hasOptionalSkill`; `resource/skill?uri=...` for reverse lookup.
+- Cache every ESCO response in Supabase table `esco_cache` keyed by URI. The taxonomy changes on a yearly cycle; a cached response never goes stale inside the fortnight, and the demo must not depend on their uptime.
+- **The cache must be fully warm before demo day:** the seed script pre-fetches and caches every ESCO resource the fixed role set touches (all role URIs, all their essential/optional skill URIs). Runtime code must serve from cache first and only call ESCO live on a cache miss. ESCO is a build-time dependency, not a runtime one.
+- ESCO has no live demand data. Do not present occupation matches as "jobs available now" — they are role targets, and the UI says so.
+
+## Matching (app/api/match)
+
+Matching is evidence-vs-essential-skills graph overlap, never keyword overlap and never ATS keyword lists. Years-of-experience and qualifications on a job spec are guidelines when seeding roles, not a gate and not a seniority rank of the person. Reachability rule (DMN-equivalent, in `lib/guardrails.ts`): ≥60% of essential skills evidenced AND every missing essential skill has a course in `data/courses/` AND regulated-role constraints checked. Output exactly two routes. If fewer than two qualify, loosen in this order: optional skills count at half weight → gap size +1. Never fabricate a route.
+
+**Tie-break when more than two routes qualify** (deterministic, in this order): highest essential-skill coverage % → smallest total gap-closing cost in euros → alphabetical by occupation title. Stable, boring, defensible.
+
+## Handoff contract (app/api/handoff) — bonus, flagged
+
+The WhatsApp partner is **not** the Screen 4 closer. The closer is the cheat-board. This webhook is behind `NEXT_PUBLIC_ENABLE_PARTNER`. Privacy rules do not relax when the flag is on.
+
+The accountability-partner webhook payload is a named Zod schema in `lib/schemas.ts`:
+
+```
+HandoffPayload { workerId, routeId, committedStep, cadence }   // exactly these four fields
+PartnerAck  { receivedAt, threadId }
+```
+
+A contract test asserts the outbound payload serialises to exactly those four fields — the privacy boundary as an automated test, not a hope. The partner's first message in every thread states what it is and is not (accountability partner, not a counsellor); that text is a static human-written string in `lib/copy.ts`, never generated.

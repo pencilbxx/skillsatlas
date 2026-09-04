@@ -224,7 +224,7 @@ Each slide: **one bold idea**, then almost no text. Anything in *italics* is a w
 - Why now (one line): *30% of Ireland’s workforce meaningfully affected by AI (Bloomberg Economics, 2026)* — only if we did **not** already use a labour number on slide 2. **Never two big numbers that compete.**
 - Supply, small: Springboard+ 2026 — 7,274 places, 244 courses (springboardcourses.ie, Mar 2026).
 
-**Why this slide:** Mentors asked for a wedge. “Outdated infrastructure” = course list + three-week gap, said without insult. Do not claim Turas Nua as a customer; a local office can still be the beachhead.
+**Why this slide:** Mentors asked for a wedge. “Outdated infrastructure” = course list + three-week gap, said without insult. Do not claim Turas Nua as a customer; a local office can still be the beachhead. Same four screens in FIT / ReBOOT / Back to Work Connect rooms: `docs/partner-rooms.md`.
 
 **Do not:** a $50bn TAM. Do not say enterprises *cannot* build this.
 

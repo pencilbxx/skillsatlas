@@ -52,7 +52,7 @@ She also pasted the challenge statement and the evaluation criteria. Useful remi
 1. **Competency matrix:** is that a real framework we may *label against ESCO* later, or only an IT teaching example? For the fortnight we use ESCO only.
 2. **CAR vs STAR:** she showed both. We ship STAR. Confirm she is fine with one method on the board.
 3. **Organisational alignment:** does the demo need a *named employer*, or a generic role? Default: generic role + ESCO. No fake company values.
-4. **ReBOOT / Workjuggle job spec:** can we cite the programme as *context* (adviser in the room), or is the eir evo spec confidential? Do not paste that spec into seed data unless she says yes.
+4. **ReBOOT / Workjuggle job spec:** can we cite the programme as *context* (adviser in the room), or is the eir evo spec confidential? Do not paste that spec into seed data unless she says yes. Spoken sentence for that room (and Turas Nua / FIT / Back to Work Connect): `docs/partner-rooms.md`. Do not copy ReBOOT worksheets into the product.
 5. **“Non-work achievements”:** we can allow a confirmed claim from volunteering if the worker types it. We will not scrape social profiles or run a personality test to find it.
 
 ---

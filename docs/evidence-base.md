@@ -17,10 +17,31 @@ Every number here has a source and a date. The deck quotes from this file and no
 | Share of workforce in tech sector | >6% (above EU average) | Bloomberg/LA Times | Jul 2026 |
 | Meta Irish workforce reduction | ~20% (double the global average) | Bloomberg/LA Times | Jul 2026 |
 | Covalen (Meta contractor) cuts | ~700 roles | Bloomberg/LA Times | Jul 2026 |
+| Irish workers in jobs Bloomberg says AI will meaningfully change | ~850,000 | Derived: 30% × 2.83m employed (Bloomberg Economics 2026 × CSO LFS Q4 2025) | Sep 2026 |
+| Live Register, unadjusted | 182,517 (+4,917 / +2.8% vs Aug 2025) | [CSO Live Register August 2026](https://www.cso.ie/en/releasesandpublications/ep/p-lr/liveregisteraugust2026/) | 4 Sep 2026 |
+| Live Register, seasonally adjusted | 173,600 (−600 vs Jul 2026) | Same CSO release | 4 Sep 2026 |
+| On the Live Register less than one year | 127,708 (70% of unadjusted total) | Same CSO release | 4 Sep 2026 |
+| On the Live Register one year or more | 54,809 | Same CSO release | 4 Sep 2026 |
+| People on activation programmes (not on the Live Register) | 29,956 | Same CSO release (July 2026 count) | 4 Sep 2026 |
+| Largest county increases, Live Register YoY | Dublin +5.1%; Waterford +5.8% | Same CSO release | 4 Sep 2026 |
+
+## Activation spend (Observed — historic / announced, not this year's invoice)
+
+Do not say these as “what DSP is paying this month.” They prove the State already spends real money on a sitting that still ends in a printout.
+
+| Figure | Value | Source | Date |
+| --- | --- | --- | --- |
+| JobPath contractor payments, 2016–2020 | €249.1m | Dáil PQ, 22 Sep 2021 (Minister Humphreys table) | 2021 |
+| JobPath wind-down payments, Jun 2022–Jun 2024 | €42m (incl. €385k after cessation) | Dáil PQ 433, 27 May 2025 | May 2025 |
+| JobPath referrals ended / service ended | Jun 2022 / Jun 2024 | Same PQ | 2025 |
+| Intreo Partners LAES: community/voluntary employment-service funding | €21m (2021) → €39m (€47m inc. VAT) | DSP press release, Minister Humphreys | Jul 2022 |
+
+**Research owed (do not quote as annual spend until confirmed):** NES tender estimated total value €142.5m / 60 months; LAES tender estimated total value €172.3m / 48 months (TED / eTenders 2021–22). Confirm 2025/26 invoices before any slide.
 
 ## The activation gap (Observed + Reported)
 
-- Ireland runs mandatory activation: Intreo refers jobseekers to contracted providers (Turas Nua in 13 counties, Seetec) under the JobPath model. Providers are paid on engagement and outcomes. Appointments run roughly every three weeks, with no structured support in between — the "silent weeks" where motivation decays (team research, V2 document; citizensinformation.ie; gov.ie).
+- JobPath ended. The sitting still exists: Intreo refers jobseekers to **Intreo Partners** — National Employment Service (12–24 months unemployed) and Local Area Employment Service (24+ months), contracted providers including Seetec and Turas Nua (DSP; INOU *Working for Work* 2025–26; Seetec). Appointments run roughly every three weeks, with no structured support in between — the "silent weeks" where the plan lives only in their head (team research, V2 document; citizensinformation.ie; gov.ie).
+- August 2026 Live Register (unadjusted **182,517**) is the scale of people already counted and, in the Partner sitting, already assessed. **29,956** people on activation programmes in July 2026 are **not** in that Live Register total (CSO, 4 Sep 2026). Quote on the problem slide. Do not pitch the CSO. Do not put CSO sex / nationality / age tables into the product. Room sentences for Turas Nua / FIT / ReBOOT / Back to Work Connect: `docs/partner-rooms.md`.
 - SOLAS: adult learning participation falls with age and rises with prior educational attainment — precisely when changing work makes learning more important (SOLAS, via SkillsAtlas deck).
 
 ## Precedents (Reported — coverage must travel with the claim)
@@ -28,6 +49,24 @@ Every number here has a source and a date. The deck quotes from this file and no
 - Springboard+ 2011–15 cohorts, outcomes at 3–6 months: 53% employment/self-employment, 19% further study, 28% looking for work. Outcomes reported for 76% of graduates — historic results, not a current prediction (Department of Education Springboard reports).
 - Springboard+ 2026: 7,274 places across 244 courses; free for unemployed, 10% fee for employed (springboardcourses.ie, Mar 2026).
 - SkillsFuture Singapore: international precedent for a common skills language with multi-party validation (SkillsAtlas deck, source 08).
+
+## Export rail (Observed — the sitting exists outside Ireland; we do not have overseas users)
+
+Do not quote an invented EU TAM. Export is a catalogue swap on a legal skills language, after Ireland copies.
+
+| Figure | Value | Source | Date |
+| --- | --- | --- | --- |
+| EURES countries that have mapped or adopted ESCO occupations | All EURES countries | ESCO Member States Working Group; ESCO in EURES brief | Oct 2025 |
+| ESCO skills dimension in PES | Uneven / still being mapped; many PES still infer skills from occupations | Same MSWG minutes | Nov 2025 |
+| European PES Network | 32 members (27 EU PES + NO, IS, LI + Commission) | PES Network / EC | 2025–26 |
+| PES Capacity Report: substantial reform underway | 18 of 32 PES (56%) | PES Network Capacity Report, via EC | Apr 2026 |
+| PES skills-based workshop | 23 PES in Luxembourg; AI-assisted matching already live in LU (ADEM), BE-VDAB, SE | PES Network Thematic Paper; EC news 24 Apr 2026 | Sep 2025 / Apr 2026 |
+| Complementary PES skills tools (incl. Ireland) | AT, FR, IE, EE, CZ, HR named | Same paper | 2026 |
+| Commission line on AI in PES | Digital tools should complement, not replace, PES counsellors | EC Employment / PES Network | Apr 2026 |
+| UK skills-shortage vacancies | 27% of vacancies (2024) | DWP *Get Britain Working* / Jobs and Careers Service update | 2025–26 |
+| UK skills language | UK Standard Skills Classification (SSC), not ESCO | Skills England | 2026 |
+
+**Export rule for the canvas:** Year 1 = Ireland sitting. Year 2 = contracted PES / activation offices in ESCO-mapped countries that do **not** already run a national AI matcher (do not lead with VDAB, ADEM, Swedish PES). UK is a later adapter (SSC crosswalk). Swap the course catalogue; keep ESCO + confirm/skip + two routes + the board.
 
 ## Scale path (Proposed — plan, not users we have)
 

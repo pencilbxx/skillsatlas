@@ -2,6 +2,16 @@
 
 Written down when made. Newest first.
 
+## 4 Sep 2026 — Four rooms, one demo (possible later pivots)
+
+**Decision:** Document four sittings we might wrap — Turas Nua, FIT, Women ReBOOT, Back to Work Connect. The product stays the four screens. The spoken sentence changes. Working map: `docs/partner-rooms.md`.
+
+**This fortnight:** no APIs into those organisations. No extra screens. Do not put their logos on slides as customers. Default beachhead remains the Intreo Partner sitting (three-week gap). FIT / ReBOOT / Back to Work Connect are the same URL with a different one-liner if that office is the wrong door.
+
+**CSO Live Register (August 2026)** is scale for the problem slide, not a fifth buyer. Quote only from `docs/evidence-base.md`. Do not ingest CSO age / sex / nationality into the schema or the demo.
+
+**Do not:** clone ReBOOT intake, replace FIT’s catalogue, scrape Back to Work Connect, or claim a contracted provider as a signed customer.
+
 ## 1 Sep 2026 — HR feedback from Brigitte: take the language, not a second product
 
 **Source:** Brigitte’s review of Andrew’s process talk (`Business Process Modeling - Feedback .docx`). HR examples, not a spec. Working map: `docs/bridget-hr-feedback.md`.

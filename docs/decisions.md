@@ -2,6 +2,51 @@
 
 Written down when made. Newest first.
 
+## 8 Sep 2026 — Answers to teammate deck “Over to You”
+
+**Source:** `docs/RedeployMate_Team_Presentation.pdf` slide 13. Full write-up for the Hub: `docs/pitch-8sep-freeze.md`.
+
+1. **Full assessment as a pre-step?** No. Confirm + 1–2 questions (cap 3, skip free) *in* their sitting. A pre-sitting replaces what they run.
+2. **Flex questions if the CV is thin?** Yes, inside the cap. No deep at-home pass this fortnight.
+3. **Two roles on screen; rank 5–10 inside?** Two on screen: yes. Ranked list or “show more”: no. Silent fallback if matching fails: yes.
+4. **UVP + buyer gain?** Yes. List vs proof. Don’t replace the office. Time back. Something in the gap. No promised ROI.
+5. **B2B-first, Turas Nua / Seetec?** Yes to office-first. Turas Nua = context, not a customer. Seetec = next office of the same type.
+6. **Orchestration now, fine-tune Phase 2?** One agent + tools + confirm: yes, and true today. Fine-tune only after real outcomes. Do not pitch LangGraph or a fine-tuned model on 14 Sep.
+
+## 8 Sep 2026 — Lean Canvas rev 4 (mum test)
+
+**Source:** teammate deck `docs/RedeployMate_Team_Presentation.pdf`, read the same way as the 7 Sep canvas pack. Fill: `docs/fill-lean-canvas.py`.
+
+**Decision:** The canvas is for a non-technical reader. Process in four steps. No stack, no 24-segment map, no “full assessment before the sitting,” no “show more” roles.
+
+**Take from the deck:** today vs us (list → silent weeks vs confirm → two jobs → board); “everyone else hands you a list / we hand you proof”; we don’t replace the office; buyer gain is time back + something to show in the gap; confirm-before-use as trust; B2B office first.
+
+**Leave in the deck, not on the canvas:** LangGraph, fine-tune, Gloat brand list, 15 B2B + 9 B2C segments, deeper at-home questions, ranking 5–10 roles, Turas Nua as a signed customer.
+
+## 8 Sep 2026 — Lean Canvas rev 3 (teammate research: accept / leave)
+
+**Source:** teammate pack `docs/RedeployMate_LeanCanvas_and_Moat_Options.pdf` (7 Sep). Canvas fill: `docs/fill-lean-canvas.py`. Output: `docs/LeanCanvas-Editable2_WORKING VERSION.pdf`.
+
+**Decision:** Keep SkillsAtlas, four screens, two routes, worker does not pay. Take the list-vs-proof UVP, Gloat-class as “not the beachhead,” Seetec as the next twin, and moat as orchestration + confirm-gate + partner outcome data. Do not become a B2C app, an internal-mobility platform, or a fine-tune demo this fortnight.
+
+**Take (canvas + deck, not new screens):**
+
+- UVP: everyone else hands a list; we hand proof (two reachable roles, confirmed, board).
+- Alternatives: Gloat / Fuel50 / TechWolf need a job architecture — we run one person against ESCO on day one.
+- Buyer: small/mid-tier Intreo Partner sitting. Turas Nua is context, not a logo-as-customer. Seetec is the verified twin.
+- Later doors stay rooms: FIT / ReBOOT / Back to Work Connect (spoken sentence only). Unions after the hub.
+- Moat: confirm/skip + guards + ESCO. Fine-tune parked until real placement outcomes exist. Not LangGraph as the product.
+- Live Register 182,517 stays a problem-slide number, not a CSO pitch.
+
+**Leave behind / not this fortnight:**
+
+- Consumer download as a second canvas.
+- Corporate HR / internal mobility as a High buyer (Gloat’s market; sounds like the agent decides who stays).
+- Over-50s / women-returners / immigrants as schema segments.
+- Intake as a full assessment before the caseworker sits down.
+- Deeper at-home question pass; “show more” / rank 5–10 roles on screen.
+- Fine-tuning on the Hub pitch. Rename to RedeployMate unless the team votes.
+
 ## 4 Sep 2026 — Four rooms, one demo (possible later pivots)
 
 **Decision:** Document four sittings we might wrap — Turas Nua, FIT, Women ReBOOT, Back to Work Connect. The product stays the four screens. The spoken sentence changes. Working map: `docs/partner-rooms.md`.

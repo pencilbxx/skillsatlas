@@ -82,7 +82,7 @@ Defensibility (mentor): large enterprises **can** build this — they have inter
 
 ## The one-sentence pitch (Proposed)
 
-> For the worker who has just been told their role is gone — and the adviser who sees them once every three weeks — SkillsAtlas is an evidence agent that turns what they have actually done into two credible next roles, a plan they can afford, and proof they can carry into an interview, unlike the assessment-and-course-list handoff that leaves them alone with a printout.
+> Everyone else hands you a list. We hand you proof — two roles you can already reach, confirmed by you, with a board to walk into the interview holding. (Worker whose role is gone + adviser on a ~3-week cadence. Not a job board. Not a consumer download.)
 
 ## Kill-sheet answers (for Q&A prep)
 
@@ -100,3 +100,22 @@ Defensibility (mentor): large enterprises **can** build this — they have inter
 ## GDPR readiness (for Q&A)
 
 The demo processes no personal data — both personas are synthetic. The design is GDPR-shaped for when a real adviser touches it: data minimisation by schema (the extraction schema cannot hold protected traits), purpose limitation by process structure (the accountability partner receives only the four-field handoff payload, enforced by a contract test), worker control as a hard gate (confirmation before use, skip without penalty, correction at any point), and an audit trail by default (every evidence item carries provenance, class, and confirmation metadata). If a judge asks "what about GDPR?", the answer is: the compliance-relevant properties are in the architecture, not in a policy document.
+
+## Do not quote
+
+- **“Men apply at 60% qualified, women only at 100%.”** Folklore from a speculative HP comment, repeated in Lean In / HBR. Behavioural Insights Team and a 2024 peer-reviewed study (Salwender et al.) did not find a robust gap. Teammate pack flagged this 7 Sep. If it is in any draft slide, pull it.
+- **“Job Care”** as a named Irish comparator. Did not verify. Confirm the real name before anyone external hears it.
+
+## Teammate research (7 Sep) — not on a slide until sourced here
+
+These were useful pointers. They are **not** Observed in this file yet. Do not put them on Hub slides until someone adds source, date, and a URL.
+
+| Claim (as brought) | Why it might help | Status |
+| --- | --- | --- |
+| FIT: 250,000 jobseekers completed; 120,000 into work | Programme-scale colour if we wrap a FIT room | Unsourced here |
+| Women ReBOOT: 500+ re-entered; 90% into full-time roles | Only if that *room* is the spoken sentence — not a SkillsAtlas outcome | Unsourced here |
+| Generation Ireland: 200–250 people/year; mentor after the bootcamp | Parallel to “gap after the programme” | Unsourced here |
+| Career Returners Indicator 2026: 99% still struggle after upskilling | Returner *room* only; wrong headline for an Intreo Partner sitting | Unsourced here |
+| interviewing.io: recruiters 55% accurate from resume alone | Backup “CVs are a bad instrument” — not Slide 2 | Unsourced here |
+
+Pitch freeze that uses this file: `docs/pitch-8sep-freeze.md`.

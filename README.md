@@ -18,6 +18,7 @@ This repo is the **kit**. The Next.js app is not scaffolded yet. Open this folde
 | `docs/partner-rooms.md` | Four sittings we might wrap (same demo, different sentence). Not customers. |
 | `docs/pitch-contents.md` | Ten-slide argument + 4-min speech + research split. Contents only. |
 | `docs/SkillsAtlas_Pitch_Contents_Team_Pack.docx` | Same pack as a Word file to send the team. Rebuild: `python docs/build-pitch-pack.py`. |
+| `docs/SkillsAtlas_Hub_Pitch_Slide_Text_TEAM_DRAFT.docx` | Hub 7-minute slide text for team comments. Rebuild: `python docs/build-pitch-slide-text-docx.py`. |
 | `prompts/cursor-kickoff-prompts.md` | Paste P0, then P1… in order. |
 
 ## What exists vs what does not

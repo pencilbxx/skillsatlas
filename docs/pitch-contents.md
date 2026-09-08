@@ -2,6 +2,8 @@
 
 **This is not a designed deck.** No PPTX, no layout, no fonts. It is the *argument*: what each slide must say, why it is there, who researches the gaps, and a working four-minute speech. After research comes back, we combine this into one picture and write the final spoken text.
 
+**8 Sep research is back.** Slide text for the ten (on-slide + spoken + four-minute speech): `docs/pitch-slide-text.md`. If a line fights `docs/pitch-8sep-freeze.md`, the freeze wins. Do not import the teammate RedeployMate deck as the Hub deck.
+
 ---
 
 ## Dates (do not mix them)
@@ -55,7 +57,7 @@ Organisers and the challenge playbook are consistent: **problem, demo, team**. T
 
 If a judge repeats one line to another judge, it should be this:
 
-> They have already been assessed. We turn what they have actually done into two reachable roles and a board they walk out holding. The system proposes; the person decides. Every line on that board traces to a confirmed claim.
+> Everyone else hands you a list. We hand you proof — two roles you can already reach, confirmed by you, with a board to walk into the interview holding. The system proposes; the person decides. Every line on that board traces to a confirmed claim.
 
 **Three visible moments** (engineer these; do not hope they appear):
 
@@ -117,8 +119,11 @@ They can. They have internal AI teams. We sell to small and mid-tier providers w
 - “No risk” (WhatsApp or otherwise).
 - “Platform” before they have seen the board.
 - Market size as the opening.
+- Turas Nua, Seetec, FIT, or ReBOOT as “our customers.”
+- LangGraph, a fine-tuned model, or “we rank the top ten roles.”
+- “Men apply at 60% qualified, women only at 100%” (myth — not data).
 
-Say instead: *we make the responsible human faster, better evidenced, and able to leave with proof.*
+Say instead: *Everyone else hands you a list. We hand you proof.*
 
 ---
 
@@ -133,8 +138,8 @@ Each slide: **one bold idea**, then almost no text. Anything in *italics* is a w
 **On the slide (max):**
 
 - Title: **SkillsAtlas**
-- Line: *The evidence agent for the silent weeks after a redundancy assessment.*
-- Sub: *Same CV. Confirmed evidence. Two reachable roles. They leave with the board.*
+- Line: *Everyone else hands you a list. We hand you proof.*
+- Sub: *Same CV. Confirmed. Two jobs they can reach. They leave with the board.*
 - Footer: TechIreland National AI Challenge 2026 · Hub 14 Sep
 
 **Why this slide:** Judges decide in seconds whether this is “another careers chatbot.” The hook must contain the **old handoff** (assessed) and the **artefact** (the board). Mentor: CV origin starts here, not on slide 4.
@@ -354,7 +359,7 @@ Pull only if asked.
 
 | Backup | Content | When |
 | --- | --- | --- |
-| B1 Competition | Course-list PDF / ChatGPT / generic career bots / full HRIS competency tools. **Our wedge:** confirmed evidence + two unranked ESCO routes + never-invent board. | “Who else is in this space?” |
+| B1 Competition | Course-list PDF / ChatGPT / generic career bots / big HR tools that need months of setup. **Our wedge:** confirmed evidence + two unranked routes + a board that only prints what they confirmed. Gloat-class names only if asked. | “Who else is in this space?” |
 | B2 Responsible AI | No protected-trait fields · confirm/skip · never-invent · four-field partner payload · eval harness. | “GDPR / bias / surveillance” |
 | B3 GDPR paragraph | Copy from `docs/evidence-base.md` | Same |
 | B4 BPMN | Four-screen picture | Technical judge |
@@ -411,10 +416,10 @@ That’s the product. Not a chatbot. A trail they can trust, and something they 
 
 ## How we combine (later)
 
-1. Team decides who takes which slide. Paste **Research to bring back** under that slide (or the conversation log).
-2. One person produces a one-page “slide text only” freeze.
-3. Only then: layout. If a claim has no source, it is deleted, not typeset smaller.
-4. Read the four-minute speech out loud on a clock. Cut anything that needs a footnote.
+1. **Done:** `docs/pitch-slide-text.md` is the on-slide + spoken freeze. Layout from that file.
+2. Fill the OPEN boxes (URL, names, conversation, Slide 2 number if you swap).
+3. If a claim has no source in `docs/evidence-base.md`, it is deleted, not typeset smaller.
+4. Read the four-minute speech in `pitch-slide-text.md` out loud on a clock.
 5. Upload before **13 Sep 2pm**.
 
 The 90-second **demo** script stays in `docs/demo-script.md`. This file is the **four-minute pitch** around that demo. Pitch frames, demo proves, ask closes.

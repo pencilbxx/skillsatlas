@@ -106,7 +106,7 @@ Pick **one** real number for Slide 2. The rest wait for Q&A.
 - One named adviser conversation: date, role, what they said, may we name them. **9 Sep:** conversation logged (`docs/field-turas-nua-enniscorthy.md`). Spoken = “an adviser.” Not a logo. Not a booked sitting.
 - Presenter freezes the one-breath hook out loud.
 - Slide 2: which single number.
-- Live URL that will actually be on the slide (today the public URL is still the wireframe).
+- Live URL on the slide: https://skillsatlas.vercel.app (clickable sitting; honest mock, not a live model API).
 - BPMN screenshot that matches the **built** demo, not the wish.
 
 The 90-second demo script does not need a rewrite for this freeze. Keep Screen 1 as “assessed, course list, three weeks.” Keep confirm / weak line / two routes / board.

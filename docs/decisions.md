@@ -2,6 +2,17 @@
 
 Written down when made. Newest first.
 
+## 9 Sep 2026 — Clickable sitting on the live URL
+
+**Decision:** The Hub URL is the HTML sitting in `docs/wireframes/`, deployed to https://skillsatlas.vercel.app (Vercel project `skillsatlas`, Andrew’s Hobby). Not the Next.js app this fortnight. Brand tokens and names: `docs/brand.md`.
+
+- **00 Start** is identity for a cold browser: SkillsAtlas / RedeployMate, shoreline, optional silent film. It is not a fifth product step on Hub slides. The sitting remains confirm → questions → two routes → board.
+- Visual language follows the Ireland evidence atlas (coral `#ED6A4A`, navy, cream, shoreline). Do not pile identity onto the Problem screen.
+- Last step on the board: **Save as PDF** downloads the interview board as real text. Do not screenshot an off-screen pack (that printed a blank page).
+- Live URL is judge-only. No presenter script bar, no `?present=1`. Hub 90 seconds still starts at the problem / confirm (`docs/demo-script.md`, `docs/hub-rundown.md`).
+
+**Leave:** RedeployMate as the product name on the URL or Hub slides.
+
 ## 9 Sep 2026 — Hub pitch as a story; Lean Canvas rev 5
 
 **Source:** rewrite of `docs/pitch-slide-text.md` after the Enniscorthy conversation and the silent film landing.

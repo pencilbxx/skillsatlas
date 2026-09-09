@@ -6,7 +6,7 @@ Judges score **the problem, the demo, and the team**.
 
 **Order:** short pitch (sting + aha) → **whole silent film (~52s: four screens + the map of the sitting)** → live click (proof it is real) → ask → Q&A.
 
-The film may retell the four screens. Keep it. Live click does **not** tour the four screens again. It proves the path is on the laptop: evidence → named gap → interview-ready (the board) → who is in the interview.
+The film may retell the four screens. Keep it. Live click does **not** tour the four screens again, and does **not** start on 00 Start. It proves the path is on the laptop: evidence → named gap → interview-ready (the board) → who is in the interview. 00 Start is for people who open https://skillsatlas.vercel.app after the room.
 
 Two people. Never the same person: **talker** and **clicker**.
 
@@ -71,7 +71,7 @@ Galway, then one sitting. Slide 10 stays for Q&A.
 **Laptop tabs, left to right:**
 
 1. Slides  
-2. Live demo (confirm screen ready; saved-copy backup warmed — clicker only, never spoken)  
+2. Live demo (confirm screen ready; saved-copy backup warmed — clicker only, never spoken). Do not start from 00 Start.  
 3. Recorded full run (wifi dead)  
 4. Talker notes (`pitch-slide-text.md` script), presenter only  
 

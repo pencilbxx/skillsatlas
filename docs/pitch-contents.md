@@ -246,7 +246,7 @@ Each slide: **one bold idea**, then almost no text. Anything in *italics* is a w
 
 **On the slide (max):**
 
-- Headline: *Working now: four screens, ninety seconds, live URL.*
+- Headline: *Working now: four sitting screens, ninety seconds, live URL (clickable sitting).*
 - Left: what exists — deployed mock / app URL · synthetic personas · ESCO v1.2.0 · real course catalogue (Skillnet / SOLAS STA / Springboard+) · guardrail tests.
 - Right: what this is **not** yet — paying seats · signed pilot · production case data.
 - Tiny: *If the API dies, we replay a golden run. We do not narrate a spinner.*

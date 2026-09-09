@@ -1,19 +1,22 @@
 # SkillsAtlas — Evidence Agent
 
-Two-week PoC for the TechIreland National AI Challenge 2026. Four screens, ~90 seconds, live URL. Slides freeze **13 Sep 2pm**.
+Two-week PoC for the TechIreland National AI Challenge 2026. Four sitting screens, ~90 seconds, live URL. Slides freeze **13 Sep 2pm**.
 
 This repo is the **kit**. The Next.js app is not scaffolded yet. Open this folder as the Cursor workspace so `AGENTS.md` and `.cursor/rules/` load.
+
+**Live URL:** https://skillsatlas.vercel.app — clickable sitting (`docs/wireframes/`). Names and look: `docs/brand.md`.
 
 ## Open this first
 
 | File | What it is |
 | --- | --- |
 | `AGENTS.md` | Ground rules. Read before touching code. |
+| `docs/brand.md` | Product name, team name, colour, type, live URL. |
 | `docs/decisions.md` | Decisions already made (closer = cheat-board; WhatsApp = bonus). |
 | `docs/bpmn/skillsatlas-4-screens.bpmn` | Team picture. Four rows in plain English. Board is the close. |
 | `docs/bpmn/skillsatlas-evidence-agent.bpmn` | Full step map. WhatsApp is a bonus side path. |
 | `docs/demo-script.md` | 90-second narration. Draft. Freeze on day 10. |
-| `docs/wireframes/demo.html` | Clickable 4-screen mock. Live: https://skillsatlas.vercel.app — how-to: `docs/wireframes/README.md`. |
+| `docs/wireframes/demo.html` | Clickable sitting. Live: https://skillsatlas.vercel.app — how-to: `docs/wireframes/README.md`. |
 | `docs/evidence-base.md` | The only numbers the deck may quote. |
 | `docs/partner-rooms.md` | Four sittings we might wrap (same demo, different sentence). Not customers. |
 | `docs/pitch-contents.md` | Ten-slide argument + 4-min speech + research split. Contents only. |
@@ -30,10 +33,12 @@ This repo is the **kit**. The Next.js app is not scaffolded yet. Open this folde
 
 ## The four screens
 
+The sitting on stage is still four steps. The live URL adds **00 Start** so a judge who opens the link cold knows who we are (optional film, shoreline). Hub 90 seconds starts at the problem.
+
 1. **Problem** — synthetic CV + “assessed, here’s a course list, good luck.”
 2. **Evidence + questions** — parse → worker confirms → 2–3 questions that strengthen weak evidence.
 3. **Two routes** — transferable skills, gaps, real Skillnet / SOLAS / Springboard+ courses.
-4. **Leave with the board** — adviser summary + one committed step + the cheat-board they walk out holding.
+4. **Leave with the board** — adviser summary + one committed step + the cheat-board they walk out holding. Last step: Save as PDF.
 
 WhatsApp accountability partner is a **bonus** (`NEXT_PUBLIC_ENABLE_PARTNER`). Same four-field privacy boundary. Not the closer.
 

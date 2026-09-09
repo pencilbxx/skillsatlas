@@ -5,14 +5,16 @@ alwaysApply: true
 
 # SkillsAtlas — ground rules
 
-Two-week competition PoC. Demo = 4 screens, 90 seconds, live URL. Slides due 13 Sep 2pm — building stops before that. Judges score the problem, the demo and the team; nobody reads the code.
+Two-week competition PoC. Demo = 4 sitting screens, 90 seconds, live URL. Slides due 13 Sep 2pm — building stops before that. Judges score the problem, the demo and the team; nobody reads the code.
+
+**Live URL:** https://skillsatlas.vercel.app (`docs/wireframes/`). Names and look: `docs/brand.md`. Cold open = **00 Start** (identity + film). The sitting is still 01–04. Do not pile identity onto Problem.
 
 ## The four screens (the whole scope)
 
 1. Problem: synthetic CV + the "assessed and left alone" mess.
 2. Evidence + questioning: parse → worker confirms → agent asks 2–3 contextual questions that strengthen weak evidence.
 3. Routes: exactly two reachable role paths with transferable skills, gaps, evidence classes, and a gap plan pointing at real Skillnet / SOLAS Skills to Advance / Springboard+ courses.
-4. Leave with the board: adviser summary + one committed step + the cheat-board they walk out holding. Bonus: WhatsApp accountability partner receives that same step.
+4. Leave with the board: adviser summary + one committed step + the cheat-board they walk out holding. Last step: Save as PDF. Bonus: WhatsApp accountability partner receives that same step.
 
 Work that does not serve these screens is out of scope. Say so and stop.
 

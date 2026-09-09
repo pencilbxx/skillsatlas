@@ -275,8 +275,8 @@ Same sitting. On the laptop. Look at the browser.
 - Dark. One line: **The sitting — on the laptop.**
 - Optional tiny: the web address
 
-> **Not sealed — the URL.**  
-> Today the public link is the walkthrough: skillsatlas.vercel.app. Confirm the address that will actually be printed. Do not put a fake “live AI app” URL on the slide if that is still the mock. Honesty in this room is a feature.
+> **URL on the slide:** https://skillsatlas.vercel.app  
+> Honest: this is the clickable sitting (HTML), not a live model API. Screen 00 is for people who open the link after the room. Hub clicker still starts on confirm / the board — do not tour 00 on stage. Names: `docs/brand.md`.
 
 **Clicker (never say this out loud)**
 

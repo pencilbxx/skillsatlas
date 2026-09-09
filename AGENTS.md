@@ -6,7 +6,9 @@ You are a coding agent working inside a two-week competition build (TechIreland 
 
 SkillsAtlas is an **evidence agent** for workers affected by restructuring in Ireland. It extracts evidence from a worker's experience, matches it to real role requirements via the ESCO taxonomy, identifies the smallest credible skill gaps, asks the worker targeted follow-up questions to deepen weak evidence, and produces a gap-closing pathway plus a cheat-board — the artefact the worker leaves the room with. A pre-built WhatsApp **accountability partner** is a bonus: it can receive the committed next step for check-ins. It is not the closer.
 
-**The deliverable is a proof of concept demoed live, not a production system.** The demo is three or four screens and about ninety seconds. Anything off that path is out of scope. Slides are due 13 September at 2pm — building stops before that.
+**The deliverable is a proof of concept demoed live, not a production system.** The sitting is four screens and about ninety seconds. Anything off that path is out of scope. Slides are due 13 September at 2pm — building stops before that.
+
+**Live URL (9 Sep):** https://skillsatlas.vercel.app is the clickable sitting in `docs/wireframes/`, not the Next.js app. Judges who open the URL cold see **00 Start** (who we are, optional silent film, shoreline). The sitting they click is still 01–04. Names and look: `docs/brand.md`. Last step on the board is Save as PDF.
 
 ## The demo path (the only thing that matters)
 
@@ -15,7 +17,7 @@ SkillsAtlas is an **evidence agent** for workers affected by restructuring in Ir
 3. **Screen 3 — Two reachable routes:** Route Explorer cards with transferable skills, missing capabilities, evidence classes, and a gap plan pointing at real Skillnet/SOLAS/Springboard+ courses.
 4. **Screen 4 — Leave with the board:** adviser summary, one committed step, then the cheat-board (the artefact they walk out holding). Bonus: WhatsApp accountability partner receives that same step.
 
-If a task does not serve one of these four screens, say so and stop.
+If a task does not serve one of these four screens (or the 00 Start landing that points at them), say so and stop.
 
 ## Hard constraints (never violate)
 
@@ -62,9 +64,11 @@ data/
   roles/                # fixed demo role set with ESCO URIs
   courses/              # fixed catalogue: Skillnet / SOLAS STA / Springboard+ entries
 docs/
+  brand.md              # names, colour, type, live URL
   bpmn/                 # Camunda blueprint (.bpmn files + exported PNGs); final file authored in Desktop Modeler
   decisions.md          # every decision, written down when made
   demo-script.md        # the 90-second narration, written week one, frozen day 10
+  wireframes/           # clickable sitting → https://skillsatlas.vercel.app
 .cursor/rules/          # project rules (read them)
 prompts/                # the prompt library — system prompts live here, not inline in code
 ```

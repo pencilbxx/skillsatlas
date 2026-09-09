@@ -34,7 +34,7 @@ Aligned with SkillsAtlas demo.css / Ireland evidence atlas / Manus:
 - UI body / chrome: **Manrope**
 - Mono (URL / parse): JetBrains Mono
 
-See `src/theme.ts` and `src/fonts.ts`.
+See `src/theme.ts` and `src/fonts.ts`. Same tokens as the live sitting: `docs/brand.md`.
 
 ## Quality bar
 

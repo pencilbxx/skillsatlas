@@ -4,33 +4,92 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#102b3f" />
-  <title>SkillsAtlas — 90s demo wireframes</title>
+  <title>SkillsAtlas — clickable sitting · RedeployMate</title>
+  <meta name="description" content="SkillsAtlas is the sitting after assessment: confirm evidence, name a gap, pick between two reachable jobs, walk out holding a board. Challenge team RedeployMate. TechIreland National AI Challenge 2026." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./demo.css" />
+  <link rel="stylesheet" href="./demo.css?v=3" />
 </head>
 <body>
   <div class="app">
     <header>
-      <div class="brand">SKILLS <span>Atlas</span></div>
+      <div class="brand">
+        <img class="brand-mark" src="./media/atlas-mark.webp" width="28" height="28" alt="" />
+        SKILLS <span>Atlas</span>
+      </div>
       <nav aria-label="Demo screens">
-        <button type="button" data-go="1" aria-current="true"><span class="nav-num">01</span><span class="nav-name">Problem</span></button>
+        <button type="button" data-go="0" aria-current="true"><span class="nav-num">00</span><span class="nav-name">Start</span></button>
+        <button type="button" data-go="1"><span class="nav-num">01</span><span class="nav-name">Problem</span></button>
         <button type="button" data-go="2"><span class="nav-num">02</span><span class="nav-name">Evidence</span></button>
         <button type="button" data-go="3"><span class="nav-num">03</span><span class="nav-name">Routes</span></button>
         <button type="button" data-go="4"><span class="nav-num">04</span><span class="nav-name">Board</span></button>
       </nav>
       <div class="hdr-meta">
-        <span class="chip chip-wire">Wireframe</span>
-        <span class="chip chip-accent">90s demo</span>
-        <span class="keys">Keys 1–4</span>
+        <span class="chip chip-wire">Prototype</span>
+        <span class="chip chip-accent">RedeployMate</span>
       </div>
     </header>
 
     <main>
+      <!-- SCREEN 0 — judge landing + film -->
+      <section class="screen on" id="s0" data-say="SkillsAtlas. Challenge team RedeployMate. Watch the silent film if you want. Then we start at the problem.">
+        <div class="home-hero">
+          <img class="home-hero-img" src="./media/atlas-hero.webp" alt="" />
+          <div class="home-hero-shade"></div>
+          <div class="home-hero-copy">
+            <p class="kicker kicker-on-dark">Clickable prototype · TechIreland National AI Challenge 2026</p>
+            <p class="home-who">SkillsAtlas · challenge team RedeployMate</p>
+            <h1>They leave holding <em>proof.</em></h1>
+            <p>Ireland already assesses people, then hands them a list. This sitting turns the same CV into evidence, a named gap, two jobs they can reach, and a board they walk out holding.</p>
+          </div>
+        </div>
+
+        <div class="home-grid">
+          <div class="rail">
+            <p class="muted intro-for">For the person whose job is gone or about to go, in a small employment-office sitting. The person does not pay. Practice CV — not a real worker. We propose. They confirm, skip, and choose. We do not say you would be hired.</p>
+            <ol class="how">
+              <li><strong>Confirm</strong> the lines — nothing is used until they say yes.</li>
+              <li><strong>Answer or Skip</strong> two questions. Skip is free. No penalty.</li>
+              <li><strong>Pick one of two jobs.</strong> Flip who is in the interview. Then save the board as PDF.</li>
+            </ol>
+            <div class="row intro-actions">
+              <button class="btn primary" type="button" data-go="1">Start the sitting →</button>
+            </div>
+          </div>
+          <figure class="shore">
+            <img src="./media/shore-route.webp" alt="" />
+          </figure>
+        </div>
+
+        <figure class="film">
+          <div class="film-frame">
+            <div class="film-idle" id="film-idle">
+              <span>Silent · about 52 seconds</span>
+              <strong>The sitting, on film</strong>
+            </div>
+            <video
+              id="film"
+              controls
+              preload="metadata"
+              playsinline
+              title="SkillsAtlas sitting — silent, about 52 seconds"
+            >
+              <source src="./media/skillsatlas-process-v2.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <figcaption>Watch 52 seconds (silent), then start. The film is optional.</figcaption>
+        </figure>
+
+        <aside class="team-strip">
+          <img src="./media/pencil-team.png" alt="" />
+          <p><strong>RedeployMate</strong> built this sitting for the challenge. SkillsAtlas is the product name. Four screens after this one. You can skip the film.</p>
+        </aside>
+      </section>
+
       <!-- SCREEN 1 -->
-      <section class="screen on" id="s1" data-say="This is the handoff Ireland actually does. You’ve been assessed. Here’s a course list. See you in three weeks. We are going to do something else with the same CV.">
-        <p class="kicker">01 / Station · The problem</p>
+      <section class="screen" id="s1" data-say="This is the handoff Ireland actually does. You’ve been assessed. Here’s a course list. See you in three weeks. We are going to do something else with the same CV.">
+        <p class="kicker" id="station">01 / Station · The problem</p>
         <div class="hero-dark">
           <h1>You’ve been <em>assessed.</em><br />Here’s a course list.</h1>
           <p>Then they are left alone. About three weeks until the next appointment. Nothing sits with them. They can see job titles — not their evidence, not a small next step.</p>
@@ -110,8 +169,8 @@
           <aside class="card navy">
             <p class="tiny" style="color:var(--accent)">After they answer</p>
             <h2 style="color:#fff" id="after-title">Still a keyword</h2>
-            <p id="after-body">Confirm first. Then the agent asks. The guardrail already ran: no protected traits, no repeats, simple English.</p>
-            <p class="muted" id="after-class">PROPOSED questions never look like fact until they answer and confirm the enrichment.</p>
+            <p id="after-body">Confirm first. Then the agent asks. Rules already ran: no protected traits, no repeats, simple English.</p>
+            <p class="muted" id="after-class">Draft questions never look like fact until they answer and confirm.</p>
           </aside>
         </div>
       </section>
@@ -120,7 +179,7 @@
       <section class="screen" id="s3" data-say="Exactly two reachable roles. Not a job board. Not you would be hired. These skills already transfer. These gaps have a real Irish course. The person chooses. We do not rank them.">
         <p class="kicker">03 / Station · Two reachable routes</p>
         <h1>Exactly two next roles — <em>not a job board</em></h1>
-        <p class="lead">ESCO-mapped from confirmed evidence only. Not “jobs available now.” Not a ranking of the person. Catalogue entries below are labelled example until seed data is live.</p>
+        <p class="lead">From confirmed evidence only. Not “jobs available now.” Not a ranking of the person. Courses are real Irish types — Skillnet / SOLAS Skills to Advance.</p>
         <div class="grid g-route" id="routes">
           <article class="card" data-route="a" tabindex="0">
             <div class="row" style="justify-content:space-between">
@@ -138,8 +197,8 @@
               <li>WMS reporting beyond day-to-day counts</li>
             </ul>
             <div class="course">
-              <span class="chip chip-human">Example catalogue</span>
-              <p style="margin:0.4rem 0 0"><strong>Logistics Skillnet</strong> — inventory &amp; WMS fundamentals · time/cost on the live card</p>
+              <span class="chip chip-human">Irish course</span>
+              <p style="margin:0.4rem 0 0"><strong>Logistics Skillnet</strong> — inventory &amp; WMS fundamentals</p>
             </div>
             <button class="btn" type="button" data-pick="a" style="margin-top:0.7rem">Choose this path</button>
           </article>
@@ -159,7 +218,7 @@
               <li>Documented people-planning / rota tools</li>
             </ul>
             <div class="course">
-              <span class="chip chip-human">Example catalogue</span>
+              <span class="chip chip-human">Irish course</span>
               <p style="margin:0.4rem 0 0"><strong>SOLAS Skills to Advance</strong> — supervisory skills for operatives · ETB-delivered</p>
             </div>
             <button class="btn" type="button" data-pick="b" style="margin-top:0.7rem">Choose this path</button>
@@ -169,27 +228,27 @@
       </section>
 
       <!-- SCREEN 4 -->
-      <section class="screen" id="s4" data-say="One next step this week. An adviser page they can forward. They say who is in the room — a screen is not a hiring-manager panel. This is the cheat-board. Flip the setting: same evidence, different questions.">
+      <section class="screen" id="s4" data-say="One next step this week. An adviser page they can forward. This is the cheat-board. Flip who is in the room. Then they save the board as a PDF and walk out holding it.">
         <p class="kicker">04 / Station · Leave with the board</p>
         <h1>They walk out holding <em>proof</em></h1>
-        <p class="lead">One step this week. A page for the adviser. Then the board. Flip who is in the room — stories stay, questions change. Not seniority.</p>
+        <p class="lead">One step this week. A page for the adviser. Then the board. Flip who is in the room — stories stay, questions change. Last step: save the board as a PDF.</p>
         <div class="grid g2" style="margin-bottom:1rem">
           <article class="card">
             <p class="tiny">Applicant commits</p>
             <h2>One step this week</h2>
-            <p>Not the whole plan. This line is printed on the board. WhatsApp may take the same four fields later — it does not block this screen.</p>
+            <p>Not the whole plan. This line is printed on the board.</p>
             <p style="margin:0.8rem 0 0"><strong id="step-text">Book the Skillnet WMS intro for Thursday (example).</strong></p>
           </article>
           <article class="card navy">
             <p class="tiny" style="color:var(--accent)">Adviser receives</p>
             <h2 style="color:#fff">One page they can keep</h2>
-            <p>Confirmed evidence, chosen route, the plan, what is still open. They may sit with the applicant. The live demo does not wait for an approve click.</p>
+            <p>Confirmed evidence, chosen route, the plan, what is still open. They may sit with the applicant. This sitting does not wait for an approve click.</p>
           </article>
         </div>
-        <article class="board">
+        <article class="board" id="board">
           <div class="row" style="justify-content:space-between;margin-bottom:0.8rem">
             <p class="tiny">Cheat-board · confirmed claims only</p>
-            <span class="chip chip-prop">proposed never looks like fact</span>
+            <span class="chip chip-prop">only what they confirmed</span>
           </div>
           <h2 id="board-title">Interview board · inventory / stock controller</h2>
           <p class="tiny" style="margin:0.8rem 0 0.4rem">Interview setting — they choose</p>
@@ -213,18 +272,20 @@
           <p id="pq" style="margin:0"><strong>Walk me through how you knew a count was off.</strong> Hook: stock claim (confirmed).</p>
           <p class="muted" id="pq-note">A phone screen stays short. A hiring-manager panel asks for the story. Same evidence.</p>
         </article>
-        <p class="muted" style="margin-top:0.85rem">Bonus, not the close: WhatsApp accountability partner gets workerId, routeId, committedStep, cadence — nothing else, nothing comes back.</p>
+        <div class="save-row">
+          <button class="btn primary" type="button" id="btn-pdf">Save as PDF</button>
+          <span class="muted" id="pdf-state">Downloads the interview board to this computer.</span>
+        </div>
+        <p class="muted" style="margin-top:0.85rem">Bonus, not the close: a WhatsApp accountability partner can receive the one step only — not the assessment. Nothing they say there comes back into this sitting.</p>
       </section>
     </main>
 
-    <div class="say" id="say-bar" role="note">
-      <div class="say-body">
-        <div class="lab">Say this · 90s script</div>
-        <p id="say-line">This is the handoff Ireland actually does. You’ve been assessed. Here’s a course list. See you in three weeks. We are going to do something else with the same CV.</p>
-      </div>
-      <button type="button" class="say-toggle" id="say-toggle" aria-expanded="false">More</button>
-    </div>
+    <footer class="site-foot" id="site-foot">
+      <p><strong>SkillsAtlas</strong> is the product. <strong>RedeployMate</strong> is the challenge team. TechIreland National AI Challenge 2026.</p>
+      <p>Clickable prototype of one sitting. Practice CV — not a live case file.</p>
+    </footer>
   </div>
-  <script src="./demo.js"></script>
+
+  <script src="./demo.js?v=4"></script>
 </body>
 </html>

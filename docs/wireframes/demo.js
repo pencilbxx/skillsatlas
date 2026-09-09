@@ -1,20 +1,26 @@
 const screens = [...document.querySelectorAll(".screen")];
     const navBtns = [...document.querySelectorAll("nav [data-go]")];
-    const say = document.getElementById("say-line");
-    const sayBar = document.getElementById("say-bar");
-    const sayToggle = document.getElementById("say-toggle");
-    let n = 1;
-
-    function collapseSay() {
-      sayBar.classList.remove("open");
-      sayToggle.setAttribute("aria-expanded", "false");
-      sayToggle.textContent = "More";
+    const film = document.getElementById("film");
+    const filmIdle = document.getElementById("film-idle");
+    function syncFilmIdle() {
+      if (!film || !filmIdle) return;
+      const show = film.paused && film.currentTime < 0.25;
+      filmIdle.hidden = !show;
     }
-    sayToggle.addEventListener("click", () => {
-      const open = sayBar.classList.toggle("open");
-      sayToggle.setAttribute("aria-expanded", String(open));
-      sayToggle.textContent = open ? "Less" : "More";
-    });
+    if (film) {
+      film.addEventListener("play", syncFilmIdle);
+      film.addEventListener("pause", syncFilmIdle);
+      film.addEventListener("ended", () => {
+        film.currentTime = 0;
+        syncFilmIdle();
+      });
+      film.addEventListener("error", () => {
+        if (!filmIdle) return;
+        const label = filmIdle.querySelector("span");
+        if (label) label.textContent = "Skip below if the film does not load";
+      });
+    }
+    let n = 0;
 
     function showEl(el) {
       if (!el) return;
@@ -28,22 +34,20 @@ const screens = [...document.querySelectorAll(".screen")];
     }
     function go(i) {
       n = i;
+      if (film && i !== 0) film.pause();
       if (i === 1) resetEvidence();
-      screens.forEach((s, idx) => s.classList.toggle("on", idx === i - 1));
+      screens.forEach((s) => s.classList.toggle("on", s.id === "s" + i));
       navBtns.forEach((b) => {
         if (b.dataset.go === String(i)) b.setAttribute("aria-current", "true");
         else b.removeAttribute("aria-current");
       });
-      const el = document.getElementById("s" + i);
-      say.textContent = el.dataset.say;
-      collapseSay();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
     document.querySelectorAll("[data-go]").forEach((b) => {
       b.addEventListener("click", () => go(Number(b.dataset.go)));
     });
     window.addEventListener("keydown", (e) => {
-      if (["1","2","3","4"].includes(e.key)) go(Number(e.key));
+      if (["0","1","2","3","4"].includes(e.key)) go(Number(e.key));
     });
 
     const confirmBtn = document.getElementById("btn-confirm");
@@ -85,7 +89,7 @@ const screens = [...document.querySelectorAll(".screen")];
       showEl(btnSkip);
       hideEl(btnToRoutes);
       afterTitle.textContent = "Still a keyword";
-      afterBody.textContent = "Confirm first. Then the agent asks. The guardrail already ran: no protected traits, no repeats, simple English.";
+      afterBody.textContent = "Confirm first. Then the agent asks. Rules already ran: no protected traits, no repeats, simple English.";
       document.querySelectorAll("[data-route]").forEach((c) => c.classList.remove("sel"));
     }
 
@@ -95,7 +99,7 @@ const screens = [...document.querySelectorAll(".screen")];
       confirmBtn.textContent = "Confirmed";
       showEl(qPanel);
       afterTitle.textContent = "Waiting on their words";
-      afterBody.textContent = "Guardrail passed. Question is specific to the weak claim. They can skip.";
+      afterBody.textContent = "Question is specific to the weak claim. They can skip.";
       qPanel.scrollIntoView({ behavior: "smooth", block: "center" });
     }
     function confirmClaim(el) {
@@ -206,3 +210,132 @@ const screens = [...document.querySelectorAll(".screen")];
     }
     bindGroup("stage");
     bindGroup("who");
+
+    function settingLabel() {
+      const st = document.querySelector("#stage .opt.on");
+      const wh = document.querySelector("#who .opt.on");
+      return (st ? st.textContent : "") + " · " + (wh ? wh.textContent : "");
+    }
+    function pdfPlain(s) {
+      return String(s || "")
+        .replace(/[“”]/g, '"')
+        .replace(/[‘’]/g, "'")
+        .replace(/—/g, "-")
+        .replace(/·/g, "-")
+        .replace(/[^\x20-\x7E]/g, " ");
+    }
+    function pdfEscape(s) {
+      return pdfPlain(s).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+    }
+    function wrapWords(text, maxChars) {
+      const words = pdfPlain(text).split(/\s+/).filter(Boolean);
+      const rows = [];
+      let cur = "";
+      words.forEach((w) => {
+        const next = cur ? cur + " " + w : w;
+        if (next.length > maxChars && cur) {
+          rows.push(cur);
+          cur = w;
+        } else cur = next;
+      });
+      if (cur) rows.push(cur);
+      return rows.length ? rows : [""];
+    }
+    function buildBoardPdfBytes() {
+      const lines = [];
+      function add(text, size, rgb, maxChars) {
+        wrapWords(text, maxChars || 88).forEach((row) => {
+          lines.push({ text: row, size: size, rgb: rgb });
+        });
+      }
+      add("SKILLSATLAS - REDEPLOYMATE - INTERVIEW BOARD", 10, [237, 106, 74], 70);
+      lines.push({ spacer: 8 });
+      add(document.getElementById("board-title").textContent, 18, [16, 43, 63], 42);
+      lines.push({ spacer: 6 });
+      add(settingLabel(), 11, [73, 96, 109], 88);
+      lines.push({ spacer: 10 });
+      add("This week's step", 10, [237, 106, 74], 70);
+      add(document.getElementById("step-text").textContent, 12, [16, 43, 63], 78);
+      lines.push({ spacer: 10 });
+      add("STAR story - Action is the long part", 10, [237, 106, 74], 70);
+      const starKids = [...document.querySelector("#board .star").children];
+      for (let i = 0; i < starKids.length; i += 2) {
+        lines.push({ spacer: 6 });
+        add(starKids[i].textContent, 10, [237, 106, 74], 70);
+        add(starKids[i + 1] ? starKids[i + 1].textContent : "", 11, [16, 43, 63], 82);
+      }
+      lines.push({ spacer: 12 });
+      add("Question for this room", 10, [237, 106, 74], 70);
+      add(document.getElementById("pq").textContent, 12, [16, 43, 63], 78);
+      lines.push({ spacer: 14 });
+      add("Only what they confirmed. Practice CV - not a live case file. We do not say they would be hired.", 9, [73, 96, 109], 88);
+
+      const ops = [];
+      let y = 800;
+      lines.forEach((item) => {
+        if (item.spacer) {
+          y -= item.spacer;
+          return;
+        }
+        const r = (item.rgb[0] / 255).toFixed(3);
+        const g = (item.rgb[1] / 255).toFixed(3);
+        const b = (item.rgb[2] / 255).toFixed(3);
+        ops.push(r + " " + g + " " + b + " rg");
+        ops.push("BT /F1 " + item.size + " Tf 48 " + y + " Td (" + pdfEscape(item.text) + ") Tj ET");
+        y -= item.size + 6;
+      });
+      const stream = ops.join("\n");
+      function obj(n, body) {
+        return n + " 0 obj\n" + body + "\nendobj\n";
+      }
+      const chunks = [
+        obj(1, "<< /Type /Catalog /Pages 2 0 R >>"),
+        obj(2, "<< /Type /Pages /Kids [3 0 R] /Count 1 >>"),
+        obj(3, "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>"),
+        obj(4, "<< /Length " + stream.length + " >>\nstream\n" + stream + "\nendstream"),
+        obj(5, "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"),
+      ];
+      let pdf = "%PDF-1.4\n";
+      const offsets = [0];
+      chunks.forEach((chunk) => {
+        offsets.push(pdf.length);
+        pdf += chunk;
+      });
+      const xrefAt = pdf.length;
+      let xref = "xref\n0 6\n0000000000 65535 f \n";
+      for (let i = 1; i <= 5; i++) {
+        xref += String(offsets[i]).padStart(10, "0") + " 00000 n \n";
+      }
+      pdf += xref;
+      pdf += "trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n" + xrefAt + "\n%%EOF";
+      const bytes = new Uint8Array(pdf.length);
+      for (let i = 0; i < pdf.length; i++) bytes[i] = pdf.charCodeAt(i) & 0xff;
+      return bytes;
+    }
+    function downloadPdf(filename, bytes) {
+      const blob = new Blob([bytes], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+    }
+    const pdfBtn = document.getElementById("btn-pdf");
+    const pdfState = document.getElementById("pdf-state");
+    pdfBtn.addEventListener("click", () => {
+      pdfBtn.disabled = true;
+      pdfState.textContent = "Saving PDF…";
+      try {
+        const bytes = buildBoardPdfBytes();
+        if (bytes.length < 400) throw new Error("empty pdf");
+        downloadPdf("SkillsAtlas-interview-board.pdf", bytes);
+        pdfState.textContent = "Saved to your downloads.";
+      } catch (err) {
+        pdfState.textContent = "Could not save the PDF. Try again.";
+      } finally {
+        pdfBtn.disabled = false;
+      }
+    });

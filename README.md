@@ -20,10 +20,11 @@ This repo is the **kit**. The Next.js app is not scaffolded yet. Open this folde
 | `docs/SkillsAtlas_Pitch_Contents_Team_Pack.docx` | Same pack as a Word file to send the team. Rebuild: `python docs/build-pitch-pack.py`. |
 | `docs/SkillsAtlas_Hub_Pitch_Slide_Text_TEAM_DRAFT.docx` | Hub 7-minute slide text for team comments. Rebuild: `python docs/build-pitch-slide-text-docx.py`. |
 | `prompts/cursor-kickoff-prompts.md` | Paste P0, then P1… in order. |
+| `docs/explainer-remotion/` | Remotion process explainer (silent branded V2.4 cut). Not the Next.js app. |
 
 ## What exists vs what does not
 
-**In the kit (ready):** rules, versioned prompts, BPMN, evidence base, kickoff prompts, this README.
+**In the kit (ready):** rules, versioned prompts, BPMN, evidence base, kickoff prompts, Remotion process explainer (`docs/explainer-remotion/`), this README.
 
 **Not built yet:** `app/`, `lib/`, `package.json`, Supabase schema, personas, roles, courses. That is P0–P1, not a missing download.
 

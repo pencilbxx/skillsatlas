@@ -1,0 +1,12 @@
+node_modules
+dist
+.DS_Store
+.env
+
+# Local Remotion render output (scratch). Ship copies live under deliverables/.
+out
+
+# Remotion cache / browser data
+.remotion
+
+# NOTE: do NOT ignore deliverables/ — the ship MP4 belongs in git.

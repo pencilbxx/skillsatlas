@@ -103,7 +103,7 @@ Pick **one** real number for Slide 2. The rest wait for Q&A.
 
 ## Still OPEN before 13 Sep 2pm (pitch will look thin without these)
 
-- One named adviser conversation: date, role, what they said, may we name them. That is Slide 6.
+- One named adviser conversation: date, role, what they said, may we name them. **9 Sep:** conversation logged (`docs/field-turas-nua-enniscorthy.md`). Spoken = “an adviser.” Not a logo. Not a booked sitting.
 - Presenter freezes the one-breath hook out loud.
 - Slide 2: which single number.
 - Live URL that will actually be on the slide (today the public URL is still the wireframe).

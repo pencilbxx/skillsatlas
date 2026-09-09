@@ -41,7 +41,7 @@ Do not say these as “what DSP is paying this month.” They prove the State al
 ## The activation gap (Observed + Reported)
 
 - JobPath ended. The sitting still exists: Intreo refers jobseekers to **Intreo Partners** — National Employment Service (12–24 months unemployed) and Local Area Employment Service (24+ months), contracted providers including Seetec and Turas Nua (DSP; INOU *Working for Work* 2025–26; Seetec). Appointments run roughly every three weeks, with no structured support in between — the "silent weeks" where the plan lives only in their head (team research, V2 document; citizensinformation.ie; gov.ie).
-- August 2026 Live Register (unadjusted **182,517**) is the scale of people already counted and, in the Partner sitting, already assessed. **29,956** people on activation programmes in July 2026 are **not** in that Live Register total (CSO, 4 Sep 2026). Quote on the problem slide. Do not pitch the CSO. Do not put CSO sex / nationality / age tables into the product. Room sentences for Turas Nua / FIT / ReBOOT / Back to Work Connect: `docs/partner-rooms.md`.
+- August 2026 Live Register (unadjusted **182,517**) is the scale of people already counted and, in the Partner sitting, already assessed. **29,956** people on activation programmes in July 2026 are **not** in that Live Register total (CSO, 4 Sep 2026). Quote as the tiny caption on the who-it’s-for slide, not on the problem slide (that slide keeps ~700). Do not pitch the CSO. Do not put CSO sex / nationality / age tables into the product. Room sentences for Turas Nua / FIT / ReBOOT / Back to Work Connect: `docs/partner-rooms.md`.
 - SOLAS: adult learning participation falls with age and rises with prior educational attainment — precisely when changing work makes learning more important (SOLAS, via SkillsAtlas deck).
 
 ## Precedents (Reported — coverage must travel with the claim)
@@ -86,7 +86,7 @@ Defensibility (mentor): large enterprises **can** build this — they have inter
 
 ## Kill-sheet answers (for Q&A prep)
 
-1. **Named person with the problem this week:** the ~700 Covalen workers and Meta's Irish cohort are this quarter's visible cases; problem owner to name one reachable adviser or outplacement contact by day 3.
+1. **Named person with the problem this week:** the ~700 Covalen workers and Meta's Irish cohort are this quarter's visible cases. Conversation logged 9 Sep: Andrew sat with an adviser (Enniscorthy). She cannot decide for the applicant. Not a customer. Not a logo. Field note: `docs/field-turas-nua-enniscorthy.md`.
 2. **Reachable in 3 days:** via ETB adult guidance services, Intreo-linked providers, or union redundancy support networks.
 3. **What they do today:** assessment + course list + ~3-week appointment gaps.
 4. **Would they use a rough version:** yes if it produces something they can carry — the evidence pack is the artefact.
@@ -94,7 +94,7 @@ Defensibility (mentor): large enterprises **can** build this — they have inter
 6. **Three screens without cutting the point:** evidence+questions, routes, leave-with-the-board (problem screen is a static image if needed).
 7. **Legal data:** synthetic personas + ESCO (EUPL) + public course listings.
 8. **Still needed if models improve:** yes — the value is the evidence trail and governance, not the model.
-9. **Unfair angle:** evidence classes + never-invent gate + structural privacy boundary; most entrants will demo a chatbot, we demo an audit trail.
+9. **Unfair angle:** one of us sat with an adviser this month (she cannot choose for them) + HR in the room who will not invent a story; evidence trail vs a chatbot. A conversation is not a booked sitting.
 10. **If the hardest part fails by day 6:** curated route pairs per persona, reasoning shown on curated data.
 
 ## GDPR readiness (for Q&A)

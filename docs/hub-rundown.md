@@ -4,13 +4,15 @@
 
 Judges score **the problem, the demo, and the team**.
 
-**Order:** short pitch → **whole ~1:00 silent film (four screens + the agentic orchestration process)** → live click (proof it is real) → ask → Q&A.
+**Order:** short pitch (sting + aha) → **whole silent film (~52s: four screens + the map of the sitting)** → live click (proof it is real) → ask → Q&A.
 
-The film may retell the four screens. Keep it. Live click does **not** tour the four screens again. It proves the path is live and lands on the board + who is in the interview.
+The film may retell the four screens. Keep it. Live click does **not** tour the four screens again. It proves the path is on the laptop: evidence → named gap → interview-ready (the board) → who is in the interview.
 
 Two people. Never the same person: **talker** and **clicker**.
 
 Talk less. The film does the explaining. The film is **silent** — no voice, no music.
+
+The talker script in `docs/pitch-slide-text.md` works with or without slides. Rehearse once with the projector off.
 
 ---
 
@@ -18,9 +20,9 @@ Talk less. The film does the explaining. The film is **silent** — no voice, no
 
 | Time | What | On the projector |
 | --- | --- | --- |
-| **0:00–0:50** | Hook + problem | Slides 1 → 2 |
+| **0:00–0:50** | Hook + problem + aha | Slides 1 → 2 |
 | **0:50–1:00** | Four words. No lecture. | Slide 3 |
-| **1:00–2:00** | **Whole film, ~1:00, silent** | Slide 4 |
+| **1:00–2:00** | **Whole film, ~52s, silent** | Slide 4 |
 | **2:00–3:20** | Live product | Slide 5 (dark). Browser. |
 | **3:20–6:20** | Who it’s for, money, scale, team, ask | Slides 6 → 10 |
 | **6:20–7:00** | Ask stays up. Stop talking. | Slide 10 |
@@ -37,13 +39,16 @@ If the film file fails, go to live click and use the Screen 2–4 lines from `do
 ## What each piece is for
 
 **Pitch (50s)**  
-List vs proof. Assessed → list → silent weeks. ~700 Covalen *(or 182,517 — not sealed, pick one)*. Then get out of the way.
+List vs proof. Assessed → list → silent weeks. ~700 this quarter (close to home). Aha: the adviser cannot choose for them. Then get out of the way.
 
-**Film (~1:00, silent)**  
-The sitting, fully. Four screens and the agentic orchestration process. Best explainer in the room. Local file, not YouTube. Talker: one sentence, then quiet.
+**Film (~52s, silent)**  
+The sitting, fully. Four screens and the map of who does what. Talker, one sentence then quiet: *They confirm the evidence. We name the gap. They leave interview-ready.*
 
 **Live click (~80s)**  
-Same sitting, live. Confirm the weak line. Two jobs. Board. Flip who is in the room. Words: Slide 5 in `pitch-slide-text.md`.
+Same sitting, on the laptop. Confirm the evidence. Point at the named gap. Interview-ready — the board. Flip who is in the room. Words: Slide 5 in `pitch-slide-text.md`.
+
+**Who it’s for (Slide 6)**  
+Tiny caption: **182,517** on the Live Register. Not a TAM. ~700 stays on Slide 2.
 
 **Ask**  
 Galway, then one sitting. Slide 10 stays for Q&A.
@@ -55,8 +60,8 @@ Galway, then one sitting. Slide 10 stays for Q&A.
 1. Hook  
 2. Problem  
 3. Title card: Confirm · Question · Two jobs · Board  
-4. **Film** — full-bleed, whole ~1:00 file, silent  
-5. **The sitting — live** (dark). Talker points at the browser.  
+4. **Film** — full-bleed, whole ~52s file, silent  
+5. **The sitting — on the laptop** (dark). Talker points at the browser.  
 6. Who it’s for  
 7. Who pays / not ChatGPT  
 8. 10 → 20 → 200  
@@ -84,6 +89,7 @@ Film file next to the slides, copied onto the presentation laptop the night befo
 | Live site | Tab 3 recording. Slide 5 words. |
 | Film file | Skip Slide 4. Live click uses the fuller `docs/demo-script.md` (Screens 2–4). |
 | Clicker lost | Talker does not take the mouse. Pause. Clicker recovers. |
+| Projector | Talker script still stands. Do not apologise. Do the sitting on the laptop. |
 
 ---
 
@@ -91,6 +97,8 @@ Film file next to the slides, copied onto the presentation laptop the night befo
 
 Slide 10 stays. Do not restart the film unless they ask.
 
-If they ask whether the process map is the product: *The film is how we designed the sitting — the agentic orchestration process. What you clicked is the product. The drawing tool is not the live engine this fortnight.*
+If they ask whether the process map is the product: *The film is how we designed the sitting — who does what. What you clicked is the product. The drawing tool is not the live engine this fortnight.*
+
+If they ask whether we have spoken to anyone: *Yes. An adviser, this month. They cannot choose for the applicant. A conversation, not a contract. We will not put their office on a slide as a customer.*
 
 Other short answers: `docs/pitch-slide-text.md` backup section.

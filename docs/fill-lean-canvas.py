@@ -3,7 +3,8 @@
 All type is black. Mark unproven lines with OPEN:.
 Re-run this file after editing copy. Template chrome (labels, grid, licence) is kept.
 
-Rev 4 — mum test. Process in plain English. Stack stays in the repo, not here.
+Rev 6 — early-investor pass on rev 5. Sourced numbers. Plain English.
+Problem and solution first. No pitch-internal notes. No stack jargon.
 """
 
 from pathlib import Path
@@ -34,8 +35,8 @@ BOXES = {
 
 CSS = f"""
 body {{ font-family: helvetica, arial, sans-serif; margin: 0; padding: 0; color: {BLACK}; }}
-p {{ margin: 0 0 5px 0; line-height: 1.22; color: {BLACK}; }}
-.k {{ color: {BLACK}; font-weight: bold; margin: 0 0 3px 0; }}
+p {{ margin: 0 0 4px 0; line-height: 1.18; color: {BLACK}; }}
+.k {{ color: {BLACK}; font-weight: bold; margin: 0 0 2px 0; }}
 .b {{ color: {BLACK}; }}
 .h {{ color: {BLACK}; font-weight: bold; margin: 7px 0 3px 0; }}
 """
@@ -54,113 +55,119 @@ HEADER_PROJECT = (
 )
 HEADER_DATE = (
     "<p class='b' style='margin:0;font-size:8pt;text-align:center'>"
-    "8 Sep 2026</p>"
+    "9 Sep 2026</p>"
 )
 HEADER_REV = (
-    "<p class='b' style='margin:0;font-size:10pt;text-align:center;font-weight:bold'>4</p>"
+    "<p class='b' style='margin:0;font-size:10pt;text-align:center;font-weight:bold'>6</p>"
 )
 LEGEND = (
-    "<p class='b' style='margin:0;font-size:5.7pt'><b>OPEN:</b> not proven yet.</p>"
+    "<p class='b' style='margin:0;font-size:5.5pt'><b>OPEN:</b> not proven. "
+    "Other figures are sourced.</p>"
 )
 
 PROBLEM = """
-<p class='k'>WHO HURTS</p>
-<p class='b'>The person who just lost their job — and the adviser who only sees them every three weeks.</p>
-<p class='b'><b>Today:</b> assessed → course list → silent weeks. The plan often dies in the gap.</p>
-<p class='b'>This quarter you can point at it: about <b>700</b> contractor roles gone (Covalen / Meta). Scale: <b>182,517</b> on the Live Register (Aug 2026) — already counted, often already assessed, still leave with a list.</p>
+<p class='k'>THE REAL PROBLEM</p>
+<p class='b'>Someone’s job is gone. They can see job titles. They cannot see the <b>evidence</b> they already have, the smallest skill <b>gap</b>, or a short next step that makes them <b>interview-ready</b>.</p>
+<p class='b'>Ireland already assessed them. They get a course list. Next appointment is about <b>three weeks</b>. In those silent weeks the plan lives only in their head. The adviser cannot choose the next job for them.</p>
+<p class='b'><b>This quarter:</b> ~<b>700</b> contractor roles gone (Covalen / Meta). Meta Ireland ~20% down (Bloomberg / LA Times, Jul 2026).</p>
+<p class='b'><b>Already sitting in that system</b> (not a made-up market): Live Register Aug 2026 <b>182,517</b>; <b>127,708</b> of them less than a year; <b>29,956</b> more on activation programmes (CSO, 4 Sep 2026).</p>
+<p class='b'><b>Why now:</b> ~<b>850,000</b> people in Ireland sit in jobs AI will change (30% of 2.83m). Unemployment is only <b>4.4%</b>. The shock is inside work.</p>
+<p class='b'><b>Money already in the sitting:</b> JobPath paid contractors €<b>249.1m</b> (2016–20) + €<b>42m</b> to wind down — people still left with a list. Historic. Not this year’s invoice.</p>
 <p class='h'>WHAT THEY DO INSTEAD</p>
-<p class='b'>• Wait for the next appointment.<br/>
-• Ask ChatGPT — more lists.<br/>
-• Another course catalogue.<br/>
-• Big HR software that takes months to install. Not this office.</p>
-<p class='b'><b>OPEN:</b> one adviser to say this in their own words.</p>
+<p class='b'>• Wait — the default.<br/>
+• ChatGPT — more lists. That <i>is</i> the broken handoff.<br/>
+• Another catalogue. Springboard+ 2026: <b>7,274</b> places, 244 courses. Training exists. The sitting still ends on a list.<br/>
+• Big-company talent software: months of setup. Not this office.</p>
+<p class='b'><b>Heard (Sep 2026):</b> sat with an adviser. She cannot decide for the applicant. Not a customer. <b>OPEN:</b> a booked sitting. Current-year office invoices.</p>
 """
 
 SOLUTION = """
-<p class='k'>FOUR STEPS IN ONE SITTING</p>
-<p class='b'><b>1. Confirm</b> — their CV. Only keep what they say is true. Skip is fine.</p>
-<p class='b'><b>2. Questions</b> — two or three. A weak line becomes a story (a number, a tool, a date).</p>
-<p class='b'><b>3. Two jobs</b> they can actually reach. They pick. One real Irish course if a skill is missing.</p>
-<p class='b'><b>4. The board</b> — they walk out holding it: stories, likely questions, one step this week.</p>
-<p class='b'>We don’t take the adviser’s meetings or job board. We fill the weeks until they meet again.</p>
-<p class='b'><b>OPEN:</b> live site is still a mock — skillsatlas.vercel.app</p>
+<p class='k'>ONE SITTING. INTERVIEW-READY.</p>
+<p class='b'>Same CV the office already has. We wrap the meeting. We do not take their diary or their jobs board.</p>
+<p class='b'><b>1. Evidence</b> — they confirm what they did. Skip is free. Nothing used until they say yes.</p>
+<p class='b'><b>2. Sharpen</b> — two or three questions. “Managed stock” → 2,400 SKUs, a tool, a date.</p>
+<p class='b'><b>3. Two jobs</b> they pick. Named gap = <b>one</b> real Irish course (Skillnet / SOLAS / Springboard+), not 200.</p>
+<p class='b'><b>4. The board</b> — confirmed stories, likely questions, one step this week. They walk out holding it.</p>
+<p class='b'>We propose. They choose. We do not rank people. <b>OPEN:</b> public walkthrough is still a mock.</p>
 """
 
 UVP = """
 <p class='k'>“Everyone else hands you a list. We hand you proof.”</p>
-<p class='b'>Proof = two jobs you can already reach, in your own words, plus a board you take into the interview.</p>
-<p class='b'>For the office: we don’t replace what you run. We make the weeks between appointments count — and you have something to show for it. The adviser spends less time re-explaining the same CV.</p>
-<p class='b'>Not a jobs website. Not a test. Not a ranking of people. They choose.</p>
-<p class='b'><b>OPEN:</b> say this in one breath with the presenter. Success = they come back holding a board they wrote.</p>
+<p class='b'><b>Proof</b> = confirmed <b>evidence</b> + a <b>named gap</b> + they leave <b>interview-ready</b> (the board they take into the room).</p>
+<p class='b'>Ireland already assessed them. The product is not a better list and not a better assessment. It is what they walk out holding.</p>
+<p class='b'><b>For the office:</b> you still run the appointments. We make the three weeks count. You are not asked to pick their job.</p>
+<p class='b'>Not a jobs website. Not a test. Not a ranking of people. Not ChatGPT on a CV. You are buying a sitting that produces an artefact — not a chatbot seat.</p>
+<p class='b'><b>Picture it:</b> a warehouse CV that says “managed stock” walks into an interview able to say the number, the system, and the date — and which of two honest next jobs they are aiming at.</p>
+<p class='b'><b>OPEN:</b> we will measure, not claim: they come back to the next appointment holding a board they wrote.</p>
 """
 
 UNFAIR = """
-<p class='k'>WHY THIS ISN’T JUST CHATGPT</p>
-<p class='b'>Nothing is used until they say yes.</p>
-<p class='b'>We work from one CV, in one sitting. Big HR tools need months of company setup first.</p>
-<p class='b'>The board only prints what they confirmed. We will not invent a story for the interview.</p>
-<p class='b'>Honest: a big company could copy this. We start with small offices that still hand out a printout. What gets hard to copy is real results from those sittings — we don’t have those yet.</p>
-<p class='b'><b>OPEN:</b> one adviser who will sit with us.</p>
+<p class='k'>WHY A LIST-MAKER CANNOT DO THIS</p>
+<p class='b'>Nothing is used until they confirm. Skip is free. The board only prints what they said was true. We will not invent a story for the interview. HR in the room holds that line.</p>
+<p class='b'>One CV, one sitting. Big talent platforms need months of company setup first.</p>
+<p class='b'><b>Honest:</b> a bank with an AI team can copy the screens. We start with offices that still hand out a printout. Sitting results are the moat — we do not have them yet.</p>
+<p class='b'><b>OPEN:</b> one adviser who will sit. A conversation (9 Sep) is not a booked sitting. Outcome data is the real moat.</p>
 """
 
 CUSTOMERS = """
-<p class='k'>THE PERSON</p>
-<p class='b'>Their job is gone or about to go.</p>
-<p class='h'>THE OFFICE (who pays)</p>
-<p class='b'>The small employment office that already sees them. The person does not pay.</p>
-<p class='b'>First door: that kind of office in Ireland. A conversation is open — not a signed customer. The other large office in the same system is the next call.</p>
-<p class='b'>Later, same four steps: a training programme or a union room. Not first: big-company HR, or an app people buy.</p>
-<p class='b'><b>OPEN:</b> name one adviser this week. Write down what they said. Don’t put their logo on a slide as a customer.</p>
+<p class='k'>USER / BUYER</p>
+<p class='b'><b>User:</b> job gone or about to go. Practice CVs (not real people): warehouse worker after a long spell in one site; a strong worker whose qualification does not map cleanly to Irish job titles. This quarter: ~700 Covalen roles.</p>
+<p class='b'><b>Buyer:</b> the small employment office the State already pays to see them (~every three weeks). The person never pays.</p>
+<p class='b'><b>Early adopter:</b> the adviser who already runs the sitting and hates sending them out with a course list.</p>
+<p class='b'><b>First door:</b> Ireland, that kind of office. Conversation 9 Sep (Enniscorthy). Not a signed customer. No logo. Next: another office of the same type.</p>
+<p class='b'><b>Later, same four steps:</b> a training programme or a union room. <b>Not first:</b> a bank’s HR team, or an app people buy. Same sitting: any room that already assesses, then leaves them with a list.</p>
+<p class='b'><b>OPEN:</b> a sitting in the diary. An office that can try ~20 people without a year of paperwork.</p>
 """
 
 METRICS = """
-<p class='k'>TODAY</p>
-<p class='b'>A four-screen mock and a live link. No one is paying. A real conversation beats a logo wall.</p>
-<p class='k'>WHAT WE COUNT</p>
-<p class='b'>People who leave holding a board. Plan: 10 in one sitting → 20 when that office copies → 200 as more small offices copy. Not app downloads.</p>
-<p class='b'><b>Success:</b> they come back to the next appointment with that board.</p>
-<p class='b'><b>OPEN:</b> did the questions make the story stronger? Did they start the course?</p>
+<p class='k'>WHAT WE CAN SHOW TODAY</p>
+<p class='b'>Four-screen walkthrough, process film, one named conversation. €0 revenue. No signed office. A conversation is traction. A logo wall is not.</p>
+<p class='k'>WHAT WE WILL COUNT (plan — not users we have)</p>
+<p class='b'><b>10</b> boards, one sitting → <b>20</b> when that office copies → <b>200</b> across ~10 small offices. Stop if no adviser will sit, or they cannot copy without us in the room.</p>
+<p class='b'><b>Success:</b> they come back holding a board they wrote from their own evidence.</p>
+<p class='b'><b>OPEN:</b> did questions turn a weak line into a story? Did they start the named course?</p>
 """
 
 CHANNELS = """
 <p class='k'>THIS YEAR — IRELAND</p>
-<p class='b'>Show it. Sit with one adviser. That office copies. Other offices hear from them. Not ads. Not a national contract.</p>
-<p class='b'>Same four steps in a training programme or union room — only the spoken sentence changes.</p>
+<p class='b'>Hub 14 Sep → Galway 24 Sep if we go through. Show the sitting. Book one adviser. That office copies. Other offices hear from them. Not ads. Not a national contract.</p>
+<p class='b'>Courses already exist (Springboard+ 7,274 places). We do not become the catalogue. We point at <b>one</b> course that closes a named gap.</p>
 <p class='h'>NEXT YEAR</p>
-<p class='b'>Same sitting abroad. Change the course list. Keep the four steps.</p>
-<p class='b'><b>OPEN:</b> first office outside Ireland — later. No invented market size.</p>
+<p class='b'>Same sitting abroad. Change the course list. Keep evidence → named gap → interview-ready. 32 public employment services in the European network. No invented €bn market.</p>
+<p class='b'><b>OPEN:</b> first office outside Ireland — after Ireland copies.</p>
 """
 
 COST = """
 <p class='k'>NOW</p>
-<p class='b'>A two-week challenge team. Practice CVs, not real people. Cheap to run one sitting.</p>
+<p class='b'>Two-week challenge team. Practice CVs, not live case files. Organiser model credits. A sitting is cheap to run. No fine-tune. No second product.</p>
 <p class='h'>LATER</p>
-<p class='b'>Teach the office. Keep the course list current. Cost of running many sittings. Extra care when real people’s details are involved.</p>
+<p class='b'>Teach the office. Keep the Irish course list current. Extra care (and a privacy review) when a real adviser touches real people. Cost of running many sittings. Time to the first office that can sign without an HQ AI programme.</p>
 """
 
 REVENUE = """
-<p class='k'>The person does not pay.</p>
-<p class='b'><b>Today:</b> free, one group. Did they come back with the board?</p>
-<p class='b'><b>Then:</b> the office pays per sitting or per adviser. Price after we see it work.</p>
-<p class='b'><b>Later:</b> same offer in other countries. Same product.</p>
-<p class='b'>Not this month: a paid phone app, or selling inside big companies.</p>
-<p class='b'><b>OPEN:</b> one office that can try about 20 people without a year of paperwork.</p>
+<p class='k'>THE PERSON DOES NOT PAY.</p>
+<p class='b'><b>Today: €0.</b> We sell the sitting to the office, not a phone app. No invented ARR.</p>
+<p class='b'><b>Pilot:</b> free, one group, practice CVs first then about 20 people. Measure: did they come back with the board?</p>
+<p class='b'><b>Then:</b> the office pays per sitting or per adviser. Price after we see it work — not a fee ladder from an old scheme.</p>
+<p class='b'><b>Later:</b> same offer in other countries. Same product. Swap the course list.</p>
+<p class='b'>Not this year: a paid consumer app, or selling into a bank that can build this itself.</p>
+<p class='b'><b>OPEN:</b> one office that can try ~20 people without a year of paperwork.</p>
 """
 
 CONTENT = {
     "header_project": (HEADER_PROJECT, "9pt"),
     "header_date": (HEADER_DATE, "9pt"),
     "header_rev": (HEADER_REV, "11pt"),
-    "legend": (LEGEND, "5.7pt"),
-    "problem": (PROBLEM, "7.3pt"),
-    "solution": (SOLUTION, "5.7pt"),
-    "uvp": (UVP, "7.4pt"),
-    "unfair": (UNFAIR, "6.2pt"),
-    "customers": (CUSTOMERS, "7.1pt"),
-    "metrics": (METRICS, "6.15pt"),
-    "channels": (CHANNELS, "6.2pt"),
-    "cost": (COST, "7.2pt"),
-    "revenue": (REVENUE, "6.7pt"),
+    "legend": (LEGEND, "5.5pt"),
+    "problem": (PROBLEM, "5.25pt"),
+    "solution": (SOLUTION, "5.2pt"),
+    "uvp": (UVP, "5.4pt"),
+    "unfair": (UNFAIR, "5.3pt"),
+    "customers": (CUSTOMERS, "5.35pt"),
+    "metrics": (METRICS, "5.4pt"),
+    "channels": (CHANNELS, "5.3pt"),
+    "cost": (COST, "6.1pt"),
+    "revenue": (REVENUE, "5.7pt"),
 }
 
 

@@ -2,6 +2,16 @@
 
 Written down when made. Newest first.
 
+## 9 Sep 2026 — Hub pitch as a story; Lean Canvas rev 5
+
+**Source:** rewrite of `docs/pitch-slide-text.md` after the Enniscorthy conversation and the silent film landing.
+
+**Decision:** The Hub talk is one story that works with or without slides. One bold idea per slide. Founder aha = Ireland already assessed them; the adviser cannot choose for them; they leave holding a board they wrote. Do not say “agentic orchestration” in the room — say the map of the sitting. Film is the shipped ~52s silent cut. Conversation is traction, not a customer logo.
+
+**Lean Canvas:** `docs/fill-lean-canvas.py` → rev 6, 9 Sep. Early-investor pass: real-world problem (titles without evidence / named gap / interview-ready) plus Ireland sitting numbers. OPEN is a booked sitting. Public URL still the walkthrough mock.
+
+**Leave off the slides:** Turas Nua / Martina as customer; both ~700 and 182,517 on the same slide (700 on Slide 2; 182,517 as a tiny caption on Slide 6).
+
 ## 8 Sep 2026 — Answers to teammate deck “Over to You”
 
 **Source:** `docs/RedeployMate_Team_Presentation.pdf` slide 13. Full write-up for the Hub: `docs/pitch-8sep-freeze.md`.

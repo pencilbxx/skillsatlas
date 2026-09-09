@@ -16,11 +16,11 @@ Do not invent numbers on stage. The stock example below is from the redundant-wo
 
 **Screen 3 — Two routes (~25s)**
 
-“Exactly two reachable roles. Not a job board. Not ‘you would be hired’. These skills already transfer. These gaps have a real Skillnet / SOLAS / Springboard+ course. The person chooses. We do not rank them.”
+“Exactly two reachable roles. Not a job board. Not ‘you would be hired’. These skills already transfer. This is the named gap — a real Skillnet / SOLAS / Springboard+ course. The person chooses. We do not rank them.”
 
 **Screen 4 — Leave with the board (~20s)**
 
-“One next step this week. An adviser page they can forward. They say who is in the room — a screen is not a hiring-manager panel. This is what they walk out holding — the cheat-board. Flip the setting: same evidence, different questions. Every line traces to a confirmed claim.”
+“One next step this week. An adviser page they can forward. They say who is in the room — a screen is not a hiring-manager panel. This is interview-ready — the cheat-board. Flip the setting: same evidence, different questions. Every line traces to a confirmed claim.”
 
 **(Optional, if the partner flag is on, +8s — cut something else)**
 

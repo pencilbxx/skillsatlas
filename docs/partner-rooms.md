@@ -37,6 +37,8 @@ Never: ranking the person, protected-trait fields, a SWOT/personality intake, in
 
 Public context: contracted Intreo Partner (NES / LAES), with Seetec as the other large brand. Sources live in `docs/evidence-base.md`. Do not invent contract values or office internals.
 
+Field note (Enniscorthy conversation, Sep 2026): `docs/field-turas-nua-enniscorthy.md`. Context only — not a logo.
+
 ### 2. FIT (fast track into tech)
 
 **What they already have:** ICT courses, apprenticeships, employer placement. They are the pipeline, not an activation office.

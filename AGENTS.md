@@ -17,6 +17,8 @@ The public URL is https://skillsatlas.vercel.app. Screen 00 is a cold-link landi
 
 `docs/pitch-slide-text.md` controls public narrative, slide words, spoken script, Q&A, and scope. `docs/SkillsAtlas_Hub_Pitch_Slide_Text_TEAM_DRAFT.docx` is generated from it for team comments.
 
+Human map: `README.md`, `CONTRIBUTING.md`, and `docs/README.md`. Do not move `docs/wireframes/` (Vercel root) or `docs/pitch-slide-text.md`.
+
 The current hook is:
 
 > **A list gives you options. SkillsAtlas gives you proof.**
@@ -74,14 +76,15 @@ When it exists:
 
 Before a prototype commit:
 
-1. Run `node --check docs/wireframes/demo.js`.
-2. Complete the golden path from Evidence through PDF.
-3. Skip both questions and verify the 2,400/SAP/date wording does not appear as confirmed evidence.
-4. Open Routes and Board directly and verify they are labelled seeded previews.
-5. Select each route and verify the Interview Board story, next step, and question change.
-6. Download and inspect the PDF for both a confirmed and preview/skip state.
-7. Confirm WhatsApp is absent from the active screens.
-8. Confirm the separate AI practice helper has not been added by unrelated work.
+1. Run `python scripts/check-repo-health.py`.
+2. Run `node --check docs/wireframes/demo.js`.
+3. Complete the golden path from Evidence through PDF.
+4. Skip both questions and verify the 2,400/SAP/date wording does not appear as confirmed evidence.
+5. Open Routes and Board directly and verify they are labelled seeded previews.
+6. Select each route and verify the Interview Board story, next step, and question change.
+7. Download and inspect the PDF for both a confirmed and preview/skip state.
+8. Confirm WhatsApp is absent from the active screens.
+9. Confirm the separate AI practice helper has not been added by unrelated work.
 
 ## Definition of done for the Hub
 

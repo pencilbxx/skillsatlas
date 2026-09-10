@@ -8,7 +8,8 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 from docx.shared import Cm, Pt, RGBColor
 
-OUT = Path(__file__).with_name("SkillsAtlas_Pitch_Contents_Team_Pack.docx")
+# Historical generator. Current Hub copy is docs/pitch-slide-text.md + scripts/build-pitch-slide-text-docx.py.
+OUT = Path(__file__).resolve().parents[1] / "docs" / "archive" / "pitch" / "SkillsAtlas_Pitch_Contents_Team_Pack.docx"
 
 NAVY = RGBColor(0x1B, 0x2A, 0x4A)
 CORAL = RGBColor(0xC4, 0x56, 0x3A)
@@ -1165,7 +1166,7 @@ def build():
 
     add_p(
         doc,
-        "Repo copies: docs/pitch-contents.md (argument) · docs/evidence-base.md (numbers) · docs/demo-script.md (90-second live demo).",
+        "Repo copies: docs/archive/pitch/pitch-contents.md (argument) · docs/evidence-base.md (numbers) · docs/demo-script.md (90-second live demo).",
         size=10,
         italic=True,
         color=MUTED,

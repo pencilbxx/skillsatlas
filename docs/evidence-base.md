@@ -105,4 +105,4 @@ These were useful pointers. They are **not** Observed in this file yet. Do not p
 | Career Returners Indicator 2026: 99% still struggle after upskilling | Returner *room* only; wrong headline for an Intreo Partner sitting | Unsourced here |
 | interviewing.io: recruiters 55% accurate from resume alone | Backup “CVs are a bad instrument” — not Slide 2 | Unsourced here |
 
-Pitch freeze that uses this file: `docs/pitch-8sep-freeze.md`.
+Pitch freeze that uses this file: `docs/archive/pitch/pitch-8sep-freeze.md` (historical). Current public copy is `docs/pitch-slide-text.md`.

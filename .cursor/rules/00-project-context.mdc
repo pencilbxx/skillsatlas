@@ -13,6 +13,8 @@ Two-week competition proof of concept. The public path is four sitting screens a
 
 **Live URL:** https://skillsatlas.vercel.app (`docs/wireframes/`). It is a clickable prototype using a prepared practice CV, not a live production AI pipeline. Screen 00 is the cold-link landing page. The on-stage click starts on Screen 02.
 
+**Repo map:** `README.md`, `CONTRIBUTING.md`, `docs/README.md`. Do not move `docs/wireframes/` or `docs/pitch-slide-text.md`.
+
 ## The four active screens
 
 1. **Problem:** a target title without the confirmed evidence, specific gap, or next step that makes the route credible.

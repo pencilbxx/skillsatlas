@@ -2,6 +2,8 @@
 
 This file controls public names, visual tokens, and final-artefact terminology for the live prototype, film, and Hub deck.
 
+**Hub slides only:** share `docs/pitch-deck-brand.md` with Bridget. Slide words stay in `docs/pitch-slide-text.md`.
+
 ## Names
 
 | What | Name | Where it goes |

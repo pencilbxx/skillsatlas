@@ -10,8 +10,8 @@ This file plans work **after the current narrative branch is merged**. The curre
 | --- | --- | --- | --- |
 | **Don** | Pitch structure, spoken text, and feedback on the existing film | Team Draft Word document; comments first | Do not create a parallel script. Accepted wording returns to `docs/pitch-slide-text.md`. |
 | **Sophia** | Pitch feedback and clarity check | Team Draft Word document | Flag unsupported or awkward lines; do not redesign the product. |
-| **Bridget** | Final slide design | Agreed **On the slide** lines from the Team Draft | Start layout after the opening, problem, and slide order are agreed. Do not pull copy from historical decks. |
-| **Andrew + Sri Karan** | Demo polish, video polish, and separate AI practice-helper implementation | Cursor, `docs/wireframes/`, existing film source | Branch from the narrative commit. The helper gets its own feature branch and must use confirmed evidence. |
+| **Bridget** | Final slide design | Agreed **On the slide** lines from the Team Draft; look from `docs/pitch-deck-brand.md` | Start layout after the opening, problem, and slide order are agreed. Do not pull copy from historical decks. |
+| **Andrew + Sri Karan** | Demo polish, video polish, and separate AI practice-helper implementation | Cursor, `docs/wireframes/`, existing film source. Feature brief: `docs/ai-practice-helper-brief.md` | Branch from the narrative commit. The helper gets its own feature branch and must use confirmed evidence. |
 
 ## Recommended Git workflow
 
@@ -24,7 +24,7 @@ This file plans work **after the current narrative branch is merged**. The curre
 
 ## AI practice-helper acceptance boundary
 
-The helper is tomorrow’s implementation task, not part of the narrative pass. It may use only worker-confirmed evidence and the selected route. It must not invent facts, score the worker, record audio without a new explicit decision, or claim that prepared output is live generation. It should remain secondary to **Save Interview Board as PDF**.
+The helper brief for Sri Karan is `docs/ai-practice-helper-brief.md`. It may use only worker-confirmed evidence and the selected route. It must not invent facts, score the worker, record audio without a new explicit decision, or claim that prepared output is live generation. On Screen 04 the helper sits **before** the PDF: it is the Hub WOW / spoken close. The PDF stays the takeaway underneath. Micro1-style hiring interviews are inspiration for practice, not the product.
 
 Before adding it to the spoken pitch, the team must decide exactly what is real in the build, test both routes and the skip path, and update `docs/pitch-slide-text.md` and `docs/demo-script.md` together.
 

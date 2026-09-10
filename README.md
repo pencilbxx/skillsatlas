@@ -18,10 +18,27 @@ SkillsAtlas is a two-week proof-of-concept for the TechIreland National AI Chall
 | `docs/wireframes/demo.html` | Public prototype copy |
 | `docs/wireframes/demo.js` | Public prototype state and interaction |
 | `docs/brand.md` | Names, palette, and public terminology |
+| `docs/pitch-deck-brand.md` | Deck-only brand sheet for Bridget |
+| `docs/ai-practice-helper-brief.md` | Sri Karan’s Screen 04 practice-helper brief |
 | `docs/decisions.md` | Product boundaries and dated decisions |
 | `docs/evidence-base.md` | The only numbers the deck may quote |
 
-Older pitch drafts, canvases, field logs, and BPMN files remain research, evidence, or design history. They are not sources for new public copy unless the canonical Team Draft explicitly adopts a line.
+The documentation map is `docs/README.md`. How to contribute is `CONTRIBUTING.md`. Older pitch drafts, canvases, field logs, and BPMN files remain research or design history. They are not sources for new public copy unless the canonical Team Draft explicitly adopts a line.
+
+## Repository map
+
+| Path | What it is |
+| --- | --- |
+| `docs/wireframes/` | Live clickable prototype. **Do not move** — this is the Vercel root. |
+| `docs/` | Active pitch, brand, decisions, evidence |
+| `docs/canvas/` | Current Lean Canvas |
+| `docs/field-logs/` | Conversation notes. Not customer proof. |
+| `docs/archive/` | Superseded decks and old canvases |
+| `docs/bpmn/` | Design-only process drawings |
+| `docs/explainer-remotion/` | Silent film source |
+| `prompts/` | Future model prompts, not used by the live HTML demo |
+| `scripts/` | Generators and `check-repo-health.py` |
+| `data/` | Empty on purpose until the later Next.js seed work |
 
 ## Current story
 
@@ -52,7 +69,7 @@ No organisation is presented as a customer, pilot, signed lead, or price signal.
 
 **This narrative branch:** canonical narrative, prototype state integrity, two route-specific Boards, Interview Board PDF, existing silent film guidance, deck handoff, and rehearsal material.
 
-**Next separate Cursor branch:** the AI practice-helper task assigned to Andrew and Sri Karan. It is not implemented in this narrative branch.
+**Next separate Cursor branch:** the AI practice-helper task assigned to Andrew and Sri Karan. Brief: `docs/ai-practice-helper-brief.md`. It is not implemented in this narrative branch.
 
 **Removed from the active pitch and demo:** WhatsApp. Historical and code references remain for project history.
 
@@ -62,4 +79,18 @@ No organisation is presented as a customer, pilot, signed lead, or price signal.
 
 The deployed experience is a static clickable prototype, not the future Next.js application. Open this repository in Cursor so `AGENTS.md` and `.cursor/rules/` load before making code changes.
 
-Before a commit, run the checks available for the files changed. For the static prototype, at minimum run `node --check docs/wireframes/demo.js`, inspect the complete click path, test the skip path, test direct Board navigation, and open the downloaded PDF.
+Local prototype:
+
+```bash
+cd docs/wireframes
+python -m http.server 4173
+```
+
+Before a push, from the repo root:
+
+```bash
+python scripts/check-repo-health.py
+node --check docs/wireframes/demo.js
+```
+
+If you changed `docs/pitch-slide-text.md`, regenerate the Word Team Draft with `python scripts/build-pitch-slide-text-docx.py`. Then inspect the complete click path, the skip path, direct Board navigation, and the downloaded PDF. Full contributor notes: `CONTRIBUTING.md`.

@@ -10,3 +10,19 @@ docs/wireframes/.deploy-b64/
 *.log
 .DS_Store
 Thumbs.db
+__pycache__/
+*.py[cod]
+.python-version
+.venv/
+venv/
+
+# Local design-tooling. Do not commit binaries or session output.
+.impeccable/
+.cursor/skills/
+.cursor/agents/
+
+# Remotion scratch (also listed in docs/explainer-remotion/.gitignore)
+docs/explainer-remotion/out/
+docs/explainer-remotion/.remotion/
+docs/explainer-remotion/node_modules/
+docs/canvas/_lean-canvas-clean.pdf

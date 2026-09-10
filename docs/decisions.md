@@ -2,6 +2,29 @@
 
 Written down when made. Newest first.
 
+## 10 Sep 2026 — Repository layout for contributors
+
+**Decision:** Keep canonical public paths stable. Reorganise everything else so a new contributor can find the live prototype, the pitch source, and historical research without mixing them.
+
+- Do not move `docs/wireframes/` (Vercel root), `docs/pitch-slide-text.md`, `docs/brand.md`, `docs/decisions.md`, or `docs/evidence-base.md`.
+- Python generators live in `scripts/`. Current Lean Canvas lives in `docs/canvas/`.
+- Superseded pitch packs, teammate PDFs, and old canvas revisions live in `docs/archive/`. They are not sources for new public copy.
+- Field notes live in `docs/field-logs/`.
+- Local Cursor design tooling (`.cursor/skills/`, `.impeccable/`) stays untracked.
+
+**Leave:** changing the Vercel project root, or treating archive files as current pitch copy.
+
+## 10 Sep 2026 — Helper is the Hub WOW; PDF moves under it
+
+**Decision:** If the AI practice helper ships in time, Screen 04 order is Interview Board → **Practice for interview** → Save Interview Board as PDF. The live-click close is the helper (one short prepared round). The PDF remains the artefact they take away, placed below, not deleted.
+
+- Feature brief: `docs/ai-practice-helper-brief.md`.
+- Do not put helper chat into the PDF.
+- Do not turn the sitting into a Micro1-style hiring interview.
+- If the helper is not implemented, labelled, and tested before freeze, keep the current PDF close.
+
+**Leave:** changing `docs/pitch-slide-text.md` spoken close until the helper is on the URL and rehearsed.
+
 ## 10 Sep 2026 — Title-to-proof narrative and active-scope reset
 
 **Decision:** Treat `docs/pitch-slide-text.md` as the canonical public narrative and generate `docs/SkillsAtlas_Hub_Pitch_Slide_Text_TEAM_DRAFT.docx` from it. The public hook is **“A list gives you options. SkillsAtlas gives you proof.”** The problem is title without proof, not a universal claim that an office leaves people alone for a fixed three weeks.
@@ -36,13 +59,13 @@ Written down when made. Newest first.
 
 **Decision:** The Hub talk is one story that works with or without slides. One bold idea per slide. Founder aha = Ireland already assessed them; the adviser cannot choose for them; they leave holding a board they wrote. Do not say “agentic orchestration” in the room — say the map of the sitting. Film is the shipped ~52s silent cut. Conversation is traction, not a customer logo.
 
-**Lean Canvas:** `docs/fill-lean-canvas.py` → rev 6, 9 Sep. Early-investor pass: real-world problem (titles without evidence / named gap / interview-ready) plus Ireland sitting numbers. OPEN is a booked sitting. Public URL still the walkthrough mock.
+**Lean Canvas:** `scripts/fill-lean-canvas.py` → rev 6, 9 Sep. Early-investor pass: real-world problem (titles without evidence / named gap / interview-ready) plus Ireland sitting numbers. OPEN is a booked sitting. Public URL still the walkthrough mock.
 
 **Leave off the slides:** Turas Nua / Martina as customer; both ~700 and 182,517 on the same slide (700 on Slide 2; 182,517 as a tiny caption on Slide 6).
 
 ## 8 Sep 2026 — Answers to teammate deck “Over to You”
 
-**Source:** `docs/RedeployMate_Team_Presentation.pdf` slide 13. Full write-up for the Hub: `docs/pitch-8sep-freeze.md`.
+**Source:** `docs/archive/pitch/RedeployMate_Team_Presentation.pdf` slide 13. Full write-up for the Hub: `docs/archive/pitch/pitch-8sep-freeze.md`.
 
 1. **Full assessment as a pre-step?** No. Confirm + 1–2 questions (cap 3, skip free) *in* their sitting. A pre-sitting replaces what they run.
 2. **Flex questions if the CV is thin?** Yes, inside the cap. No deep at-home pass this fortnight.
@@ -53,7 +76,7 @@ Written down when made. Newest first.
 
 ## 8 Sep 2026 — Lean Canvas rev 4 (mum test)
 
-**Source:** teammate deck `docs/RedeployMate_Team_Presentation.pdf`, read the same way as the 7 Sep canvas pack. Fill: `docs/fill-lean-canvas.py`.
+**Source:** teammate deck `docs/archive/pitch/RedeployMate_Team_Presentation.pdf`, read the same way as the 7 Sep canvas pack. Fill: `scripts/fill-lean-canvas.py`.
 
 **Decision:** The canvas is for a non-technical reader. Process in four steps. No stack, no 24-segment map, no “full assessment before the sitting,” no “show more” roles.
 
@@ -63,7 +86,7 @@ Written down when made. Newest first.
 
 ## 8 Sep 2026 — Lean Canvas rev 3 (teammate research: accept / leave)
 
-**Source:** teammate pack `docs/RedeployMate_LeanCanvas_and_Moat_Options.pdf` (7 Sep). Canvas fill: `docs/fill-lean-canvas.py`. Output: `docs/LeanCanvas-Editable2_WORKING VERSION.pdf`.
+**Source:** teammate pack `docs/archive/pitch/RedeployMate_LeanCanvas_and_Moat_Options.pdf` (7 Sep). Canvas fill: `scripts/fill-lean-canvas.py`. Output: `docs/canvas/lean-canvas-working.pdf`.
 
 **Decision:** Keep SkillsAtlas, four screens, two routes, worker does not pay. Take the list-vs-proof UVP, Gloat-class as “not the beachhead,” Seetec as the next twin, and moat as orchestration + confirm-gate + partner outcome data. Do not become a B2C app, an internal-mobility platform, or a fine-tune demo this fortnight.
 

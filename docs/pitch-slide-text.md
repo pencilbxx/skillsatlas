@@ -10,7 +10,7 @@
 
 ## How the team should use this document
 
-Comment on the words before Bridget turns them into slides. Do not create a parallel speech or copy old wording from another deck. When this document changes, regenerate `docs/SkillsAtlas_Hub_Pitch_Slide_Text_TEAM_DRAFT.docx` with `python docs/build-pitch-slide-text-docx.py`.
+Comment on the words before Bridget turns them into slides. Do not create a parallel speech or copy old wording from another deck. When this document changes, regenerate `docs/SkillsAtlas_Hub_Pitch_Slide_Text_TEAM_DRAFT.docx` with `python scripts/build-pitch-slide-text-docx.py`.
 
 | Owner | Work in this round |
 | --- | --- |
@@ -368,5 +368,7 @@ Stop. Leave Slide 10 up.
 | `docs/wireframes/demo.html` | Public prototype words |
 | `docs/wireframes/demo.js` | Public prototype state and interactions |
 | `docs/brand.md` | Naming, visual tokens, and final-artefact terminology |
+| `docs/pitch-deck-brand.md` | Deck-only brand sheet for Bridget (look and names, not slide copy) |
+| `docs/ai-practice-helper-brief.md` | Sri Karan’s helper brief (Screen 04 practice; not a Micro1 hiring AI) |
 
 Older pitch drafts, canvases, and field logs remain evidence or history. They are not sources for new public wording.

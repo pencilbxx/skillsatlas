@@ -13,7 +13,7 @@
 
 **Screenshot:** open the first tab → `Ctrl+0` (fit) → File → Export as image, or Win+Shift+S. The first tab is sized for one picture.
 
-**Important:** this file is still design-only. A technical judge may open it later; reconcile it against the built demo before slides freeze. Local Camunda examples live in `C:\Users\IKARUS\Desktop\CURSOR PROJECTS\Camunda Test`.
+**Important:** this file is still design-only. A technical judge may open it later; reconcile it against the built demo before slides freeze. Local Camunda practice belongs in a separate lab folder, not this repository.
 
 **Modelling convention used throughout:**
 

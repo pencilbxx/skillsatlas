@@ -11,9 +11,7 @@ Task: create the final BPMN 2.0 process file for the project in Camunda Desktop 
 
 Important context:
 - Camunda Desktop Modeler is already installed on this machine.
-- Local examples are available here:
-  C:\Users\IKARUS\Desktop\CURSOR PROJECTS\Camunda Test
-- Inspect those examples first and follow their structure, naming, and diagram conventions where appropriate.
+- Local examples: if you have a Camunda Getting Started package or another local lab, inspect those first. There is no Camunda lab inside this repository.
 - Do NOT invent a different process from scratch. Use the repo’s process blueprint docs as the source of truth:
   - docs/bpmn/README.md
   - any existing draft .bpmn files in docs/bpmn/
@@ -73,7 +71,7 @@ Validation requirements:
 Deliverables:
 1. The final `.bpmn` file.
 2. A short note in `docs/bpmn/modeler-notes.md` stating:
-   - which local example files you inspected under C:\Users\IKARUS\Desktop\CURSOR PROJECTS\Camunda Test
+   - which local Camunda examples you inspected, if any (no lab path is assumed on this machine)
    - any modelling choices you changed from the draft blueprint
    - confirmation that the file opens cleanly in Camunda Desktop Modeler
 

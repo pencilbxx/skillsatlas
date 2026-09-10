@@ -62,7 +62,7 @@ Add demo_runs capture: a script that runs both personas through the whole pipeli
 
 Use the dedicated prompt in `prompts/camunda-desktop-modeler-bpmn.md`.
 
-That prompt tells Cursor to inspect the local Camunda examples at `C:\Users\IKARUS\Desktop\CURSOR PROJECTS\Camunda Test`, author the real BPMN 2.0 file in Camunda Desktop Modeler, validate that it opens cleanly, reconcile it against the built demo routes, and save the final deliverable to `docs/bpmn/skillsatlas-evidence-agent.bpmn`.
+That prompt tells Cursor to inspect local Camunda examples if they exist on the machine, author the real BPMN 2.0 file in Camunda Desktop Modeler, validate that it opens cleanly, reconcile it against the built demo routes, and save the final deliverable to `docs/bpmn/skillsatlas-evidence-agent.bpmn`.
 
 ## P9 — Second-developer onboarding (hand this to dev 2 on day 1)
 
@@ -71,7 +71,7 @@ You are joining the SkillsAtlas build as developer 2. Read AGENTS.md and .cursor
 
 M1 · Seed data pack (days 1–3): data/personas/*.json, data/roles/*.json, data/courses/*.json per .cursor/rules/40-data.mdc. Two personas, 8 roles with real ESCO v1.2.0 URIs, 12 real courses with verifiable URLs. Done = `pnpm db:seed` runs clean and idempotent.
 
-M2 · AI practice helper: do not build from this generic onboarding prompt. First obtain the exact agreed feature brief from Andrew, create a separate branch, and preserve the confirmed-evidence boundary. It must not invent facts, score the worker, or displace Save Interview Board as PDF. If the brief is not available, leave the helper out.
+M2 · AI practice helper: follow `docs/ai-practice-helper-brief.md`. Create a separate branch and preserve the confirmed-evidence boundary. It must not invent facts or score the worker. On Screen 04 it sits before the PDF as the Hub WOW; the PDF stays the takeaway underneath. If the brief is not available, leave the helper out.
 
 M3 · BPMN finalisation (days 8–10): follow prompts/camunda-desktop-modeler-bpmn.md exactly. Done = docs/bpmn/skillsatlas-evidence-agent.bpmn opens cleanly in Camunda Desktop Modeler and matches the built demo flow.
 

@@ -1,7 +1,6 @@
-"""One-shot: rebuild Lean Canvas rev 3 into docs/LeanCanvas-rev3.pdf.
+"""Historical one-shot. Output already lives at docs/archive/canvas/lean-canvas-rev3.pdf.
 
-Does not touch the current mum-test canvas (WORKING VERSION.pdf).
-Uses that file only as the blank grid source.
+Do not rerun this against the current canvas in docs/canvas/.
 """
 
 from pathlib import Path
@@ -9,11 +8,12 @@ import shutil
 
 import fitz
 
-ROOT = Path(__file__).resolve().parent
-TEMPLATE = ROOT / "LeanCanvas-Editable2_WORKING VERSION.pdf"
-DEST = ROOT / "LeanCanvas-rev3.pdf"
-TMP = ROOT / "_lean-canvas-rev3-tmp.pdf"
-PREVIEW = ROOT / "_lean-canvas-rev3-preview.png"
+ARCHIVE = Path(__file__).resolve().parent
+DOCS = ARCHIVE.parents[1]
+TEMPLATE = DOCS / "canvas" / "lean-canvas-working.pdf"
+DEST = ARCHIVE / "lean-canvas-rev3.pdf"
+TMP = ARCHIVE / "_lean-canvas-rev3-tmp.pdf"
+PREVIEW = ARCHIVE / "lean-canvas-rev3-preview.png"
 
 BLACK = "#111111"
 
@@ -243,6 +243,10 @@ def save_over(doc: fitz.Document, dest: Path) -> Path:
 
 
 def main() -> None:
+    raise SystemExit(
+        "Historical one-shot. The rev 3 PDF already lives at "
+        "docs/archive/canvas/lean-canvas-rev3.pdf. Do not rerun this against the current canvas."
+    )
     if not TEMPLATE.exists():
         raise FileNotFoundError(TEMPLATE)
     shutil.copyfile(TEMPLATE, DEST)

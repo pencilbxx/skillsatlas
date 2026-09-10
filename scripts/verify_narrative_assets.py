@@ -62,7 +62,7 @@ def main() -> None:
     ):
         require(word, marker, "generated Word Team Draft")
 
-    canvas = pdf_text(DOCS / "LeanCanvas-Editable2_WORKING VERSION.pdf")
+    canvas = pdf_text(DOCS / "canvas" / "lean-canvas-working.pdf")
     for marker in (
         "A list gives you options. SkillsAtlas gives you proof.",
         "THE WORKER DOES NOT PAY",

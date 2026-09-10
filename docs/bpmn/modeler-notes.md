@@ -1,6 +1,6 @@
 # Modeler notes — SkillsAtlas BPMN
 
-Inspected: `C:\Users\IKARUS\Desktop\CURSOR PROJECTS\Camunda Test\processes\ravens-point-detailed.bpmn` (colours, yellow notes, groups).
+Inspected: a local Ravens Point lab diagram for colour, yellow notes, and groups. That lab is not part of this repository.
 
 Three files (do not merge them in Modeler and overwrite):
 

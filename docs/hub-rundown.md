@@ -1,104 +1,87 @@
-# Hub rundown — 7 minutes + 3 Q&A
+# SkillsAtlas Hub rundown — 7 minutes + 3 minutes Q&A
 
-14 Sep. Matches `docs/pitch-slide-text.md`. If the two files drift, the slide-text clock wins.
+**Date:** 14 Sep 2026. **Slides freeze:** 13 Sep 2026, 2pm.
+
+This file follows `docs/pitch-slide-text.md`. If the two drift, `docs/pitch-slide-text.md` wins; regenerate the Word Team Draft from it.
 
 Judges score **the problem, the demo, and the team**.
 
-**Order:** short pitch (sting + aha) → **whole silent film (~52s: four screens + the map of the sitting)** → live click (proof it is real) → ask → Q&A.
+## Core line
 
-The film may retell the four screens. Keep it. Live click does **not** tour the four screens again, and does **not** start on 00 Start. It proves the path is on the laptop: evidence → named gap → interview-ready (the board) → who is in the interview. 00 Start is for people who open https://skillsatlas.vercel.app after the room.
+> A list gives you options. SkillsAtlas gives you proof.
 
-Two people. Never the same person: **talker** and **clicker**.
+## Order
 
-Talk less. The film does the explaining. The film is **silent** — no voice, no music.
+Short problem → existing silent film → live evidence-to-PDF click → user and payer → what remains to prove → team → ask.
 
-The talker script in `docs/pitch-slide-text.md` works with or without slides. Rehearse once with the projector off.
+The talker never holds the mouse. The clicker starts on Screen 02, not Screen 00. The film stays silent. WhatsApp is not in the active pitch or demonstration.
 
----
+## The clock
 
-## The clock (7:00)
-
-| Time | What | On the projector |
+| Time | What | Projector |
 | --- | --- | --- |
-| **0:00–0:50** | Hook + problem + aha | Slides 1 → 2 |
-| **0:50–1:00** | Four words. No lecture. | Slide 3 |
-| **1:00–2:00** | **Whole film, ~52s, silent** | Slide 4 |
-| **2:00–3:20** | Live product | Slide 5 (dark). Browser. |
-| **3:20–6:20** | Who it’s for, money, scale, team, ask | Slides 6 → 10 |
-| **6:20–7:00** | Ask stays up. Stop talking. | Slide 10 |
-| **7:00–10:00** | Q&A | Slide 10 still up |
+| **0:00–0:45** | Hook and title-without-proof problem | Slides 1–2 |
+| **0:45–0:55** | Confirm · Question · Two routes · Interview Board | Slide 3 |
+| **0:55–1:55** | Existing silent film, about 52 seconds | Slide 4 |
+| **1:55–3:30** | Clickable prototype: Evidence → Routes → Interview Board → PDF | Slide 5, then browser |
+| **3:30–6:20** | User and payer, difference, next proof, team, ask | Slides 6–10 |
+| **6:20–7:00** | Stop. Let the ask hold. | Slide 10 |
+| **7:00–10:00** | Questions | Slide 10 |
 
-If late at 1:00, still **play the film**. Cut Slide 8 talk later.
+If late, shorten Slide 8. Never skip the evidence transformation, the two routes, or the Interview Board.
 
-If late at 3:20, skip extra “what we built” talk. Never skip the board.
+## What each piece proves
 
-If the film file fails, go to live click and use the Screen 2–4 lines from `docs/demo-script.md`.
+**Slides 1–2:** A title or list can identify an option but does not supply credible evidence, a named gap, or one next step.
 
----
+**Film:** The map behind the sitting. One opening sentence, then silence: *“The system proposes, the worker confirms, and the worker chooses.”*
 
-## What each piece is for
+**Live click:** The prototype is tangible. “Managed stock” becomes stronger wording only after worker review and confirmation. The worker chooses between two unranked routes and saves a route-specific Interview Board as PDF.
 
-**Pitch (50s)**  
-List vs proof. Assessed → list → silent weeks. ~700 this quarter (close to home). Aha: the adviser cannot choose for them. Then get out of the way.
+**Slides 6–8:** The same four screens can be hosted in two candidate-present settings. The worker is the user; the organisation is the proposed payer. Buyer, workflow fit, privacy requirements, and price remain open.
 
-**Film (~52s, silent)**  
-The sitting, fully. Four screens and the map of who does what. Talker, one sentence then quiet: *They confirm the evidence. We name the gap. They leave interview-ready.*
+**Slide 9:** The named team contributions are true and specific.
 
-**Live click (~80s)**  
-Same sitting, on the laptop. Confirm the evidence. Point at the named gap. Interview-ready — the board. Flip who is in the room. Words: Slide 5 in `pitch-slide-text.md`.
+**Slide 10:** Galway, then one hosted sitting.
 
-**Who it’s for (Slide 6)**  
-Tiny caption: **182,517** on the Live Register. Not a TAM. ~700 stays on Slide 2.
+## Deck order
 
-**Ask**  
-Galway, then one sitting. Slide 10 stays for Q&A.
+1. Hook — list versus proof
+2. Problem — title without proof
+3. Confirm · Question · Two routes · Interview Board
+4. Existing silent film
+5. Clickable prototype
+6. Same four screens, two candidate-present rooms
+7. Confirmation trail and product boundaries
+8. What must be proved next
+9. Team
+10. Ask
 
----
+## Laptop tabs
 
-## How to put it in the deck
+1. Slides
+2. Live prototype, already on Screen 02
+3. Recorded full run
+4. Talker notes
 
-1. Hook  
-2. Problem  
-3. Title card: Confirm · Question · Two jobs · Board  
-4. **Film** — full-bleed, whole ~52s file, silent  
-5. **The sitting — on the laptop** (dark). Talker points at the browser.  
-6. Who it’s for  
-7. Who pays / not ChatGPT  
-8. 10 → 20 → 200  
-9. Team  
-10. Ask  
+Keep the film file next to the deck. Test the laptop with sound muted.
 
-**Laptop tabs, left to right:**
+## Failure plan
 
-1. Slides  
-2. Live demo (confirm screen ready; saved-copy backup warmed — clicker only, never spoken). Do not start from 00 Start.  
-3. Recorded full run (wifi dead)  
-4. Talker notes (`pitch-slide-text.md` script), presenter only  
-
-Film file next to the slides, copied onto the presentation laptop the night before.
-
-**Sound:** the film is silent. One sentence at the start, then quiet. Test the laptop so Windows does not ping.
-
----
-
-## Failures (decide before the room)
-
-| What dies | What you do |
+| Failure | Response |
 | --- | --- |
-| Model / wifi | Clicker already on the saved-copy path (`?replay=golden` — never say this). Do not narrate a spinner. |
-| Live site | Tab 3 recording. Slide 5 words. |
-| Film file | Skip Slide 4. Live click uses the fuller `docs/demo-script.md` (Screens 2–4). |
-| Clicker lost | Talker does not take the mouse. Pause. Clicker recovers. |
-| Projector | Talker script still stands. Do not apologise. Do the sitting on the laptop. |
+| Live site | Use the recorded run. Keep speaking from `docs/demo-script.md`. |
+| Film file | Skip Slide 4 and use the complete Screen 02–04 live narration. |
+| Clicker loses position | Talker pauses. The talker does not take the mouse. |
+| Projector | Deliver the one-breath story, then demonstrate on the laptop if practical. |
+| PDF download | Keep the Board visible and say: “The final action saves this Interview Board as a PDF.” Do not troubleshoot on stage. |
 
----
+## Q&A boundaries
 
-## Q&A (3:00)
-
-Slide 10 stays. Do not restart the film unless they ask.
-
-If they ask whether the process map is the product: *The film is how we designed the sitting — who does what. What you clicked is the product. The drawing tool is not the live engine this fortnight.*
-
-If they ask whether we have spoken to anyone: *Yes. An adviser, this month. They cannot choose for the applicant. A conversation, not a contract. We will not put their office on a slide as a customer.*
-
-Other short answers: `docs/pitch-slide-text.md` backup section.
+- One field conversation, not a customer, pilot, contract, or price signal.
+- Clickable prepared prototype, not a live production AI pipeline.
+- Illustrative learning options, not verified live course recommendations.
+- Candidate-present recruiter setting, not recruiter-alone CRM search.
+- Worker uses; organisation is the proposed payer; not B2C in the current model.
+- WhatsApp is not in the active demonstration or pitch.
+- The separate AI practice-helper task is discussed only after implementation and testing.

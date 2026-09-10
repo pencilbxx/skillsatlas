@@ -1,30 +1,48 @@
-# Demo wireframes
+# SkillsAtlas clickable prototype
 
-Clickable sitting for the Hub. Names and look: `docs/brand.md`. Visual language matches the Ireland evidence atlas ([Manus report](https://ireland-skil-q5sln9qn.manus.space)): DM Serif Display, Manrope, coral `#ED6A4A`, navy, shoreline.
+This folder is the Hub prototype. Product and pitch wording follows `docs/pitch-slide-text.md`; names and visual tokens follow `docs/brand.md`.
 
-This is a **clickable prototype**, not the Next.js app. **SkillsAtlas** is the product, **RedeployMate** is the challenge team. The live URL is the judge view — no presenter script.
+**Live URL:** https://skillsatlas.vercel.app
 
-## Live URL
+This is a **clickable prototype using a prepared practice CV**, not the future Next.js application and not a live production AI pipeline.
 
-https://skillsatlas.vercel.app
+## Demo path
 
-Judges land on Screen **00 Start**, then 01–04. Last step on the board: **Save as PDF** (downloads `SkillsAtlas-interview-board.pdf`).
+A judge opening the link lands on Screen **00 Start**. On stage, the clicker starts on Screen **02 Evidence**.
 
-Film file: `media/skillsatlas-process-v2.mp4`. Deploy this whole folder so the film goes up with the HTML.
-
-From this folder, after `vercel login`: `npx vercel --prod --yes --scope andrews-projects-b52b259b`
-
-## Open in Chrome
-
-1. Open https://skillsatlas.vercel.app
-2. Click **Start the sitting**, then walk the coral buttons.
-
-| Screen | What to click |
+| Screen | What to do |
 | --- | --- |
-| 00 Start | Optional silent film, then Start the sitting |
-| 01 Problem | Same CV, this time as evidence |
-| 02 Evidence | Confirm these lines → Answer (or Skip) twice → See two routes |
-| 03 Routes | Choose this path (goes to the board) |
-| 04 Board | Flip Phone / First / Panel and Recruiter / Hiring manager — then **Save as PDF** |
+| 00 Start | Cold-link identity and optional existing silent film; do not tour it on stage |
+| 01 Problem | Title without proof; click **Turn this CV into evidence** |
+| 02 Evidence | Confirm the two CV lines → show both prepared answers → **Confirm stronger wording** → See two routes |
+| 03 Routes | Choose one of exactly two prepared route examples |
+| 04 Interview Board | Change one interview setting → **Save Interview Board as PDF** |
 
-Do not treat this file as live product copy. Catalogue lines and the SAP / 2,400 example are for the pitch only.
+## State rules
+
+- An extracted CV line is labelled **From CV · awaiting confirmation**.
+- The worker may skip either question without penalty.
+- If any detail is skipped, the original **“managed stock”** wording remains. No number, system, or date may appear as worker-confirmed evidence.
+- After both prepared answers, the stronger wording remains proposed until the worker clicks **Confirm stronger wording**.
+- Direct navigation to Routes or the Interview Board is a **seeded preview**, not confirmed worker evidence.
+- The selected route changes the Interview Board story, next step, and question set.
+- The PDF reflects the current route and evidence state.
+
+## Public terminology
+
+Use **SkillsAtlas Interview Board**, **two credible role routes**, **illustrative learning option**, and **question example**.
+
+Do not call fixed prepared strings live AI output. Do not call the displayed learning options verified/current unless a real provider listing is checked and linked.
+
+WhatsApp is removed from the active prototype and pitch. Historical/code references remain elsewhere. The AI practice helper is a separate task for Andrew and Sri Karan and is not implemented by this narrative pass.
+
+## Local use
+
+Serve this directory over HTTP rather than opening `file://` directly. Example:
+
+```bash
+cd docs/wireframes
+python3 -m http.server 4173
+```
+
+The film file is `media/skillsatlas-process-v2.mp4`. Keep the existing silent film unless the team makes a small text-only re-render.

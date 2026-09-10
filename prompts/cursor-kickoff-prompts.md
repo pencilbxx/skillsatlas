@@ -1,11 +1,13 @@
 # Cursor kickoff prompts
 
+> **Current scope, 10 Sep:** read `docs/pitch-slide-text.md` before using any prompt below. WhatsApp is removed from the active demo and pitch. The final artefact is the **SkillsAtlas Interview Board**. The AI practice helper is a separate Andrew + Sri Karan task and needs its own agreed brief and branch.
+
 Ready-to-paste prompts for the build. Each assumes the agent has read `AGENTS.md` and the rules (automatic when Cursor opens the repo root). Paste one, review the diff, commit, move to the next.
 
 ## P0 — Scaffold (day 1)
 
 ```
-Scaffold the SkillsAtlas repo per AGENTS.md: Next.js App Router + TypeScript strict + Tailwind + shadcn/ui, lib/ folder with stubs for models.ts, schemas.ts, esco.ts, guardrails.ts, evidence.ts, ai.ts, supabase.ts, copy.ts (each with a header comment describing its contract from AGENTS.md), app/ with four placeholder routes (/, /evidence, /routes, /handoff) each rendering its screen name in large type, and a /api/health route that makes one cheap model call via lib/ai.ts and returns the response. In lib/models.ts, pin exactly two OpenAI model IDs as `extraction` and `reasoning` — check OpenAI's current pricing page first, do not use IDs from memory; leave a TODO comment with today's date if the pricing page cannot be reached from this environment. lib/ai.ts must log one line per call: model ID, token counts, latency, schema-valid yes/no. Add .env.example with exactly: OPENAI_API_KEY, SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, PARTNER_WEBHOOK_URL. Do not add auth. Do not add Google anything. Do not add any other dependency without asking.
+Scaffold the SkillsAtlas repo per AGENTS.md: Next.js App Router + TypeScript strict + Tailwind + shadcn/ui, lib/ folder with stubs for models.ts, schemas.ts, esco.ts, guardrails.ts, evidence.ts, ai.ts, supabase.ts, copy.ts (each with a header comment describing its contract from AGENTS.md), app/ with four placeholder routes (/, /evidence, /routes, /handoff) each rendering its screen name in large type, and a /api/health route that makes one cheap model call via lib/ai.ts and returns the response. In lib/models.ts, pin exactly two OpenAI model IDs as `extraction` and `reasoning` — check the current model catalogue first, do not use IDs from memory; leave a TODO comment with today's date if it cannot be reached. lib/ai.ts must log one line per call: model ID, token counts, latency, schema-valid yes/no. Add .env.example with exactly: OPENAI_API_KEY, SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY. Do not add auth, WhatsApp, Google integrations, or any other dependency without asking.
 ```
 
 ## P1 — Schema and seeds (day 1–2)
@@ -41,13 +43,13 @@ Build matching per 20-evidence-domain.mdc: POST /api/match that normalises confi
 ## P5 — Plan and the board (day 6–7)
 
 ```
-Build POST /api/plan using prompts/assemble-plan.v1.md, the commit-one-step UI, POST /api/adviser-summary, POST /api/evidence-pack using prompts/evidence-pack.v1.md (STAR stories only), POST /api/predict-questions using prompts/predict-questions.v1.md, a cache keyed by route + interview setting + evidence ids, the never-invent gate in lib/guardrails.ts (every evidenceIds / evidenceHook must exist and be CONFIRMED; strip and log anything else, with tests), and Screen 4 (/handoff) as the leave-the-room close: adviser summary + the cheat-board. The board has an interview-setting control (stage + who is in the room). Changing it regenerates questions only, not stories. Do not label it seniority. Do not wait on WhatsApp for this screen to be done.
+Build POST /api/plan using prompts/assemble-plan.v1.md, the commit-one-step UI, POST /api/adviser-summary, POST /api/evidence-pack using prompts/evidence-pack.v1.md (STAR stories only), POST /api/predict-questions using prompts/predict-questions.v1.md, a cache keyed by route + interview setting + evidence ids, and the never-invent gate in lib/guardrails.ts (every evidenceIds / evidenceHook must exist and be CONFIRMED; strip and log anything else, with tests). Screen 4 (/handoff) closes on the **SkillsAtlas Interview Board** and Save Interview Board as PDF. The Board has an interview-setting control (stage + who is in the room). Changing it regenerates questions only, not stories. Do not label it seniority. Do not add WhatsApp.
 ```
 
-## P6 — Bonus WhatsApp partner (day 8, feature-flagged)
+## P6 — Retired integration prompt
 
 ```
-Behind the flag NEXT_PUBLIC_ENABLE_PARTNER: POST /api/handoff sends the accountability-partner webhook (URL from env PARTNER_WEBHOOK_URL; payload validated against the HandoffPayload Zod schema — workerId, routeId, committedStep, cadence, exactly those four fields — with a contract test asserting no other fields can leak). If the flag is on, Screen 4 also shows the handoff receipt (what was sent / what was NOT sent). The partner's first-message text comes from the static string in lib/copy.ts (accountability-partner boundary statement), never from a model call. If the flag is off, Screen 4 still ends on the cheat-board.
+Do not run an integration task here. WhatsApp is removed from the active demo and pitch. Preserve historical code only if it already exists; do not surface it in the active UI. The current close is Save Interview Board as PDF.
 ```
 
 ## P7 — Golden run (day 9)
@@ -69,7 +71,7 @@ You are joining the SkillsAtlas build as developer 2. Read AGENTS.md and .cursor
 
 M1 · Seed data pack (days 1–3): data/personas/*.json, data/roles/*.json, data/courses/*.json per .cursor/rules/40-data.mdc. Two personas, 8 roles with real ESCO v1.2.0 URIs, 12 real courses with verifiable URLs. Done = `pnpm db:seed` runs clean and idempotent.
 
-M2 · WhatsApp accountability-partner handoff (days 7–8, feature-flagged NEXT_PUBLIC_ENABLE_PARTNER): POST /api/handoff + receipt UI per P6. Done = flag on shows the four-field receipt; flag off removes all partner UI from the demo. The closer is the cheat-board either way.
+M2 · AI practice helper: do not build from this generic onboarding prompt. First obtain the exact agreed feature brief from Andrew, create a separate branch, and preserve the confirmed-evidence boundary. It must not invent facts, score the worker, or displace Save Interview Board as PDF. If the brief is not available, leave the helper out.
 
 M3 · BPMN finalisation (days 8–10): follow prompts/camunda-desktop-modeler-bpmn.md exactly. Done = docs/bpmn/skillsatlas-evidence-agent.bpmn opens cleanly in Camunda Desktop Modeler and matches the built demo flow.
 

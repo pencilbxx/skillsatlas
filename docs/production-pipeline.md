@@ -1,5 +1,7 @@
 # Production pipeline — two-week build plan
 
+> **Current scope note, 10 Sep:** `docs/pitch-slide-text.md` is the narrative source of truth. WhatsApp is no longer in the active demo or pitch. Historical design/code references may remain. The AI practice helper is a separate Andrew + Sri Karan task and must not weaken the Interview Board PDF close.
+
 Day zero is 28 Aug (keys land). Slides freeze 13 Sep 2pm. That is twelve working days. This plan front-loads all plumbing risk into days 1–2 and all polish into days 9–11, leaving day 12 for rehearsal and contingency.
 
 ## Phase 0 — Day 1 morning: the plumbing sprint (before any feature talk)
@@ -41,12 +43,12 @@ Following the blueprint's day-one sequence, in order:
 
 **Exit criteria:** both personas get two route cards with provenance and a plan. Midpoint (≈5 Sep) passes with the demo path green.
 
-## Phase 3 — Days 7–8: the board, then optional WhatsApp
+## Phase 3 — Days 7–8: the Interview Board and integrity pass
 
 | Day | Build |
 | --- | --- |
-| 7 | Adviser summary + `evidence-pack` + never-invent gate + cheat-board on Screen 4. This is the close — the artefact they leave the room with. |
-| 8 | Bonus: WhatsApp accountability-partner webhook + receipt UI (what was sent / what was NOT sent), behind `NEXT_PUBLIC_ENABLE_PARTNER`. If it slips, the demo still ends on the board. |
+| 7 | Professional summary + never-invent gate + **SkillsAtlas Interview Board** on Screen 4. This is the close and the PDF the worker takes away. |
+| 8 | Evidence-state integrity: skip keeps the original claim; strengthened wording requires separate confirmation; direct navigation is a seeded preview; both routes produce different Board content. |
 
 ## Phase 4 — Days 9–11: polish, golden runs, pitch
 
@@ -65,13 +67,13 @@ The second developer gets only modules with hard interfaces, and every module ha
 
 | Module | Owner | Interface contract | If it doesn't land |
 | --- | --- | --- | --- |
-| Demo-path core (parse-cv → questioning → matching → routes → plan → pack → cheat-board) | Main dev | — | — |
+| Demo-path core (parse-cv → questioning → matching → routes → plan → SkillsAtlas Interview Board) | Main dev | — | — |
 | M1 · Seed data pack (personas, roles, courses) | Dev 2 | `data/*.json` against the Zod schemas; validated by `pnpm db:seed`. ESCO skills, not a competency matrix. Read `docs/bridget-hr-feedback.md` | Main dev hand-writes 2 personas + 6 roles + 8 courses (~3 h; P1 generates the shape) |
-| M2 · WhatsApp accountability-partner handoff | Dev 2 | `POST /api/handoff` + receipt UI, behind `NEXT_PUBLIC_ENABLE_PARTNER` | Flag stays off; demo still ends on the cheat-board |
+| M2 · AI practice helper on the Interview Board | Andrew + Sri Karan | Separate feature brief and branch; use only confirmed evidence; no invented facts, recording, scoring, or claim that a prepared interaction is live AI | Leave it out; demo still ends on the Interview Board PDF |
 | M3 · Final BPMN in Desktop Modeler | Dev 2 | `.bpmn` opens cleanly; `modeler-notes.md` written | Deck uses the existing valid draft `.bpmn` |
 | M4 · Golden-run capture + replay | Dev 2 (day 9) | `?replay=golden` renders all four screens offline | Main dev records one golden run via P7 (~2 h) |
 
-Rules that make this safe: `lib/schemas.ts` is owned by the main dev and frozen on day 2; dev 2 works in feature branches `m1`–`m4` with draft PRs and never commits to `main`; everything dev 2 touches is behind a flag or a seed script, so half-finished work cannot break the deploy. **Solo plan:** drop M2 (WhatsApp bonus), do M1 on days 1–2, keep the draft BPMN, do M4 on day 9 — roughly one added working day, already absorbed by the schedule. The closer is still the cheat-board.
+Rules that make this safe: `lib/schemas.ts` is owned by the main dev and frozen on day 2; feature work uses branches and draft PRs rather than direct commits to `main`; half-finished work stays behind a flag or out of the active path. The practice helper ships only if it is labelled honestly and passes the confirmed-evidence boundary. The closer remains **Save Interview Board as PDF**.
 
 ## The demo script
 

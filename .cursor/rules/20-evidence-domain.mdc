@@ -38,9 +38,9 @@ Matching is evidence-vs-essential-skills graph overlap, never keyword overlap an
 
 **Tie-break when more than two routes qualify** (deterministic, in this order): highest essential-skill coverage % → smallest total gap-closing cost in euros → alphabetical by occupation title. Stable, boring, defensible.
 
-## Handoff contract (app/api/handoff) — bonus, flagged
+## Historical handoff contract (app/api/handoff) — inactive
 
-The WhatsApp partner is **not** the Screen 4 closer. The closer is the cheat-board. This webhook is behind `NEXT_PUBLIC_ENABLE_PARTNER`. Privacy rules do not relax when the flag is on.
+WhatsApp is removed from the active demo and pitch. Historical code or design references may remain, but do not surface or implement this path unless the user explicitly reactivates it. The active Screen 4 close is **Save Interview Board as PDF**. If the historical webhook is ever revisited, its privacy rules do not relax.
 
 The accountability-partner webhook payload is a named Zod schema in `lib/schemas.ts`:
 

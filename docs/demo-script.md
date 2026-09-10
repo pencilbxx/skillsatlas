@@ -1,37 +1,44 @@
-# Demo script — 90 seconds
+# SkillsAtlas live-demo script — about 90 seconds
 
-Draft. Write it in week one. Freeze on day 10. Say this out loud, on a clock, against the live URL.
+This file follows `docs/pitch-slide-text.md`. If the two drift, `docs/pitch-slide-text.md` wins; regenerate the Word Team Draft from it.
 
-Live URL: https://skillsatlas.vercel.app (clickable sitting, not the Next.js app). Brand: `docs/brand.md`.
+**Live URL:** https://skillsatlas.vercel.app
 
-Do not invent numbers on stage. The stock example below is from the redundant-worker persona; if the live extract differs, narrate what is on screen.
+This is a clickable prototype using a prepared practice CV. It does not run the production AI pipeline. Screen 00 is the cold-link landing page; the Hub clicker starts on Screen 02.
 
-A judge who opens the URL later sees **00 Start** first (who we are, optional silent film). That is not the 90-second tour. On Hub, the clicker is already on confirm or the board. Do not tour 00 on stage.
+## Before the click
 
----
+> “This is a clickable prototype using a prepared practice CV. The production AI pipeline is not live in this demo.”
 
-**Screen 1 — The problem (~15s)**
+## Screen 02 — Evidence, questions, confirmation
 
-“This is the handoff Ireland actually does. You’ve been assessed. Here’s a course list. See you in three weeks. We are going to do something else with the same CV.”
+> “Nothing is used until the worker confirms it. Skip is free. Watch this weak CV line: ‘managed stock.’ Two short questions add a number, a system, and dates. The worker reviews that stronger wording before anything downstream may use it. Now it is evidence, not a keyword.”
 
-**Screen 2 — Evidence + questions (~30s)**
+**Clicker:** Confirm the two CV lines → show both prepared answers → **Confirm stronger wording** → See two routes.
 
-“The agent reads the CV. The worker confirms — nothing is used until they say it is true. Watch this weak line: ‘managed stock’. Two questions. Skip is always allowed. Now it is 2,400 SKUs in SAP, with a date. That is evidence. That is not a keyword.”
+Do not use the skip branch on stage. It is there to prove the worker can refuse; it correctly retains only the original weak claim.
 
-**Screen 3 — Two routes (~25s)**
+## Screen 03 — Two routes
 
-“Exactly two reachable roles. Not a job board. Not ‘you would be hired’. These skills already transfer. This is the named gap — a real Skillnet / SOLAS / Springboard+ course. The person chooses. We do not rank them.”
+> “Exactly two credible role routes. Not jobs available now, not a hiring promise, and not a ranking. The worker chooses. A learning option appears only for a named gap; the examples in this prototype are illustrative.”
 
-**Screen 4 — Leave with the board (~20s)**
+**Clicker:** Choose one route. Do not skip this screen.
 
-“One next step this week. An adviser page they can forward. They say who is in the room — a screen is not a hiring-manager panel. This is interview-ready — the cheat-board. Flip the setting: same evidence, different questions. Every line traces to a confirmed claim. Last step: they save the board as a PDF and walk out holding it.”
+## Screen 04 — SkillsAtlas Interview Board
 
-**(Optional, if the partner flag is on, +8s — cut something else)**
+> “This is the SkillsAtlas Interview Board. The chosen route changes the story and question. Change the interview stage or who is in the room: the confirmed evidence stays; the question changes. The close is the PDF the worker takes away.”
 
-“WhatsApp gets four fields only: who, which route, the one step, how often we check in. Nothing else. Nothing they say there comes back into scoring.”
+**Clicker:** Change one interview setting → **Save Interview Board as PDF**.
 
----
+## Do not show or claim
 
-**If the model API is dead:** `?replay=golden` before you start talking. Do not narrate a spinner. (The clickable sitting has no model API; wifi death = recorded tab.)
+- Do not open Screen 00 on stage.
+- Do not show WhatsApp; it is removed from the active demonstration and pitch.
+- Do not call course examples live or verified recommendations.
+- Do not say Turas Nua is a customer or pilot.
+- Do not call the recruiter CRM-search problem part of this product.
+- Do not mention the separate AI practice-helper task until it has been implemented, labelled honestly, and tested.
 
-**If you have only three screens:** drop Screen 1 (static image on the deck) and keep 2 → 3 → 4. The point still lands.
+## Recovery
+
+If the live site fails, use the recorded run already open in the next tab. Do not narrate a spinner or technical failure. The spoken lines above still work.

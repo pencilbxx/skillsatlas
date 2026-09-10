@@ -1,26 +1,45 @@
 ---
-description: UI conventions for the four demo screens
+description: UI conventions for the four active SkillsAtlas screens
 alwaysApply: false
-globs: app/**/*.tsx, components/**/*.tsx
+globs: app/**/*.tsx, components/**/*.tsx, docs/wireframes/*.{html,css,js}
 ---
 
 # UI conventions
 
-Until the Next.js app exists, the clickable sitting in `docs/wireframes/` is the demo. Colour and type: `docs/brand.md`. Do not invent a second palette.
+Until a production application exists, `docs/wireframes/` is the public clickable prototype. Copy follows `docs/pitch-slide-text.md`; visual tokens follow `docs/brand.md`.
 
-shadcn/ui + Tailwind when the app is scaffolded. Change the accent colour and font once, then stop. Ugly and consistent beats bespoke and half-finished.
+## Public truth
+
+- Label the experience **clickable prototype** and the data **prepared practice CV**.
+- Do not imply that fixed strings came from a live model call.
+- Use **SkillsAtlas Interview Board** for the final artefact.
+- Use **two credible role routes**, not top matches, jobs available now, or hiring predictions.
+- Use **illustrative learning option** until a course listing is current, verified, and linked.
+- Use **question example** until live question generation is implemented and tested.
+
+## Evidence states
+
+- A CV claim starts as **From CV · awaiting confirmation**.
+- The worker may confirm or skip without penalty.
+- If the worker skips detail, retain only the original confirmed CV wording. Never leak the prepared number, system, or dates into Routes, Interview Board, or PDF.
+- Strengthened wording remains visually proposed until a separate worker action confirms it.
+- Direct navigation to Routes or Interview Board must be labelled a seeded practice preview, not confirmed worker evidence.
+- Every worker-specific production claim needs visible provenance back to confirmed evidence.
 
 ## Screen rules
 
-- Type big enough to read from the back of a hub room: body ≥ `text-lg`, key numbers ≥ `text-4xl`.
-- Every screen has designed empty, loading, and error states. A judge must never see a spinner with no story or a raw error.
-- Evidence classes are visible everywhere evidence appears: a small coloured chip — OBSERVED (teal), REPORTED (amber), PROPOSED (outlined, italic label "proposed"), HUMAN REVIEW (green). PROPOSED content is visually distinct from fact — this is a governance requirement, not a style choice.
-- Every AI-generated card shows its provenance: which evidence items it drew from, with the worker able to tap through to the source claim.
-- The questioning UI is a chat-style card, one question at a time, with a visible "Skip — no penalty" action on every question.
-- The route explorer shows exactly two route cards. Each card: transferable skills (confirmed), missing capabilities, the bridge explanation, courses with real provider names (Skillnet / SOLAS Skills to Advance / Springboard+), time and cost realism.
-- Screen 4 is the leave-the-room artefact: adviser summary, the committed next step, and the cheat-board (big enough to read from the back). The board has a visible **interview setting** control (stage + who is in the room). Changing it regenerates questions only, not stories. Do not label it “seniority.” Do not show a Basic→Advanced year-band ladder. STAR stories may hint Situation / Task / Action / Result (Action is the long part). Do not add a second CAR worksheet. Last step: **Save as PDF** downloads the board. WhatsApp partner receipt is bonus, behind a flag — if shown, list what was sent and what was NOT sent.
+- Body copy must remain readable from the back of a Hub room.
+- Screen 01 uses the **title without proof** problem, not a universal three-week-abandonment claim.
+- Screen 02 shows one question at a time and always keeps **Skip — no penalty** visible.
+- Screen 03 shows exactly two route cards. The selected route must materially change Screen 04.
+- Screen 04 changes its story, next step, and question set with the selected route. Interview setting means stage plus who is in the room, never seniority.
+- The last active action is **Save Interview Board as PDF**.
+- WhatsApp is absent from the active demo and pitch.
+- The AI practice helper is a separate later task. Do not implement it as part of unrelated narrative or UI work.
 
 ## Demo resilience
 
-- The demo must survive a dead model API: every screen can render from the seeded `demo_run` table (a pre-computed golden run). A `?replay=golden` query param forces it. Build this on day 2, not day 12.
-- Number keys 0–4 jump the clickable sitting (00 Start, then 01–04). Hub 90 seconds still starts at the problem.
+- Number keys 0–4 may jump between screens for testing.
+- Hub presentation starts on Screen 02, not Screen 00.
+- Keep a recorded run ready for site or network failure.
+- A judge must never see a raw error or an unexplained spinner.

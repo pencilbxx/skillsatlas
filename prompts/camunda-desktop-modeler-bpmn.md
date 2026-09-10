@@ -1,5 +1,7 @@
 # Prompt — Author the final BPMN in Camunda Desktop Modeler
 
+> **Current scope, 10 Sep:** the final artefact is the **SkillsAtlas Interview Board**. WhatsApp is historical and must not appear in a newly generated active diagram. Strengthened wording requires a separate worker-confirmation step before downstream use.
+
 Use this prompt when you want Cursor to produce the actual `.bpmn` deliverable, not just describe it.
 
 ```text
@@ -28,22 +30,22 @@ Process requirements:
   7) If weak load-bearing claims exist, generate contextual questions [AI]
   8) Guardrail-check generated questions [CODE]
   9) Worker answers or skips [HUMAN]
-  10) Fold answers into evidence [AI]
-  11) Loop back for re-score, max 2 iterations
-  12) Normalise skills to ESCO [AI+CODE]
-  13) Retrieve candidate occupations [CODE]
-  14) Score route reachability [CODE]
-  15) Explain the bridge [AI]
-  16) Worker inspects routes [HUMAN]
-  17) Resolve gap-closing options [CODE]
-  18) Assemble pathway plan [AI]
-  19) Worker commits to one next step [HUMAN]
-  20) Generate adviser summary [AI]
-  21) Assemble interview evidence pack [AI]
-  22) Never-invent traceability gate [CODE]
-  23) Generate cheat-board [EXT] — this is the close; they leave the room with it
-  24) End: they leave with the board
-  Bonus (does not block the close): hand off to WhatsApp accountability partner [EXT] + partner ack
+  10) Fold answers into proposed enriched wording [AI]
+  11) Worker confirms or rejects the enriched wording [HUMAN]
+  12) Loop back for re-score, max 2 iterations
+  13) Normalise skills to ESCO [AI+CODE]
+  14) Retrieve candidate occupations [CODE]
+  15) Score route reachability [CODE]
+  16) Explain the bridge [AI]
+  17) Worker inspects and chooses between two routes [HUMAN]
+  18) Resolve gap-closing options [CODE]
+  19) Assemble pathway plan [AI]
+  20) Worker commits to one next step [HUMAN]
+  21) Generate professional summary [AI]
+  22) Assemble interview story and questions [AI]
+  23) Never-invent traceability gate [CODE]
+  24) Generate SkillsAtlas Interview Board PDF [CODE] — this is the close
+  25) End: the worker leaves with the Interview Board
 
 Modelling rules:
 - Use BPMN task types that best match the step semantics:
@@ -53,8 +55,8 @@ Modelling rules:
   - sendTask or message events for external handoffs
 - Add clear names with the [CODE] / [AI] / [HUMAN] / [EXT] markers preserved in the element names.
 - Add documentation text to important tasks summarising implementation intent.
-- Keep the diagram readable: left-to-right main flow, one questioning loop, the cheat-board as the last step of the happy path, WhatsApp as a bonus side path.
-- Name the external participant "Accountability Partner (existing WhatsApp system)" — not "companion" and never anything suggesting a mental-health service.
+- Keep the diagram readable: left-to-right main flow, one questioning loop, and the SkillsAtlas Interview Board PDF as the last step of the happy path.
+- Do not add WhatsApp, recruiter CRM search, candidate ranking, or the separate AI practice-helper task to this diagram.
 - If a subprocess improves readability, use it, but only if it still opens cleanly in Desktop Modeler.
 
 Validation requirements:

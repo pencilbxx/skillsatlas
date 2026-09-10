@@ -1,534 +1,372 @@
-# SkillsAtlas — Hub pitch (team draft)
+# SkillsAtlas — Hub pitch team draft
 
-**Status:** not sealed. Comment, then we lock the words and start designing.
+**Status:** working source of truth for team comments. This file controls the slide words, spoken words, live-demo narration, and generated Word Team Draft.
 
-**Share with the team:** `docs/SkillsAtlas_Hub_Pitch_Slide_Text_TEAM_DRAFT.docx` — turn on Track Changes and comment on the yellow boxes. Rebuild that file: `python docs/build-pitch-slide-text-docx.py`.
+**Hub:** 14 Sep 2026. **Slides freeze:** 13 Sep 2026, 2pm.
 
-Hub: **14 Sep 2026**. Slides freeze: **13 Sep, 2pm**. Building stops before that.
+**Product:** SkillsAtlas. **Challenge team:** RedeployMate.
 
-This is the words for the slides and the 7-minute talk. It is not a designed deck yet. After comments come back, we seal this file and only then lay out PowerPoint.
+> **Core narrative:** A list gives you options. SkillsAtlas gives you proof.
 
-**Name on every slide: SkillsAtlas.** Not RedeployMate.
+## How the team should use this document
 
-Numbers only from `docs/evidence-base.md`. If a number is not in that file, it does not go on a slide.
+Comment on the words before Bridget turns them into slides. Do not create a parallel speech or copy old wording from another deck. When this document changes, regenerate `docs/SkillsAtlas_Hub_Pitch_Slide_Text_TEAM_DRAFT.docx` with `python docs/build-pitch-slide-text-docx.py`.
 
-**What changed (9 Sep):** the talk is a sitting story, not a run-of-show. Three original nouns stay attached: **evidence**, a **named gap**, **interview-ready**. Jargon cut. The Enniscorthy conversation is in the spoken path — not as a customer logo. Lean Canvas matches this file.
-
----
-
-## How to use this
-
-Three jobs on the day. Never the same person talking and clicking.
-
-| Job | What they do |
+| Owner | Work in this round |
 | --- | --- |
-| **Talker** | Speaks. Never holds the mouse. The script at the end works with or without slides. |
-| **Clicker** | Runs the live product. Already on the right screen before the talker points at it. |
-| **Designer** | Types only the **On the slide** lines. Use **Picture** as the layout brief. Ignore spoken notes until layout. |
+| **Don** | Pitch structure, spoken text, and feedback on the existing video. |
+| **Sophia** | Pitch feedback. Flag anything unclear, unsupported, or hard to say aloud. |
+| **Bridget** | Slide design after the narrative is agreed. Use only the **On the slide** lines as slide copy. |
+| **Andrew + Sri Karan** | After this narrative branch is merged: polish the demo and existing video, then implement the AI practice helper as a separate task and branch. |
+| **Everyone** | Protect the boundaries: no invented claims, no customer implication, no ranking, and no CRM-search pivot this week. |
 
-**Yellow “Not sealed” boxes** mean we have not locked that line, number, name, or phrase. Comment there. Do not invent a replacement on the slide until the team agrees.
+The talker never holds the mouse. The clicker starts on Screen 02, not Screen 00. The existing film stays silent. WhatsApp is removed from the active pitch and demo; historical and code references can remain.
 
-The clock in `docs/hub-rundown.md` must match this file.
+## What the Martina conversation changed
 
----
+The 10 Sep conversation strengthened the **evidence** story. Martina responded positively to questions that go beyond keyword matching and to showing only two routes because that saves time. She also liked the idea of interview practice from the person’s own CV.
 
-## Founder persona and the aha
+It did **not** show that Turas Nua is a customer, that its office is broken, that three weeks is a standard designed gap, that a standalone external tool fits its systems, or that anyone will pay a particular price. It also surfaced a recruiter CRM-search problem. That is a different product and is not being built this week.
 
-This is who we are in the room. It is not a biography slide. It is the human reason the product exists. Judges score **the team**. If this is wrong, comment — do not invent a replacement story.
+## The product, in plain English
 
-**The field person (Andrew).** He sits with the offices that already do this job. This month he sat with an adviser in a small employment office (Enniscorthy, 9 Sep). She already assesses people. She cannot choose the next job for them. They leave with a list. Next time she sees them is about three weeks.
+SkillsAtlas is a guided workforce-transition sitting for a worker and the professional already helping them. The worker confirms or skips CV claims, answers at most two or three useful questions, sees exactly two credible role routes, identifies a learning gap only when one is real, and leaves with a **SkillsAtlas Interview Board** saved as a PDF.
 
-**The aha.** Ireland already did the hard half. Someone was assessed. Then they were handed a list and left alone. The plan lived only in their head. The product is not a better assessment, and it is not a better list. It is the next sitting: they confirm the **evidence**, we name the **gap**, they pick between two jobs they can reach, and they walk out **interview-ready** — holding a board they wrote. The adviser does not decide for them. We do not rank them.
+The worker uses it. The organisation hosting the sitting is the proposed payer. This is not B2C unless we deliberately choose that later.
 
-**HR in the room (Brigitte).** You cannot invent a story for an interview. Confirm first. Then print. That is why skip is free, and why the board only carries what they said was true.
+## The problem in one line
 
-**The rest of the challenge team.** We can show this sitting cold, in two weeks, with a recording in the next tab if the wifi dies. Names, who talks, who clicks: still a yellow box on Slide 9.
+A job title or course list can show someone where they might go. It does not show the confirmed evidence, specific gap, and next step that make them credible for that route.
 
-**What we will not say:** that the Enniscorthy office is a customer, a pilot, or a logo. A conversation is traction. A conversation is not a contract. Field note: `docs/field-turas-nua-enniscorthy.md`.
+## The example we use everywhere
 
-> **Not sealed — founder line.**  
-> Working line for Slide 9: *One of us sat with an adviser this month. She cannot choose for them. That is why they leave holding a board they wrote.* If that is not true in the room on the day, cut it. Do not replace it with a prettier story.
+A warehouse worker’s CV says **“managed stock.”** That is a claim, not yet proof. The worker confirms the original line and answers two short questions about scale, system, and dates. They review the stronger wording: **“Managed about 2,400 product lines in SAP, including monthly cycle counts, from 2019 to 2024.”** Only after confirmation may that wording reach the routes, Interview Board, and PDF. If the worker skips, the original weak claim remains.
 
----
+## One breath
 
-## The story (one breath, no slides)
+> A list gives you options. SkillsAtlas gives you proof. In one sitting, a worker turns their own CV into confirmed evidence, chooses between two credible role routes, sees the one gap that matters, and leaves with a SkillsAtlas Interview Board they can use. The worker uses it with the adviser or recruiter already beside them; the host organisation is the proposed payer.
 
-Everyone else hands you a list. We hand you proof.
-
-Ireland already assesses people, then leaves them alone for three weeks. The sitting already exists. The adviser cannot choose for them. So we take the same CV, they confirm the evidence, we name the gap, they pick between two jobs, and they walk out interview-ready — holding a board.
-
-The person never pays. The small office is the buyer. We do not replace their meetings. If the first ten do not come back holding that board, we stop.
-
-Send us to Galway. Then one sitting with a real adviser.
-
-If the projector dies, that is the talk. The slides are pictures of those sentences. They are not a second speech.
-
----
-
-## How the feeling moves (designer + talker)
-
-One bold idea per slide. One picture. Then the next feeling. Do not restart the argument on every slide.
-
-| Slide | Bold idea | Feeling | Bridge into the next slide |
-| --- | --- | --- | --- |
-| 1 | List vs proof | Sting | That list is not a plan. |
-| 2 | Assessed, then left alone | The human cost | We do not replace that meeting. |
-| 3 | Four words. The sitting. | Relief | Watch it. Then click it. |
-| 4 | The sitting, on film | Quiet / wonder | Same sitting. On the laptop. |
-| 5 | They leave holding the board | Trust | That person never pays. |
-| 6 | The sitting already exists | Belonging | ChatGPT would hand them another list. |
-| 7 | We sell proof, not another list | Clarity | We do not launch nationally. |
-| 8 | Copy the room | Inevitable | We are a challenge team. |
-| 9 | Why this group | Human | Galway. Then one sitting. |
-| 10 | Galway, then one sitting | The ask | Stop. Let the slide hold. |
-
-**Inevitable** does not mean a huge market number. It means: the sitting is already there, the silent weeks are already three weeks, ChatGPT already failed (it is another list), and the only missing artefact is proof they walk out holding — evidence, a named gap, interview-ready.
-
----
-
-## The shape of the 7 minutes
-
-Talk less → **show the silent film (keep the whole thing, ~52s)** → click so they see it is real → close and ask → 3 minutes of questions.
-
-The film may retell the four screens. That is intended. The live click is not a second tour. It is: *this is on the laptop* → confirm the evidence → name the gap → they leave interview-ready (the board) → flip who is in the interview.
-
-**The film is silent.** No voice. No music. That is on purpose, so the room is not fighting two voices, and the talker is not talking over a soundtrack.
-
----
-
-## Plain English (read this before the slides)
-
-Ireland already does the first half of this job. Someone is assessed. They get a course list. Next appointment is about three weeks. In that gap the plan lives only in their head.
-
-SkillsAtlas is that next sitting: they confirm the **evidence**, we name the **gap**, we show two jobs they can reach, and they walk out **interview-ready** — holding a **board**. We propose. They choose. We do not rank people.
-
-The person does not pay. The small employment office is the buyer. We do not replace their meetings. We make the weeks between appointments count.
-
----
-
-## Words we do not say in the room
-
-Judges are mixed: some technical, some not. Talk like a person, not like a repo.
-
-| Do not say | Say instead |
-| --- | --- |
-| Camunda, BPMN, agentic, orchestration | **the map of the sitting** — who does what. The model drafts. A person confirms. Not a product name. |
-| LangGraph, fine-tune, model names | Nothing. If asked how it works: the model drafts, rules decide what is allowed, the person confirms. |
-| `?replay=golden` | Nothing to the room. Clicker-only backup — see Slide 5. |
-| ESCO, Kubernetes, “platform” | the sitting / evidence / a named gap / interview-ready (the board) |
-| RedeployMate | SkillsAtlas |
-| We rank people / show the top ten | Two jobs. They pick. |
-| They download an app / they pay | The person never pays here. The office is the buyer. |
-| Turas Nua / Martina as “our customer” | We sat with an adviser. Not a signed office. |
-
-**Do not put on any slide:** file names (`evidence-base.md`), web-address codes, tool names, a second process lecture, a provider logo as if they buy from us.
-
----
-
-## Keep the room calm (easy to distract)
-
-- The film is **silent**. One sentence when it starts, then quiet until it ends. Do not narrate the four screens over it.
-- Local file on the laptop. Not YouTube (ads, autoplay, login).
-- Test the laptop so Windows does not ping or unmute a surprise.
-- Do not start the live product from a cold homepage.
-- Do not talk while a spinner is spinning. If it stalls, the clicker already has a backup (Slide 5).
-- After the film: do not retell all four screens. Point at the named gap, then the board, then who is in the interview. That is the beat the film cannot do live.
-- WhatsApp only if it is switched on **and** you still have about 8 seconds. It is a bonus, not the close.
-
----
-
-## The 7 minutes (talker + clicker)
+## The stage shape
 
 | Time | What | Projector |
 | --- | --- | --- |
-| **0:00–0:50** | Hook + problem. The aha. Short. | Slides 1 → 2 |
-| **0:50–1:00** | Four words. Do not explain them. | Slide 3 |
-| **1:00–2:00** | **Whole film, ~52s.** Four screens + the map of the sitting. Let it play. Silent. | Slide 4 |
-| **2:00–3:20** | Live product. Do not retell the film. | Slide 5 (dark). Browser. |
-| **3:20–6:20** | Who it’s for, who pays, scale, team, ask | Slides 6 → 10 |
-| **6:20–7:00** | Ask stays up. Stop talking. | Slide 10 |
+| **0:00–0:45** | Hook and problem | Slides 1–2 |
+| **0:45–0:55** | Four-step title card | Slide 3 |
+| **0:55–1:55** | Existing silent film, about 52 seconds | Slide 4 |
+| **1:55–3:30** | Live clickable prototype | Slide 5, then browser |
+| **3:30–6:20** | User and payer, difference, validation, team, ask | Slides 6–10 |
+| **6:20–7:00** | Stop. Let the ask hold. | Slide 10 |
 | **7:00–10:00** | Questions | Slide 10 |
-
-If you are late at 3:20, cut the “how 10 becomes 200” talk. Never cut the film to save the table on Slide 8. Never skip the board.
-
----
 
 ## Slide 1 — Hook
 
-**Bold idea:** They already got a list. We hand them proof.
+**Bold idea:** A list gives you options. SkillsAtlas gives you proof.
 
-**Picture:** One line, huge, on cream. No photos. No logos. SkillsAtlas in the corner. The board is not drawn yet — that payoff comes later.
+**Picture:** One large line on cream. SkillsAtlas in the corner. No logos, statistics, or process diagram.
 
 **On the slide**
 
 - SkillsAtlas
-- Everyone else hands you a list. We hand you proof.
-- Same CV. Evidence. A named gap. They leave interview-ready — the board.
-- TechIreland National AI Challenge 2026 · Hub 14 Sep
+- **A list gives you options. SkillsAtlas gives you proof.**
+- TechIreland National AI Challenge 2026
 
-**Spoken (~10s)**
+**Spoken**
 
-Everyone else hands you a list. We hand you proof.
+“A list gives you options. SkillsAtlas gives you proof.”
 
-**Bridge:** That list is not a plan. *(click to 2)*
-
-**Not on this slide:** team names, tech stack, the word “platform”, logos, the Enniscorthy office.
-
----
+**Bridge:** “Because seeing the title is not the same as being able to stand over it.”
 
 ## Slide 2 — Problem
 
-**Bold idea:** Ireland assesses people, then leaves them alone.
+**Bold idea:** You can see the title. Not yet the proof.
 
-**Picture:** Three beats in a row — **Assessed → list → silent weeks**. One number under it, large. Source in tiny type. Empty chair / three-week gap as the visual, not a chart of five statistics.
-
-**On the slide**
-
-- You’ve been assessed. Here’s a course list. See you in three weeks.
-- Assessed → list → silent weeks
-- This quarter: ~700 contractor roles gone (Covalen / Meta)
-- Source, small type: Bloomberg / LA Times, Jul 2026
-
-**Spoken (~35s)**
-
-Ireland already does the first half of this job. Someone is assessed. They get a list. Next sitting is about three weeks. In that gap the plan lives only in their head.
-
-This quarter, about 700 contractor roles gone — close to home. We are not replacing that meeting. We take the same CV.
-
-The adviser cannot choose the next job for them. So they must leave interview-ready — holding something that is theirs.
-
-**Bridge:** Here is that sitting. Four words. *(click to 3)*
-
-> **Not sealed — pick one number, not both.**  
-> **Proposed:** keep **~700** on this slide (this quarter, a person you can picture). National scale lives on Slide 6 as the tiny Live Register line (**182,517**). Do not put both numbers here.
-
-**Not on this slide:** five statistics, JobPath money, 2,400 SKUs, blaming workers, the CSO as a customer, a file name as the source, 30% / 850,000 (save for questions).
-
----
-
-## Slide 3 — The sitting (title card)
-
-**Bold idea:** Confirm. Question. Two jobs. The board.
-
-**Picture:** Four words only, large, one line. Tiny constraint under them. No icons lecture. The film is about to do the explaining.
+**Picture:** A job title on one side. Three missing pieces on the other: evidence, gap, next step. Use the warehouse CV line **“managed stock.”**
 
 **On the slide**
 
-- Confirm · Question · Two jobs · Board
-- Evidence. A named gap. Interview-ready. They choose.
+- **You can see the title. Not yet the proof.**
+- Confirmed evidence
+- The gap that matters
+- One next step
+- ~700 Covalen contractor roles cut · Jul 2026
+- Source, small: Bloomberg / Los Angeles Times, Jul 2026
 
-**Spoken (~8s)**
+**Spoken**
 
-You are about to see that sitting. Evidence. A named gap. Interview-ready. First on film. Then on the laptop.
+“When somebody’s role disappears, a CV, vacancy, or course list can point at another title. It does not show the evidence they can stand over in an interview, the specific gap they need to close, or what to do this week. For a warehouse worker, ‘managed stock’ is not yet proof.”
 
-Do not read four bullet explanations. The film does that.
+Do not say the office abandoned them. Do not say three weeks is a fixed programme. Do not say the adviser should choose the job.
 
-**Bridge:** One sentence. Then quiet. *(click to 4, play)*
+**Bridge:** “We use the same CV and make the evidence visible.”
 
-**Not on this slide:** WhatsApp, skills-taxonomy names, “full assessment”, “show more jobs”.
+## Slide 3 — The sitting
 
----
+**Bold idea:** Confirm. Question. Two routes. Interview Board.
 
-## Slide 4 — The film (~52s)
-
-**Keep the whole film.** Four screens and the **map of the sitting** (who does what: the model drafts, a person confirms). Do not trim. Do not name the drawing tool.
-
-Shipped file: `docs/explainer-remotion/deliverables/skillsatlas-process-v2.mp4` (~52 seconds, silent, 1920×1080). Copy it next to the slides on the presentation laptop the night before.
-
-**Bold idea:** Watch the sitting. Do not lecture it.
-
-**Picture:** Almost full-bleed video. No other bullets. The film is the slide.
+**Picture:** Four words only. No explanation grid.
 
 **On the slide**
 
-- Almost full-bleed video. Local file on the laptop, not YouTube.
-- Tiny caption: *The sitting — who does what, and the four screens.*
-- No other bullets. No table. The film is the slide.
+- **Confirm · Question · Two routes · Interview Board**
+- The worker confirms, skips, and chooses.
 
-**Talker during the film (it is silent)**
+**Spoken**
 
-One sentence at the start only:
+“Confirm. Question. Two routes. Interview Board. First on film, then on the laptop.”
 
-*“They confirm the evidence. We name the gap. They leave interview-ready.”*
+## Slide 4 — Existing film
 
-Then shut up until it ends. Do not talk over the four screens. Do not add music.
+**Bold idea:** The map behind the sitting.
 
-**When it ends (~1s)**
-
-Same sitting. On the laptop. Look at the browser.
-
-**Not on this slide:** Camunda, BPMN, agentic, LangGraph, fine-tune, model names, a second process lecture.
-
-> **Not sealed — film on the laptop.**  
-> File is known. Still must be copied onto the presentation laptop the night before. Test on that laptop: silent film, no system sounds, caption readable from the back.
-
----
-
-## Slide 5 — Live product
-
-**Bold idea:** They leave holding the board. You can click it.
-
-**Picture:** Dark slide. One line. The browser *is* the visual. Point at the board, then at the interview flip. Do not put the demo script on the wall.
+**Picture:** Use the existing silent film full-bleed. Do not reshoot it. Do not add music or narration.
 
 **On the slide**
 
-- Dark. One line: **The sitting — on the laptop.**
-- Optional tiny: the web address
+- Tiny caption only: **The map behind the sitting**
 
-> **URL on the slide:** https://skillsatlas.vercel.app  
-> Honest: this is the clickable sitting (HTML), not a live model API. Screen 00 is for people who open the link after the room. Hub clicker still starts on confirm / the board — do not tour 00 on stage. Names: `docs/brand.md`.
+**Spoken before playback**
 
-**Clicker (never say this out loud)**
+“This is the map behind the sitting: the system proposes, the worker confirms, and the worker chooses.”
 
-Already on the confirm screen, CV loaded. Do not start from a cold homepage.
+Then stay silent until it ends.
 
-**If the AI is slow or the internet hiccups:** the site can show a saved copy of the same four screens. The clicker adds a short code to the web address (`?replay=golden`). The room just sees the product. They should never hear “golden replay” or a web-address code.
+**Film feedback for the team:** If an easy text-only re-render is possible, replace **“production path”** with **“the sitting”** and align the example with the warehouse case. Do not delay the deck or reshoot footage to do this.
 
-**If wifi dies completely:** recorded full run already open in the next tab. Same spoken words. Do not narrate a spinner.
+## Slide 5 — Live clickable prototype
 
-**Spoken (this is live commentary — not the 90-second tour again)**
+**Bold idea:** Watch one weak CV line become usable evidence.
 
-Same sitting you just saw. You can click it.
-
-Nothing is used until they say it is true. Skip is free. Watch this weak line: “managed stock.” … Now it is a number, a tool, a date. That is **evidence**. That is not a keyword.
-
-Two jobs. What already transfers. This is the **named gap** — one real course. They pick. We do not rank them.
-
-This is **interview-ready**. This is the board. Say who is in the room — a screen is not a hiring-manager panel. Same evidence, different questions. Every line traces to a confirmed claim.
-
-**Time:** ~80 seconds. If the film already showed the first screen, skip it in the app. Do **not** skip the two jobs. Point at the named gap, then land on the **board** and **flip who is in the interview**. That is the beat the film cannot do live.
-
-**Bridge:** That person never pays. *(click to 6)*
-
-**Not on this slide:** the demo script as text, WhatsApp unless it is switched on and you still have 8 seconds.
-
-> **Not sealed — WhatsApp on the day?**  
-> Only if the switch is on and the clicker has practised it. Default: skip. The board is the close.
-
----
-
-## Slide 6 — Who it’s for
-
-**Bold idea:** The sitting already exists. We wrap it.
-
-**Picture:** Two columns only — **The person** | **The office**. Ireland first, small type. No logo wall. No map of 24 segments. Tiny scale line under the columns — not a TAM chart.
+**Picture:** Dark holding slide. The browser is the visual.
 
 **On the slide**
 
-- Ireland first. The sitting already exists.
-- The person: their job is gone or about to go.
-- The office: already sees them. The person does not pay.
-- We do not replace what they run. We make the weeks between appointments count.
-- Tiny caption: **182,517** already on the Live Register (Aug 2026, CSO). Already counted. Still leave with a list.
+- **The sitting — clickable today**
+- Practice CV · prepared interaction
+- skillsatlas.vercel.app
 
-**Spoken (~25s)**
+**Spoken before the browser**
 
-The user is the person. The buyer is the office. Not a download. Not a national tender this year.
+“This is a clickable prototype using a prepared practice CV. The production AI pipeline is not live in this demo.”
 
-This month we sat with an adviser who already does this job. She cannot choose for them. That is the sitting we wrap. 182,517 already counted. They still leave with a list.
+**Live commentary**
 
-**Bridge:** ChatGPT would hand them another list. *(click to 7)*
+“Nothing is used until the worker confirms it. Skip is free. Watch ‘managed stock.’ Two short questions add a number, a system, and dates. The worker reviews that wording. Now it is evidence, not a keyword.
 
-**Not on this slide:** named providers as customers, 24 market segments, a TAM or global market number, 30% / 850,000, “big companies can build this” (that line lives on Slide 7). Do not add a new market slide.
+Exactly two role routes. Not jobs available now, not a hiring promise, and not a ranking. The worker chooses. A learning option appears only for a named gap; the examples in this prototype are illustrative.
 
-> **Not sealed — how we name the conversation.**  
-> Mentors said a real conversation is a judging bonus. We have one (Enniscorthy, 9 Sep). Spoken: “an adviser.” Not a logo. If the team wants a first name, comment. If we cannot say it without making them a customer, keep it as “an adviser.”
+This is the SkillsAtlas Interview Board. The chosen route changes the story and question. The worker can change the interview stage and who is in the room. The close is the PDF they take away.”
 
----
+**Clicker path**
 
-## Slide 7 — Who pays, and why this isn’t ChatGPT
+1. Start on Screen 02 with the practice CV ready.
+2. Confirm the two visible CV lines.
+3. Show the two prepared answers.
+4. Review and confirm the strengthened stock wording.
+5. Open the two routes and choose one.
+6. On the Interview Board, change one interview setting.
+7. Save the Interview Board as PDF.
 
-**Bold idea:** We sell proof, not another list.
+Do not show Screen 00 on stage. Do not show WhatsApp. Do not mention the separate AI practice-helper task unless it has been implemented, labelled honestly, tested, and added to this script before the freeze.
 
-**Picture:** Left: a course list / chat window. Right: the board. One line under: the person never pays. No patent language. No fee ladder.
+## Slide 6 — Who uses it and who pays
 
-**On the slide**
+**Bold idea:** The worker uses it. The host organisation is the proposed payer.
 
-- We sell the sitting, not a phone app.
-- Now: free, one group. Success = they come back holding a board they wrote.
-- Then: the office pays per sitting or per adviser. Price after we see it work.
-- ChatGPT hands you another list. We will not print a story they did not confirm.
-- Big companies can copy this. We start with offices that still hand out a printout.
-
-**Spoken (~25s)**
-
-The person never pays here. We are not promising better placement numbers. We are promising they leave interview-ready.
-
-A bank can build this. They have an AI team. We stay with the office that still runs on a printout.
-
-**Bridge:** We do not launch nationally. We copy the room. *(click to 8)*
-
-**Not on this slide:** JobPath fee ladders, “unique technology”, “they cannot copy us”, patent.
-
-*(There is no extra “what exists today” slide. The film plus the live click are the proof. No paying seats, no signed office — say that in questions if asked.)*
-
----
-
-## Slide 8 — How 10 becomes 200
-
-**Bold idea:** Land one room. Then copy the room.
-
-**Picture:** A path, not a hockey stick. **10 → 20 → 200**. Caption in coral: *Proposed. These are not users we have.* Three gates, each with a stop.
+**Picture:** One four-screen flow in the centre. Two human settings around it, not two products.
 
 **On the slide**
 
-- Do not launch nationally. Land one room, then copy the room.
-- Caption: **Proposed. These are not users we have.**
+- **Same four screens. Different professional across the table.**
+- Redundancy sitting: worker + employment or outplacement adviser
+- Recruiter sitting: candidate + mid-tier recruiter
+- Worker confirms and chooses
+- Organisation is the proposed payer
+- **Not B2C**
 
-| | What | How | We stop if |
-| --- | --- | --- | --- |
-| **10** | One sitting. One adviser. ~10 boards. | Someone agrees to sit. | No adviser will sit. |
-| **20** | That office copies next week. | The 10 came back with the board. | They will not do it without us in the room. |
-| **200** | ~10 small offices copy the sitting. | Office tells office. | The next office needs a year of paperwork. |
+**Spoken**
 
-**Spoken (~15s)**
+“In one room, a worker facing redundancy sits with an employment or outplacement adviser. In another, the same kind of worker sits with a recruiter. The professional can guide and click. The worker confirms, answers or skips, chooses the route, and leaves with the PDF. The worker does not pay; the host organisation is the proposed payer, and that still needs validation.”
 
-If the first ten do not come back holding a board, we stop.
+This slide describes two candidate-present host settings. It does not claim either buyer is validated.
 
-**Bridge:** We are a challenge team. Here is why we can show this. *(click to 9)*
+## Slide 7 — What makes it different
 
-**Not on this slide:** app downloads, ads, a logo map.
+**Bold idea:** The trust is in what the product refuses to do.
 
-> **Not sealed — first door.**  
-> We have a conversation. We do not have a booked sitting. Keep the table as a plan. Do not dress 10 as traction.
+**Picture:** A short confirmation trail: CV claim → worker confirms → question → worker confirms → Board.
 
----
+**On the slide**
+
+- Confirm before use
+- Skip without penalty
+- Two unranked routes
+- No protected-trait fields
+- No invented interview story
+- Existing meeting and job board stay
+
+**Spoken**
+
+“We are not replacing the adviser, recruiter, job board, or course catalogue. We are not ranking a person’s worth. The worker can skip. The Board may use only evidence the worker confirmed. That confirmation trail—not a generic chatbot—is the product difference.”
+
+## Slide 8 — What we need to prove next
+
+**Bold idea:** The next step is one hosted sitting, not a national launch.
+
+**Picture:** Three questions, not a growth chart.
+
+**On the slide**
+
+- Does the sitting fit the host’s workflow?
+- Does the worker leave with a useful Interview Board?
+- Will an organisation pay to host it?
+- **Open: buyer, workflow fit, price**
+
+**Spoken**
+
+“We have a working clickable sitting and one useful field conversation. We do not have a customer, pilot, price, or placement result. The next proof is one hosted sitting: does it fit the workflow, does the worker use the Board, and will the organisation pay?”
+
+Do not use the old 10 → 20 → 200 table as traction.
 
 ## Slide 9 — Team
 
-**Bold idea:** Why this group can show this — and what we still lack.
+**Bold idea:** The team combines field contact, pitch judgment, design, and a working demonstration.
 
-**Picture:** Names and one true line each. Not job titles in a row. A small honest hole: no signed buyer yet. Remedy: one sitting.
-
-**On the slide**
-
-- Why this group can show this in two weeks — and what we still lack.
-- Challenge team. No signed buyer yet. Remedy: one sitting.
-- Talker and clicker are two different people.
-- Working line: one of us sat with an adviser this month. She cannot choose for them.
-
-**Spoken (~15s)**
-
-One of us sat with an adviser this month. She cannot choose for them. That is why they leave holding a board they wrote.
-
-One of us is HR, and will not let us invent a story for the interview.
-
-We can show this cold. We do not have a signed office. We will not pretend.
-
-**Not on this slide:** fake completeness, Camunda, a fake unfair angle.
-
-> **Not sealed — names.**  
-> Names. One line each that maps to the product (the sitting / Ireland / the demo / the rules). Not job titles only. Who talks. Who clicks.
-
-> **Not sealed — unfair angle.**  
-> Proposed, only because it is true: the field sitting + HR who will not invent. If we cannot say it without blushing, cut it. Do not add “we already built WhatsApp” unless that switch is on.
-
----
-
-## Slide 10 — The ask
-
-**Bold idea:** Send us to Galway. Then one sitting.
-
-**Picture:** Two steps only. Galway. Then one adviser. The slide stays up in questions. Contact in the corner when we have it.
+**Picture:** Five names with one true contribution each. No inflated job titles.
 
 **On the slide**
 
-- Send us to Galway. Then one sitting with a real adviser.
-- 14 Sep: progress to the National AI Meet, 24 Sep, Galway.
-- After that: one introduction to one office — small pilot. Practice CVs first, then about 20 people.
-- Measure: do they come back holding a board they wrote.
-- This slide stays up in questions.
+- **Don** — pitch, spoken story, video feedback
+- **Sophia** — pitch review and clarity
+- **Bridget** — slide design
+- **Andrew** — field conversation, demo and video
+- **Sri Karan** — demo, video and AI practice helper
+- Challenge team · no signed buyer yet
 
-**Spoken (~15s)**
+**Spoken**
 
-Not “partners and funding.” Galway. Then one sitting.
+“Don and Sophia are making the story clear enough to say aloud. Bridget is turning the agreed words into the deck. Andrew brought the field conversation and is polishing the demonstration with Sri Karan. We have built something we can show. We will not pretend we already have a signed buyer.”
 
-**Not on this slide:** a wishlist, cloud credits, five asks.
+If any contribution line is inaccurate, the named person should correct it before the slide is designed.
 
-> **Not sealed — contact.**  
-> One email. One web address. These must be real before 13 Sep 2pm.
+## Slide 10 — Ask
 
----
+**Bold idea:** Send us to Galway. Then help us test one sitting.
 
-## Backup (questions only — not on the live ten)
+**Picture:** Two steps only: Galway → one hosted sitting. Contact and URL in the corner.
 
-**Is this the thing in the application?** Yes. Evidence in. Two reachable paths. A named gap with a real course. Interview-ready proof — the board. The sitting is how Ireland already meets the worker. We wrapped that.
+**On the slide**
 
-**Who else?** ChatGPT = more lists. A course catalogue = still a list. Big HR tools need months of setup. We work from one CV in one sitting.
+- **Send SkillsAtlas to Galway.**
+- Then help us test one hosted sitting.
+- Practice data first. Real data only with agreed privacy and workflow controls.
+- skillsatlas.vercel.app
+- One real team email before freeze
 
-**Is the process map the product?** The film is how we designed the sitting — who does what. What you clicked is the product. The drawing tool is not running the laptop this fortnight.
+**Spoken**
 
-**Privacy / bias?** Practice CVs today. The form cannot hold age, gender, or health. Nothing is used until they confirm. Skip is free.
+“Send SkillsAtlas to Galway. Then help us test one hosted sitting with the right organisation. We know what we have built, what remains a hypothesis, and what we need to learn next.”
 
-**Why only two jobs?** A jobs board is the old product. Two paths force a human choice. We do not rank people.
+Then stop.
 
-**Have you spoken to anyone?** Yes. An adviser, this month. They cannot choose for the applicant. We sent a follow-up. It is a conversation, not a contract. We will not put their office on a slide as a customer.
+## Talker script — continuous version
 
-**How big is the sitting already?** Point at Slide 6. 182,517 already counted (CSO, Aug 2026). Not a TAM. They still leave with a list. ~700 on Slide 2 is this quarter, close to home.
+### 0:00–0:45 · Slides 1–2
 
-**Traction?** Four screens, the film, the path on the laptop, one conversation. No paying seats. We will not pretend.
+“A list gives you options. SkillsAtlas gives you proof.
 
----
+Because seeing the title is not the same as being able to stand over it. When somebody’s role disappears, a CV, vacancy, or course list can point at another title. It does not show the evidence they can stand over in an interview, the specific gap they need to close, or what to do this week. For a warehouse worker, ‘managed stock’ is not yet proof.”
 
-## Talker script (7 minutes)
+### 0:45–0:55 · Slide 3
 
-This replaces any older four-minute speech. Do not read both.
+“Confirm. Question. Two routes. Interview Board. First on film, then on the laptop.”
 
-Read it on a clock **without** the slides once. If it still makes sense, the deck is doing its job.
+### 0:55–1:55 · Slide 4
 
-**0:00–0:50 · Slides 1–2**
+“This is the map behind the sitting: the system proposes, the worker confirms, and the worker chooses.”
 
-Everyone else hands you a list. We hand you proof.
+Stay silent for the film.
 
-Ireland already assesses people. They get a course list. See you in three weeks. In that gap the plan lives only in their head. This quarter, about 700 contractor roles gone — close to home.
+### 1:55–3:30 · Slide 5 and browser
 
-We do not replace that meeting. We take the same CV. The adviser cannot choose for them. So they walk out interview-ready — holding something that is theirs.
+“This is a clickable prototype using a prepared practice CV. The production AI pipeline is not live in this demo.
 
-**0:50–1:00 · Slide 3**
+Nothing is used until the worker confirms it. Skip is free. Watch ‘managed stock.’ Two short questions add a number, a system, and dates. The worker reviews that wording. Now it is evidence, not a keyword.
 
-Confirm. Question. Two jobs. The board. Evidence. A named gap. Interview-ready. First on film — then on the laptop.
+Exactly two role routes. Not jobs available now, not a hiring promise, and not a ranking. The worker chooses. A learning option appears only for a named gap; the examples in this prototype are illustrative.
 
-**1:00–2:00 · Slide 4 · film (silent)**
+This is the SkillsAtlas Interview Board. The chosen route changes the story and question. Change the interview setting. The close is the PDF they take away.”
 
-One sentence: *They confirm the evidence. We name the gap. They leave interview-ready.* Then quiet. Do not narrate the four screens.
+### 3:30–6:20 · Slides 6–10
 
-**2:00–3:20 · Slide 5 · live**
+“The same four screens can sit in two rooms. A worker facing redundancy can use them with an employment or outplacement adviser. The same kind of worker can use them with a recruiter. The professional guides. The worker confirms, skips, and chooses. The organisation is the proposed payer. This is not B2C.
 
-Same sitting. You can click it. Nothing used until they say yes. Watch “managed stock.” That is evidence. Two jobs. This is the named gap. They pick. This is interview-ready — the board. Flip who is in the room. Same evidence, different questions. Every line traces to a confirmed claim.
+The trust is in what SkillsAtlas refuses to do. We do not replace the professional or their job board. We do not rank a person’s worth. We do not ask for protected traits. We do not print an interview story the worker did not confirm.
 
-**3:20–6:20 · Slides 6–10**
+We have a working clickable sitting and one useful field conversation. We do not have a customer, pilot, price, or placement result. The next proof is one hosted sitting: does it fit the workflow, does the worker use the Board, and will the organisation pay?
 
-That person never pays. The small office already sees them. This month we sat with an adviser who does this job. She cannot choose for them. We wrap that sitting. 182,517 already counted. They still leave with a list.
+Don and Sophia are making the pitch clear enough to say aloud. Bridget is turning the agreed words into the deck. Andrew brought the field conversation and is polishing the demonstration with Sri Karan. We have built something we can show. We will not pretend we already have a signed buyer.
 
-ChatGPT is another list. We will not invent a story.
+Send SkillsAtlas to Galway. Then help us test one hosted sitting with the right organisation.”
 
-A bank can copy this. We start with a printout.
+### 6:20–7:00
 
-Ten boards in one sitting. Twenty when that office copies. Two hundred when other small offices copy. If the first ten do not come back holding a board, we stop.
+Stop. Leave Slide 10 up.
 
-We are a challenge team. One of us sat in that room. One of us is HR, and will not let us invent a story. **Names — not sealed.**
+## Short Q&A answers
 
-Send us to Galway. Then one adviser, one sitting.
+| If a judge asks | Answer |
+| --- | --- |
+| **Is the AI live in this demo?** | “No. This is a clickable prototype using a prepared practice case. It demonstrates the sitting and the controls. The production design uses model output behind confirmation and deterministic checks.” |
+| **What did the adviser conversation prove?** | “It strengthened the evidence-over-keywords idea and the value of showing two routes. It did not create a customer, pilot, buyer, price, or proof that a standalone tool fits their workflow.” |
+| **Why only two routes?** | “A long list repeats the problem. Two credible, unranked routes create a choice the worker can discuss with the professional beside them.” |
+| **Who pays?** | “The worker uses it. The organisation hosting the sitting is the proposed payer. We still need to validate buyer authority, workflow fit, privacy requirements, and willingness to pay.” |
+| **What about recruitment agencies and CRM search?** | “A recruiter CRM-search problem emerged in conversation, but it is a different product. Today we show a candidate-present sitting. We are not claiming CRM access, integration, security approval, or candidate ranking.” |
+| **Are those courses live recommendations?** | “No. They are illustrative learning options in this prototype. Production would show a provider option only when it closes a named gap and its listing is current and verified.” |
+| **Is Turas Nua a customer?** | “No. We had one field conversation and prototype walkthrough. It is not a contract, pilot, logo, or pipeline claim.” |
+| **Why not sell to the worker?** | “We are B2B-first because the sitting already has a professional and organisational context. The worker uses the product and does not pay in this model.” |
+| **What about WhatsApp?** | “It is not in the active demonstration or pitch. The Interview Board PDF is the close.” |
+| **What is the AI practice helper?** | “It is a separate demo task for tomorrow. We will describe it only after it is implemented and tested. It must use confirmed evidence and must not invent or score the worker.” |
 
-**6:20–7:00**
+## Words and claims to keep consistent
 
-Slide 10 up. Stop.
+| Use | Avoid |
+| --- | --- |
+| SkillsAtlas Interview Board | cheat-board, evidence pack, board they wrote |
+| two credible role routes | jobs you can get, top jobs, ranked matches |
+| learning option | real course, guaranteed place, available course |
+| clickable prototype, prepared practice CV | live AI product, production system, pilot |
+| worker confirms, skips, and chooses | the system decides, adviser chooses |
+| organisation is the proposed payer | the office pays, proven buyer, price |
+| field conversation | customer, traction, lead, partnership |
+| question example | predicted question, unless live generation is implemented and tested |
 
----
+## Freeze checklist
 
-## Still fill before 13 Sep 2pm
+- [ ] Don and Sophia have commented on the opening, problem, one-breath line, and spoken script.
+- [ ] Bridget has confirmed the slide words fit the design without shrinking the type.
+- [ ] Andrew and Sri Karan have rehearsed the live click from Screen 02 through the PDF.
+- [ ] The demo no longer shows enriched evidence after the worker skips.
+- [ ] The strengthened wording has a separate worker review-and-confirm action.
+- [ ] Route B uses only evidence visible and confirmed in the practice case.
+- [ ] The selected route changes the Interview Board story and question.
+- [ ] Course rows say **illustrative learning option** unless the listings are verified and linked.
+- [ ] WhatsApp is absent from the active demo and spoken pitch.
+- [ ] The AI practice helper remains outside this script until tomorrow’s implementation is tested.
+- [ ] The film is copied locally and the browser backup is ready.
+- [ ] Slide 9 contribution lines are confirmed by each named team member.
+- [ ] Slide 10 has one real email and the correct URL.
+- [ ] Full rehearsal reaches the ask by 6:20, once with the projector off.
 
-Mark each as sealed in comments when you decide.
+## Files that control the active experience
 
-- [ ] Slide 2: ~700. Slide 6 tiny caption: **182,517**. Not both on one slide. Not a new market slide.
-- [ ] Film file on the presentation laptop: `skillsatlas-process-v2.mp4`, whole cut, ~52s, silent. Caption readable.
-- [ ] Presenter says Slides 1–2 on a clock. If it exceeds 50 seconds, cut the last sentence, not the 700.
-- [ ] Clicker path: confirm screen ready · saved-copy backup (`?replay=golden`, never spoken) · recorded run in the next tab
-- [ ] **Not sealed.** Slide 9: names · who talks · who clicks
-- [ ] **Proposed.** Unfair angle: field sitting + HR who will not invent. Comment if that is not the line.
-- [ ] **Not sealed.** Slide 10: one email + one URL
-- [ ] **Not sealed.** Walkthrough URL that will actually be on the slide
-- [ ] **Proposed.** Conversation: say “an adviser this month.” No logo. No booked sitting claimed.
-- [ ] One full rehearsal of 7:00 with silent film **and** live click, both people — **and once with the projector off**, to prove the script stands alone.
+| File | Role |
+| --- | --- |
+| `docs/pitch-slide-text.md` | Canonical narrative, slides, spoken script, Q&A |
+| `docs/SkillsAtlas_Hub_Pitch_Slide_Text_TEAM_DRAFT.docx` | Team commenting copy generated from the canonical narrative |
+| `docs/demo-script.md` | Short clicker/talker live-demo script |
+| `docs/hub-rundown.md` | Timing and recovery plan |
+| `docs/wireframes/demo.html` | Public prototype words |
+| `docs/wireframes/demo.js` | Public prototype state and interactions |
+| `docs/brand.md` | Naming, visual tokens, and final-artefact terminology |
 
-When comments are in, we seal this file and start designing. Do not design from an unsealed line.
+Older pitch drafts, canvases, and field logs remain evidence or history. They are not sources for new public wording.

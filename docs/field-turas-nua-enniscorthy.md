@@ -8,6 +8,12 @@
 
 ---
 
+## Field logs
+
+- Live interview dump (10 Sep 2026): `docs/field-logs/turas-nua-martina-2026-09-10.md` — raw spoken notes. Not a customer claim. Andrew will rewrite any summary separately.
+
+---
+
 ## Naming
 
 | Surface | Name |

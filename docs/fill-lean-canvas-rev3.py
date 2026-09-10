@@ -193,11 +193,37 @@ def restore_template(doc: fitz.Document, page: fitz.Page) -> None:
     doc.xref_set_key(page.xref, "Contents", f"{keep} 0 R")
 
 
-def hide_form_fields(page: fitz.Page) -> None:
-    for widget in page.widgets() or []:
-        widget.field_value = ""
-        widget.field_display = 1
-        widget.update()
+def strip_acroform(doc: fitz.Document) -> None:
+    doc.xref_set_key(doc.pdf_catalog(), "AcroForm", "null")
+
+
+def delete_form_fields(doc: fitz.Document, page: fitz.Page) -> None:
+    """Remove widgets. iOS paints hidden form appearances; desktop usually does not."""
+    for widget in list(page.widgets() or []):
+        page.delete_widget(widget)
+    doc.xref_set_key(page.xref, "Annots", "null")
+    strip_acroform(doc)
+
+
+def clean_grid_document(src: fitz.Document) -> fitz.Document:
+    page = src[0]
+    restore_template(src, page)
+    delete_form_fields(src, page)
+    try:
+        page.clean_contents()
+    except Exception:
+        pass
+    clean = fitz.open()
+    clean.insert_pdf(
+        src,
+        from_page=0,
+        to_page=0,
+        links=False,
+        annots=False,
+        widgets=False,
+    )
+    strip_acroform(clean)
+    return clean
 
 
 def fill(page: fitz.Page) -> list[str]:
@@ -210,7 +236,7 @@ def fill(page: fitz.Page) -> list[str]:
 
 
 def save_over(doc: fitz.Document, dest: Path) -> Path:
-    doc.save(TMP, garbage=4, deflate=True)
+    doc.save(TMP, garbage=4, deflate=True, clean=True)
     doc.close()
     TMP.replace(dest)
     return dest
@@ -221,15 +247,10 @@ def main() -> None:
         raise FileNotFoundError(TEMPLATE)
     shutil.copyfile(TEMPLATE, DEST)
 
-    doc = fitz.open(DEST)
-    page = doc[0]
-    restore_template(doc, page)
-    hide_form_fields(page)
-    save_over(doc, DEST)
-
-    doc = fitz.open(DEST)
-    page = doc[0]
-    notes = fill(page)
+    src = fitz.open(DEST)
+    doc = clean_grid_document(src)
+    src.close()
+    notes = fill(doc[0])
     save_over(doc, DEST)
 
     doc2 = fitz.open(DEST)

@@ -2,12 +2,14 @@
 
 All type is black. Mark unproven lines with OPEN:.
 Re-run this file after editing copy. Template chrome (labels, grid, licence) is kept.
+Form fields are deleted, not hidden: iOS PDFKit paints old widget appearances.
 
 Rev 6 — early-investor pass on rev 5. Sourced numbers. Plain English.
 Problem and solution first. No pitch-internal notes. No stack jargon.
 """
 
 from pathlib import Path
+import shutil
 
 import fitz
 
@@ -187,12 +189,77 @@ def restore_template(doc: fitz.Document, page: fitz.Page) -> None:
     doc.xref_set_key(page.xref, "Contents", f"{keep} 0 R")
 
 
-def hide_form_fields(page: fitz.Page) -> None:
-    """Blank the Ravens Point field values so they cannot show through."""
-    for widget in page.widgets() or []:
-        widget.field_value = ""
-        widget.field_display = 1  # hidden
-        widget.update()
+def strip_acroform(doc: fitz.Document) -> None:
+    """Drop the form dictionary. Hidden widgets still paint on iOS PDFKit."""
+    doc.xref_set_key(doc.pdf_catalog(), "AcroForm", "null")
+
+
+def delete_form_fields(doc: fitz.Document, page: fitz.Page) -> None:
+    """Remove widgets instead of hiding them.
+
+    iOS (Safari / Files / Mail) draws AcroForm appearance streams even when
+    the Hidden flag is set. Desktop viewers usually do not, which is why
+    this file looked fine on a computer and stacked old copy on a phone.
+    """
+    widgets = list(page.widgets() or [])
+    for widget in widgets:
+        page.delete_widget(widget)
+    doc.xref_set_key(page.xref, "Annots", "null")
+    strip_acroform(doc)
+
+
+def clean_grid_document(src: fitz.Document) -> fitz.Document:
+    """New PDF with the Trauring chrome only — no form fields, no old copy."""
+    page = src[0]
+    restore_template(src, page)
+    delete_form_fields(src, page)
+    try:
+        page.clean_contents()
+    except Exception:
+        pass
+    clean = fitz.open()
+    clean.insert_pdf(
+        src,
+        from_page=0,
+        to_page=0,
+        links=False,
+        annots=False,
+        widgets=False,
+    )
+    strip_acroform(clean)
+    return clean
+
+
+OLD_COPY_NEEDLES = (
+    b"RAVENS",
+    b"UNDERSTANDS YOU",
+    b"solopreneur",
+    b"Skill-build",
+    b"Liquidating",
+    b"Telegram",
+    b"1 in 4 adults",
+    b"cognitive overload",
+)
+
+
+def leftover_xrefs(doc: fitz.Document) -> dict[str, list[int]]:
+    """Search every object, including widget streams get_text() cannot see."""
+    hits: dict[str, list[int]] = {n.decode(): [] for n in OLD_COPY_NEEDLES}
+    for xref in range(1, doc.xref_length()):
+        parts: list[bytes] = []
+        try:
+            parts.append(doc.xref_stream(xref) or b"")
+        except Exception:
+            pass
+        try:
+            parts.append(doc.xref_object(xref).encode("latin-1", "replace"))
+        except Exception:
+            pass
+        blob = b"".join(parts).lower()
+        for needle in OLD_COPY_NEEDLES:
+            if needle.lower() in blob:
+                hits[needle.decode()].append(xref)
+    return {k: v for k, v in hits.items() if v}
 
 
 def fill(page: fitz.Page) -> list[str]:
@@ -206,34 +273,38 @@ def fill(page: fitz.Page) -> list[str]:
 
 def save_over(doc: fitz.Document, dest: Path) -> Path:
     tmp = ROOT / "_lean-canvas-tmp.pdf"
-    doc.save(tmp, garbage=4, deflate=True)
+    doc.save(tmp, garbage=4, deflate=True, clean=True)
     doc.close()
     try:
         tmp.replace(dest)
         return dest
     except PermissionError:
-        fallback = ROOT / "LeanCanvas-Editable2_WORKING VERSION-filled.pdf"
-        if fallback.exists():
-            try:
-                fallback.unlink()
-            except PermissionError:
-                fallback = ROOT / "LeanCanvas-Editable2_WORKING VERSION-rev2.pdf"
-        tmp.replace(fallback)
-        print("LOCKED: could not write", dest.name, "→ wrote", fallback.name)
-        return fallback
+        try:
+            shutil.copyfile(tmp, dest)
+            tmp.unlink(missing_ok=True)
+            return dest
+        except PermissionError:
+            fallback = ROOT / "LeanCanvas-Editable2_WORKING VERSION-filled.pdf"
+            if fallback.exists():
+                try:
+                    fallback.unlink()
+                except PermissionError:
+                    fallback = ROOT / "LeanCanvas-Editable2_WORKING VERSION-rev2.pdf"
+            tmp.replace(fallback)
+            print("LOCKED: could not write", dest.name, "-> wrote", fallback.name)
+            return fallback
 
 
 def main() -> None:
     dest = PDF
-    doc = fitz.open(PDF)
-    page = doc[0]
-    restore_template(doc, page)
-    hide_form_fields(page)
-    dest = save_over(doc, dest)
-
-    doc = fitz.open(dest)
-    page = doc[0]
-    notes = fill(page)
+    src = fitz.open(PDF)
+    doc = clean_grid_document(src)
+    src.close()
+    notes = fill(doc[0])
+    try:
+        doc[0].clean_contents()
+    except Exception:
+        pass
     dest = save_over(doc, dest)
 
     preview = ROOT / "_lean-canvas-preview.png"
@@ -241,13 +312,22 @@ def main() -> None:
     pix = doc2[0].get_pixmap(matrix=fitz.Matrix(2.2, 2.2), alpha=False)
     pix.save(preview)
     text = doc2[0].get_text()
+    leftover = leftover_xrefs(doc2)
+    widgets = list(doc2[0].widgets() or [])
+    is_form = bool(doc2.is_form_pdf)
     doc2.close()
     print("wrote", dest)
     print("preview", preview)
+    print("widgets", len(widgets), "is_form", is_form)
     for line in notes:
         print(" ", line)
     for needle in ("RAVENS", "solopreneur", "Telegram", "Liquidating Offer"):
         print(f"old-copy leftover {needle!r}:", needle.lower() in text.lower())
+    if leftover:
+        print("OLD COPY STILL IN XREFS:", leftover)
+        raise SystemExit("Lean Canvas still contains previous-version form text")
+    if widgets or is_form:
+        raise SystemExit("Lean Canvas still has form fields — iOS would overlay them")
 
 
 if __name__ == "__main__":

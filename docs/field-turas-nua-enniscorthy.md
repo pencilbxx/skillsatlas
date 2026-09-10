@@ -1,6 +1,6 @@
 # Field note — Turas Nua Enniscorthy (Martina)
 
-**Status:** conversation logged 9 Sep 2026. Not a contract. Not a customer. Not a logo for the deck.
+**Status:** conversation logged 9 Sep 2026; phone follow-up 10 Sep 2026. Not a contract. Not a customer. Not a logo for the deck.
 
 **Room type:** Intreo Partner sitting (see `docs/partner-rooms.md` § Turas Nua). Beachhead context only.
 
@@ -10,7 +10,9 @@
 
 ## Field logs
 
-- Live interview dump (10 Sep 2026): `docs/field-logs/turas-nua-martina-2026-09-10.md` — raw spoken notes. Not a customer claim. Andrew will rewrite any summary separately.
+- Live interview dump (10 Sep 2026): `docs/field-logs/turas-nua-martina-2026-09-10.md` — raw spoken notes. Not a customer claim.
+- Team report (plain English, 10 Sep call): `docs/field-logs/turas-nua-martina-2026-09-10-team-report.md` — share that file, not the dump.
+- Hub / demo / pitch suggestions after that call: `docs/pitch-after-martina-10sep.md`
 
 ---
 

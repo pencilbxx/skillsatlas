@@ -27,7 +27,7 @@ Every number here has a source and a date. The deck quotes from this file and no
 
 ## Activation spend (Observed — historic / announced, not this year's invoice)
 
-Do not say these as “what DSP is paying this month.” They prove the State already spends real money on a sitting that still ends in a printout.
+Do not say these as “what DSP is paying this month,” and do not infer a SkillsAtlas buyer or a printout-based workflow from them. They show historic programme expenditure only.
 
 | Figure | Value | Source | Date |
 | --- | --- | --- | --- |
@@ -38,9 +38,9 @@ Do not say these as “what DSP is paying this month.” They prove the State al
 
 **Research owed (do not quote as annual spend until confirmed):** NES tender estimated total value €142.5m / 60 months; LAES tender estimated total value €172.3m / 48 months (TED / eTenders 2021–22). Confirm 2025/26 invoices before any slide.
 
-## The activation gap (Observed + Reported)
+## Activation context (Observed + Reported)
 
-- JobPath ended. The sitting still exists: Intreo refers jobseekers to **Intreo Partners** — National Employment Service (12–24 months unemployed) and Local Area Employment Service (24+ months), contracted providers including Seetec and Turas Nua (DSP; INOU *Working for Work* 2025–26; Seetec). Appointments run roughly every three weeks, with no structured support in between — the "silent weeks" where the plan lives only in their head (team research, V2 document; citizensinformation.ie; gov.ie).
+- JobPath ended. The sitting still exists: Intreo refers jobseekers to **Intreo Partners** — National Employment Service (12–24 months unemployed) and Local Area Employment Service (24+ months), with contracted providers including Seetec and Turas Nua (DSP; INOU *Working for Work* 2025–26; Seetec). **Do not claim a standard three-week gap or no interim support.** One Enniscorthy conversation reported that appointment timing depends on caseload and that some interview-support tools are already used. Whether the interval creates a material product problem remains a hypothesis to test.
 - August 2026 Live Register (unadjusted **182,517**) is the scale of people already counted and, in the Partner sitting, already assessed. **29,956** people on activation programmes in July 2026 are **not** in that Live Register total (CSO, 4 Sep 2026). Quote as the tiny caption on the who-it’s-for slide, not on the problem slide (that slide keeps ~700). Do not pitch the CSO. Do not put CSO sex / nationality / age tables into the product. Room sentences for Turas Nua / FIT / ReBOOT / Back to Work Connect: `docs/partner-rooms.md`.
 - SOLAS: adult learning participation falls with age and rises with prior educational attainment — precisely when changing work makes learning more important (SOLAS, via SkillsAtlas deck).
 
@@ -66,40 +66,27 @@ Do not quote an invented EU TAM. Export is a catalogue swap on a legal skills la
 | UK skills-shortage vacancies | 27% of vacancies (2024) | DWP *Get Britain Working* / Jobs and Careers Service update | 2025–26 |
 | UK skills language | UK Standard Skills Classification (SSC), not ESCO | Skills England | 2026 |
 
-**Export rule for the canvas:** Year 1 = Ireland sitting. Year 2 = contracted PES / activation offices in ESCO-mapped countries that do **not** already run a national AI matcher (do not lead with VDAB, ADEM, Swedish PES). UK is a later adapter (SSC crosswalk). Swap the course catalogue; keep ESCO + confirm/skip + two routes + the board.
+**Expansion rule:** do not present export or 10 → 20 → 200 as traction. Validate one host, one workflow and one candidate-present sitting before describing replication.
 
-## Scale path (Proposed — plan, not users we have)
+## The one-sentence pitch (Current)
 
-Mentors asked how we get **10 → 20 → 200**. These are sitting-counts (workers who leave with a board), not app installs. Do not say them as traction.
+> A list gives you options. SkillsAtlas gives you proof. In one sitting, the worker confirms their evidence, chooses between two credible role routes, and leaves with a SkillsAtlas Interview Board.
 
-| Gate | Meaning | Kill-point |
+## Validation gates (for Q&A prep)
+
+| Gate | What must be learned | Current status |
 | --- | --- | --- |
-| 10 | First sitting, one adviser | No adviser will sit with us |
-| 20 | One office copies the next week | They will not repeat without us in the room |
-| 200 | ~10 small/mid-tier offices copy the sitting | Next office needs HQ AI programme or a 12-month tender |
+| Problem | Does title-without-proof matter enough in the host's real workflow? | One useful field conversation; not proven across hosts |
+| User value | Does the worker leave with a useful Interview Board? | Clickable practice case only |
+| Workflow | Can the sitting fit without replacing the host's meeting, CRM, job board or catalogue? | Open |
+| Data | What consent, privacy, security and retention controls are required? | Practice data only; open for real use |
+| Buyer | Who has authority and willingness to pay? | Proposed organisation payer; no validated buyer or price |
 
-Defensibility (mentor): large enterprises **can** build this — they have internal AI teams. Beachhead is small and mid-tier providers whose infrastructure is still a printout and a three-week gap. Not a patent claim.
+The ~700 Covalen / Meta contractor cuts are a sourced example of visible workforce transition, not proof that every affected person needs SkillsAtlas. The 10 Sep Enniscorthy conversation strengthened evidence beyond keywords and the value of two constrained routes. It did not establish a customer, pilot, fixed appointment gap, broken office, standalone-tool fit or price.
 
-## The one-sentence pitch (Proposed)
+## Privacy readiness (for Q&A)
 
-> Everyone else hands you a list. We hand you proof — two roles you can already reach, confirmed by you, with a board to walk into the interview holding. (Worker whose role is gone + adviser on a ~3-week cadence. Not a job board. Not a consumer download.)
-
-## Kill-sheet answers (for Q&A prep)
-
-1. **Named person with the problem this week:** the ~700 Covalen workers and Meta's Irish cohort are this quarter's visible cases. Conversation logged 9 Sep: Andrew sat with an adviser (Enniscorthy). She cannot decide for the applicant. Not a customer. Not a logo. Field note: `docs/field-turas-nua-enniscorthy.md`.
-2. **Reachable in 3 days:** via ETB adult guidance services, Intreo-linked providers, or union redundancy support networks.
-3. **What they do today:** assessment + course list + ~3-week appointment gaps.
-4. **Would they use a rough version:** yes if it produces something they can carry — the evidence pack is the artefact.
-5. **90-second demo from cold:** four screens, replay fallback.
-6. **Three screens without cutting the point:** evidence+questions, routes, leave-with-the-board (problem screen is a static image if needed).
-7. **Legal data:** synthetic personas + ESCO (EUPL) + public course listings.
-8. **Still needed if models improve:** yes — the value is the evidence trail and governance, not the model.
-9. **Unfair angle:** one of us sat with an adviser this month (she cannot choose for them) + HR in the room who will not invent a story; evidence trail vs a chatbot. A conversation is not a booked sitting.
-10. **If the hardest part fails by day 6:** curated route pairs per persona, reasoning shown on curated data.
-
-## GDPR readiness (for Q&A)
-
-The demo processes no personal data — both personas are synthetic. The design is GDPR-shaped for when a real adviser touches it: data minimisation by schema (the extraction schema cannot hold protected traits), purpose limitation by process structure (the accountability partner receives only the four-field handoff payload, enforced by a contract test), worker control as a hard gate (confirmation before use, skip without penalty, correction at any point), and an audit trail by default (every evidence item carries provenance, class, and confirmation metadata). If a judge asks "what about GDPR?", the answer is: the compliance-relevant properties are in the architecture, not in a policy document.
+The clickable prototype processes no personal data; the warehouse case is synthetic. A production design must minimise fields, exclude protected-trait inference, require worker confirmation before use, preserve skip without penalty, and keep an auditable link from every worker-specific output to confirmed evidence. Real deployment would still require a host-specific privacy, security, consent and retention review. Do not describe that review as complete.
 
 ## Do not quote
 

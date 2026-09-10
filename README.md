@@ -1,67 +1,65 @@
-# SkillsAtlas — Evidence Agent
+# SkillsAtlas — evidence-first workforce transition
 
-Two-week PoC for the TechIreland National AI Challenge 2026. Four sitting screens, ~90 seconds, live URL. Slides freeze **13 Sep 2pm**.
+SkillsAtlas is a two-week proof-of-concept for the TechIreland National AI Challenge 2026. The active demonstration is one candidate-present sitting: confirm evidence → ask focused questions → choose between two role routes → save a SkillsAtlas Interview Board as PDF.
 
-This repo is the **kit**. The Next.js app is not scaffolded yet. Open this folder as the Cursor workspace so `AGENTS.md` and `.cursor/rules/` load.
+**Hub:** 14 Sep 2026. **Slides freeze:** 13 Sep 2026, 2pm.
 
-**Live URL:** https://skillsatlas.vercel.app — clickable sitting (`docs/wireframes/`). Names and look: `docs/brand.md`.
+**Live URL:** https://skillsatlas.vercel.app — clickable prototype in `docs/wireframes/`.
 
-## Open this first
+## Source of truth
 
-| File | What it is |
+| File | Role |
 | --- | --- |
-| `AGENTS.md` | Ground rules. Read before touching code. |
-| `docs/brand.md` | Product name, team name, colour, type, live URL. |
-| `docs/decisions.md` | Decisions already made (closer = cheat-board; WhatsApp = bonus). |
-| `docs/bpmn/skillsatlas-4-screens.bpmn` | Team picture. Four rows in plain English. Board is the close. |
-| `docs/bpmn/skillsatlas-evidence-agent.bpmn` | Full step map. WhatsApp is a bonus side path. |
-| `docs/demo-script.md` | 90-second narration. Draft. Freeze on day 10. |
-| `docs/wireframes/demo.html` | Clickable sitting. Live: https://skillsatlas.vercel.app — how-to: `docs/wireframes/README.md`. |
-| `docs/evidence-base.md` | The only numbers the deck may quote. |
-| `docs/partner-rooms.md` | Four sittings we might wrap (same demo, different sentence). Not customers. |
-| `docs/pitch-contents.md` | Ten-slide argument + 4-min speech + research split. Contents only. |
-| `docs/SkillsAtlas_Pitch_Contents_Team_Pack.docx` | Same pack as a Word file to send the team. Rebuild: `python docs/build-pitch-pack.py`. |
-| `docs/SkillsAtlas_Hub_Pitch_Slide_Text_TEAM_DRAFT.docx` | Hub 7-minute slide text for team comments. Rebuild: `python docs/build-pitch-slide-text-docx.py`. |
-| `prompts/cursor-kickoff-prompts.md` | Paste P0, then P1… in order. |
-| `docs/explainer-remotion/` | Remotion process explainer (silent branded V2.4 cut). Not the Next.js app. |
+| `docs/pitch-slide-text.md` | Canonical slide words, spoken script, Q&A, ownership, and freeze checklist |
+| `docs/SkillsAtlas_Hub_Pitch_Slide_Text_TEAM_DRAFT.docx` | Team-commenting copy generated from the canonical Markdown |
+| `docs/demo-script.md` | Short live-click narration |
+| `docs/hub-rundown.md` | Timing and stage recovery plan |
+| `docs/team-workplan-10sep.md` | Team ownership, branch order, helper boundary, and freeze gates |
+| `docs/wireframes/demo.html` | Public prototype copy |
+| `docs/wireframes/demo.js` | Public prototype state and interaction |
+| `docs/brand.md` | Names, palette, and public terminology |
+| `docs/decisions.md` | Product boundaries and dated decisions |
+| `docs/evidence-base.md` | The only numbers the deck may quote |
 
-## What exists vs what does not
+Older pitch drafts, canvases, field logs, and BPMN files remain research, evidence, or design history. They are not sources for new public copy unless the canonical Team Draft explicitly adopts a line.
 
-**In the kit (ready):** rules, versioned prompts, BPMN, evidence base, kickoff prompts, Remotion process explainer (`docs/explainer-remotion/`), this README.
+## Current story
 
-**Not built yet:** `app/`, `lib/`, `package.json`, Supabase schema, personas, roles, courses. That is P0–P1, not a missing download.
+> **A list gives you options. SkillsAtlas gives you proof.**
 
-## The four screens
+A job title or course list can show someone where they might go. It does not show the confirmed evidence, specific gap, and next step that make them credible for that route.
 
-The sitting on stage is still four steps. The live URL adds **00 Start** so a judge who opens the link cold knows who we are (optional film, shoreline). Hub 90 seconds starts at the problem.
+A warehouse worker’s CV says **“managed stock.”** The worker confirms the original line, answers or skips two short questions, and reviews any stronger wording before it may be used. Exactly two unranked role routes follow. The worker chooses and leaves with a **SkillsAtlas Interview Board**.
 
-1. **Problem** — synthetic CV + “assessed, here’s a course list, good luck.”
-2. **Evidence + questions** — parse → worker confirms → 2–3 questions that strengthen weak evidence.
-3. **Two routes** — transferable skills, gaps, real Skillnet / SOLAS / Springboard+ courses.
-4. **Leave with the board** — adviser summary + one committed step + the cheat-board they walk out holding. Last step: Save as PDF.
+## The four active screens
 
-WhatsApp accountability partner is a **bonus** (`NEXT_PUBLIC_ENABLE_PARTNER`). Same four-field privacy boundary. Not the closer.
+The public URL includes **00 Start** for a judge opening it cold. The on-stage product path remains Screens 01–04, and the clicker starts on Screen 02.
 
-## Next action
+1. **Problem** — a target title without the proof, gap, or next step.
+2. **Evidence** — confirm the CV wording, answer or skip at most three questions, and separately confirm any strengthened wording.
+3. **Two routes** — exactly two credible, unranked role routes. Learning options in the clickable prototype are illustrative unless verified and linked.
+4. **SkillsAtlas Interview Board** — one next step, route-specific evidence story, question example by interview setting, and a real text PDF.
 
-Paste **P0** from `prompts/cursor-kickoff-prompts.md` into a new Cursor chat in this repo. Do not skip to features.
+## Current commercial boundary
 
-Keys you will need after P0 (see `.env.example`):
+The worker uses SkillsAtlas. The organisation hosting the sitting is the proposed payer. The current model is not B2C.
 
-- `OPENAI_API_KEY` (organiser credits)
-- Supabase EU: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
-- `PARTNER_WEBHOOK_URL` (only when the WhatsApp bonus is on)
+The same candidate-present sitting may be hosted by an employment or outplacement adviser, or by a mid-tier recruiter meeting the candidate. A recruiter-alone CRM-search tool is a separate product and is not being built this week.
 
-Repo must live on a **personal** GitHub account (Vercel Hobby cannot deploy org repos).
+No organisation is presented as a customer, pilot, signed lead, or price signal.
 
-## After the app exists
+## Active and parked work
 
-```bash
-pnpm install
-cp .env.example .env.local
-pnpm db:push
-pnpm db:seed
-pnpm dev
-```
+**This narrative branch:** canonical narrative, prototype state integrity, two route-specific Boards, Interview Board PDF, existing silent film guidance, deck handoff, and rehearsal material.
 
-Before any commit: `pnpm lint && pnpm test`.
+**Next separate Cursor branch:** the AI practice-helper task assigned to Andrew and Sri Karan. It is not implemented in this narrative branch.
+
+**Removed from the active pitch and demo:** WhatsApp. Historical and code references remain for project history.
+
+**Out of scope this week:** recruiter CRM search, B2C payment, candidate ranking, ATS keyword matching, personality or SWOT intake, extra screens, custom authentication, and a new film.
+
+## Development notes
+
+The deployed experience is a static clickable prototype, not the future Next.js application. Open this repository in Cursor so `AGENTS.md` and `.cursor/rules/` load before making code changes.
+
+Before a commit, run the checks available for the files changed. For the static prototype, at minimum run `node --check docs/wireframes/demo.js`, inspect the complete click path, test the skip path, test direct Board navigation, and open the downloaded PDF.

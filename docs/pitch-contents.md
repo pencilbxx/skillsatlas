@@ -1,5 +1,7 @@
 # SkillsAtlas pitch contents — team research pack
 
+> **Superseded research pack — not current public copy.** Use `docs/pitch-slide-text.md` and its generated Team Draft Word document.
+
 **This is not a designed deck.** No PPTX, no layout, no fonts. It is the *argument*: what each slide must say, why it is there, who researches the gaps, and a working four-minute speech. After research comes back, we combine this into one picture and write the final spoken text.
 
 **9 Sep:** Hub slide text is a story, not a run-of-show: `docs/pitch-slide-text.md` (team Word: `docs/SkillsAtlas_Hub_Pitch_Slide_Text_TEAM_DRAFT.docx`). If a product line fights `docs/pitch-8sep-freeze.md`, the freeze still wins. Narrative, aha, and conversation handling follow the 9 Sep file. Do not import the teammate RedeployMate deck as the Hub deck.

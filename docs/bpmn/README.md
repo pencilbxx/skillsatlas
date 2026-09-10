@@ -1,13 +1,13 @@
 # SkillsAtlas — Camunda BPMN Blueprint (Design-Only)
 
-**Status:** design artefact for the pitch deck and repo docs. The two-week demo runs on the lightweight stack (Next.js + Supabase + Vercel AI SDK); this BPMN model documents the process as it *would* run on Camunda 8 in production, and doubles as the architecture map for the demo build.
+**Status:** historical/design artefact, not public pitch copy and not the live prototype engine. The active narrative is `docs/pitch-slide-text.md`. WhatsApp paths remain here as history but are removed from the active demo and pitch. The active final artefact is the **SkillsAtlas Interview Board** PDF.
 
 **Two files** — open in **Camunda Desktop Modeler**. If a tab still shows the old order, close it without saving and open these paths again.
 
 | File | Use it for |
 | --- | --- |
 | `docs/bpmn/skillsatlas-4-screens.bpmn` | Team picture. Four rows, plain English. For a first-time viewer, not a developer. |
-| `docs/bpmn/skillsatlas-evidence-agent.bpmn` | Full step map. Happy path ends on the board. WhatsApp is a side box, marked bonus. |
+| `docs/bpmn/skillsatlas-evidence-agent.bpmn` | Full historical step map. WhatsApp remains as an inactive design side path. |
 
 **How to read the colours** (same idea as the Ravens Point lab): amber = pitch slide, green = the person, blue = a model call, grey = a rule, teal = AI draft then ESCO pin, purple = another system, yellow sticky = the line you say out loud.
 

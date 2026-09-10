@@ -1,5 +1,7 @@
 # Pitch freeze — 8 Sep 2026
 
+> **Historical decision record — not current public copy.** Use `docs/pitch-slide-text.md` for the active Hub narrative, spoken script, and slide words. Where this file says it wins a conflict, that instruction is superseded.
+
 Input for the Hub slides and the four-minute speech. Not a designed deck.
 
 **Use with:** `docs/pitch-contents.md` (slide skeleton), `docs/evidence-base.md` (only numbers you may quote), `docs/demo-script.md` (90 seconds), `docs/LeanCanvas-Editable2_WORKING VERSION.pdf` (rev 4, mum test).

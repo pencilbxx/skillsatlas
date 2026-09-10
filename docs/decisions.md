@@ -2,6 +2,23 @@
 
 Written down when made. Newest first.
 
+## 10 Sep 2026 — Title-to-proof narrative and active-scope reset
+
+**Decision:** Treat `docs/pitch-slide-text.md` as the canonical public narrative and generate `docs/SkillsAtlas_Hub_Pitch_Slide_Text_TEAM_DRAFT.docx` from it. The public hook is **“A list gives you options. SkillsAtlas gives you proof.”** The problem is title without proof, not a universal claim that an office leaves people alone for a fixed three weeks.
+
+- Final artefact name: **SkillsAtlas Interview Board**.
+- The live experience is described as a **clickable prototype using a prepared practice CV**, not a live production AI pipeline.
+- The worker confirms, skips, and chooses. Any strengthened wording requires a separate worker-confirmation action before Routes, Board, or PDF may use it.
+- Exactly two unranked role routes remain. Learning options are illustrative until a current listing is verified and linked.
+- Same candidate-present sitting may be described in two rooms: worker + employment/outplacement adviser; candidate + mid-tier recruiter. The organisation is the proposed payer. This is not B2C.
+- Recruiter-alone CRM search remains a different product and is not being built this week.
+- WhatsApp is removed from the active demo and pitch. Historical and code references remain.
+- The AI practice helper is a separate task for Andrew and Sri Karan. Do not add it to the canonical script until it is implemented and tested.
+
+**Team ownership:** Don — pitch, spoken text, video feedback; Sophia — pitch feedback; Bridget — slide design; Andrew + Sri Karan — demo, video, and later AI practice-helper implementation.
+
+**Field-evidence boundary:** the 10 Sep Martina conversation strengthened evidence-over-keywords and two constrained choices. It did not establish a customer, pilot, broken office, fixed three-week programme, external-tool fit, buyer, price, or CRM-search product.
+
 ## 9 Sep 2026 — Clickable sitting on the live URL
 
 **Decision:** The Hub URL is the HTML sitting in `docs/wireframes/`, deployed to https://skillsatlas.vercel.app (Vercel project `skillsatlas`, Andrew’s Hobby). Not the Next.js app this fortnight. Brand tokens and names: `docs/brand.md`.

@@ -1,5 +1,7 @@
 # After Martina — compact reframe (10 Sep)
 
+> **Historical working note — not current public copy.** Accepted decisions are incorporated into `docs/pitch-slide-text.md`. Do not add a recruiter CRM product or a multi-market slide to the Hub pitch from this file.
+
 Source: team report of the 10 Sep Martina call.  
 Design is not started. Spoken text is not locked. Demo words can move. **AI helper is in** — show it on the board.
 

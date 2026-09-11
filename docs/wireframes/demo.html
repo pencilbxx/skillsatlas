@@ -9,9 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./demo.css?v=3" />
+  <link rel="stylesheet" href="./demo.css?v=10" />
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to sitting</a>
   <div class="app">
     <header>
       <div class="brand">
@@ -31,11 +32,11 @@
       </div>
     </header>
 
-    <main>
+    <main id="main-content" tabindex="-1">
       <!-- SCREEN 0 — judge landing + film -->
       <section class="screen on" id="s0" data-say="SkillsAtlas. Challenge team RedeployMate. Watch the silent film if you want. Then we start at the problem.">
         <div class="home-hero">
-          <img class="home-hero-img" src="./media/atlas-hero.webp" alt="" />
+          <img class="home-hero-img" src="./media/atlas-hero.webp" alt="" fetchpriority="high" decoding="async" />
           <div class="home-hero-shade"></div>
           <div class="home-hero-copy">
             <p class="kicker kicker-on-dark">Clickable prototype · TechIreland National AI Challenge 2026</p>
@@ -58,16 +59,16 @@
             </div>
           </div>
           <figure class="shore">
-            <img src="./media/shore-route.webp" alt="" />
+            <img src="./media/shore-route.webp" alt="" width="960" height="640" loading="lazy" decoding="async" />
           </figure>
         </div>
 
         <figure class="film">
+          <p class="film-idle" id="film-idle">
+            <span>Silent · about 52 seconds</span>
+            <strong>The sitting, on film</strong>
+          </p>
           <div class="film-frame">
-            <div class="film-idle" id="film-idle">
-              <span>Silent · about 52 seconds</span>
-              <strong>The sitting, on film</strong>
-            </div>
             <video
               id="film"
               controls
@@ -82,13 +83,13 @@
         </figure>
 
         <aside class="team-strip">
-          <img src="./media/pencil-team.png" alt="" />
+          <img src="./media/pencil-team.png" alt="" width="120" height="83" loading="lazy" decoding="async" />
           <p><strong>RedeployMate</strong> built this sitting for the challenge. SkillsAtlas is the product name. Four screens after this one. You can skip the film.</p>
         </aside>
       </section>
 
       <!-- SCREEN 1 -->
-      <section class="screen" id="s1" data-say="A title can show where someone might go. It does not show the evidence, gap, and next step that make the route credible. We use the same CV.">
+      <section class="screen" id="s1" inert data-say="A title can show where someone might go. It does not show the evidence, gap, and next step that make the route credible. We use the same CV.">
         <p class="kicker" id="station">01 / Station · The problem</p>
         <div class="hero-dark">
           <h1>You can see the <em>title.</em><br />Not yet the proof.</h1>
@@ -129,10 +130,10 @@
       </section>
 
       <!-- SCREEN 2 -->
-      <section class="screen" id="s2" data-say="This prepared practice case shows the intended flow. The worker confirms before use, answers or skips two questions, then reviews the stronger wording.">
+      <section class="screen" id="s2" inert data-say="This prepared practice case shows the intended flow. The worker confirms before use, answers or skips two questions, then reviews the stronger wording.">
         <p class="kicker">02 / Station · Experience becomes evidence</p>
         <h1>Nothing is used until they <em>say yes</em></h1>
-        <p class="lead">This prepared practice case shows the intended flow: extract, confirm, then 2–3 focused questions. Skip is one tap, with no penalty.</p>
+        <p class="lead">This prepared practice case shows the intended flow: extract, confirm, then two focused questions. Skip is one tap, with no penalty.</p>
         <div class="grid g3">
           <div>
             <article class="card" style="margin-bottom:1rem">
@@ -150,7 +151,7 @@
               </button>
               <div class="row" style="margin-top:0.75rem">
                 <button class="btn primary" type="button" id="btn-confirm">Confirm these lines</button>
-                <span class="muted" id="confirm-state">Not confirmed yet · tap a line or this button</span>
+                <span class="muted" id="confirm-state" role="status">Not confirmed yet · tap a line or this button</span>
               </div>
             </article>
             <article class="card" id="q-panel" hidden>
@@ -177,14 +178,14 @@
       </section>
 
       <!-- SCREEN 3 -->
-      <section class="screen" id="s3" data-say="Exactly two credible role routes. Not jobs available now and not a ranking. The worker chooses. Learning options are illustrative in this prototype.">
+      <section class="screen" id="s3" inert data-say="Exactly two credible role routes. Not jobs available now and not a ranking. The worker chooses. Learning options are illustrative in this prototype.">
         <p class="kicker">03 / Station · Two reachable routes</p>
         <h1>Exactly two next roles — <em>not a job board</em></h1>
         <p class="lead" id="route-lead">Prepared route examples from this practice case. Not “jobs available now,” not a hiring promise, and not a ranking. Learning options are illustrative in this prototype.</p>
         <div class="grid g-route" id="routes">
-          <article class="card" data-route="a" tabindex="0">
+          <article class="card" data-route="a">
             <div class="row" style="justify-content:space-between">
-              <p class="tiny">Route A · reachable</p>
+              <p class="tiny">Reachable route</p>
               <span class="chip chip-obs" id="route-a-status">Confirmed evidence</span>
             </div>
             <h2>Inventory / stock controller</h2>
@@ -203,9 +204,9 @@
             </div>
             <button class="btn" type="button" data-pick="a" style="margin-top:0.7rem">Choose this path</button>
           </article>
-          <article class="card" data-route="b" tabindex="0">
+          <article class="card" data-route="b">
             <div class="row" style="justify-content:space-between">
-              <p class="tiny">Route B · reachable</p>
+              <p class="tiny">Reachable route</p>
               <span class="chip chip-obs" id="route-b-status">Confirmed evidence</span>
             </div>
             <h2>Team lead · warehouse operations</h2>
@@ -229,38 +230,26 @@
       </section>
 
       <!-- SCREEN 4 -->
-      <section class="screen" id="s4" data-say="One next step this week. A page for the professional beside them. This is the SkillsAtlas Interview Board. Change the interview setting, then save the Board as a PDF.">
+      <section class="screen" id="s4" inert data-say="One next step this week. A page for the professional beside them. This is the SkillsAtlas Interview Board. Change the interview setting, then save the Board as a PDF.">
         <p class="kicker">04 / Station · Leave with the board</p>
         <h1>They walk out holding <em>proof</em></h1>
-        <p class="lead">One step this week. A page for the professional beside them. Then the SkillsAtlas Interview Board. The interview setting changes the question. Last step: save the Board as a PDF.</p>
-        <div class="grid g2" style="margin-bottom:1rem">
-          <article class="card">
-            <p class="tiny">Applicant commits</p>
-            <h2>One step this week</h2>
-            <p>Not the whole plan. This line is printed on the board.</p>
-            <p style="margin:0.8rem 0 0"><strong id="step-text">Check a current inventory / WMS learning option with the adviser this week.</strong></p>
-          </article>
-          <article class="card navy">
-            <p class="tiny" style="color:var(--accent)">Professional receives</p>
-            <h2 style="color:#fff">One page they can keep</h2>
-            <p>Confirmed evidence, chosen route, the plan, what is still open. They may sit with the applicant. This sitting does not wait for an approve click.</p>
-          </article>
-        </div>
         <article class="board" id="board">
-          <div class="row" style="justify-content:space-between;margin-bottom:0.8rem">
+          <div class="row board-head">
             <p class="tiny" id="board-status">SkillsAtlas Interview Board · practice case</p>
             <span class="chip chip-prop" id="board-status-chip">production uses confirmed evidence</span>
           </div>
           <h2 id="board-title">SkillsAtlas Interview Board · inventory / stock controller</h2>
+          <p class="tiny" style="margin:0.8rem 0 0.25rem">This week's step</p>
+          <p id="step-text" style="margin:0 0 0.85rem">Check a current inventory / WMS learning option with the adviser this week.</p>
           <p class="tiny" style="margin:0.8rem 0 0.4rem">Interview setting — they choose</p>
           <div class="row" id="stage">
-            <button type="button" class="opt on" data-val="screen">Phone screen</button>
-            <button type="button" class="opt" data-val="first">First interview</button>
-            <button type="button" class="opt" data-val="panel">Panel</button>
+            <button type="button" class="opt on" data-val="screen" aria-pressed="true">Phone screen</button>
+            <button type="button" class="opt" data-val="first" aria-pressed="false">First interview</button>
+            <button type="button" class="opt" data-val="panel" aria-pressed="false">Panel</button>
           </div>
           <div class="row" id="who" style="margin-top:0.4rem">
-            <button type="button" class="opt on" data-val="recruiter">Recruiter</button>
-            <button type="button" class="opt" data-val="hm">Hiring manager</button>
+            <button type="button" class="opt on" data-val="recruiter" aria-pressed="true">Recruiter</button>
+            <button type="button" class="opt" data-val="hm" aria-pressed="false">Hiring manager</button>
           </div>
           <p class="muted" style="margin:0.85rem 0 0.4rem">STAR story (once) · Action is the long part</p>
           <div class="star">
@@ -275,8 +264,9 @@
         </article>
         <div class="save-row">
           <button class="btn primary" type="button" id="btn-pdf">Save Interview Board as PDF</button>
-          <span class="muted" id="pdf-state">Downloads the interview board to this computer.</span>
+          <span class="muted" id="pdf-state" role="status">Downloads the interview board to this computer.</span>
         </div>
+        <p class="muted board-aside">Adviser can sit with them. This sitting does not wait for an approve click. We never say they would be hired.</p>
       </section>
     </main>
 
@@ -286,6 +276,6 @@
     </footer>
   </div>
 
-  <script src="./demo.js?v=4"></script>
+  <script src="./demo.js?v=8"></script>
 </body>
 </html>

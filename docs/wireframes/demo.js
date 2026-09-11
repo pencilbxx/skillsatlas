@@ -3,18 +3,9 @@ const navBtns = [...document.querySelectorAll("nav [data-go]")];
 const film = document.getElementById("film");
 const filmIdle = document.getElementById("film-idle");
 
-function syncFilmIdle() {
-  if (!film || !filmIdle) return;
-  const show = film.paused && film.currentTime < 0.25;
-  filmIdle.hidden = !show;
-}
-
 if (film) {
-  film.addEventListener("play", syncFilmIdle);
-  film.addEventListener("pause", syncFilmIdle);
   film.addEventListener("ended", () => {
     film.currentTime = 0;
-    syncFilmIdle();
   });
   film.addEventListener("error", () => {
     if (!filmIdle) return;
@@ -46,20 +37,57 @@ function go(index) {
   if (film && index !== 0) film.pause();
   if (index === 3) syncRoutes();
   if (index === 4) syncBoard();
-  screens.forEach((screen) => screen.classList.toggle("on", screen.id === "s" + index));
+  screens.forEach((screen) => {
+    const on = screen.id === "s" + index;
+    screen.classList.toggle("on", on);
+    if (on) screen.removeAttribute("inert");
+    else screen.setAttribute("inert", "");
+  });
   navBtns.forEach((button) => {
     if (button.dataset.go === String(index)) button.setAttribute("aria-current", "true");
     else button.removeAttribute("aria-current");
   });
   window.scrollTo({ top: 0, behavior: "smooth" });
+  if (index === 3) {
+    const rail = document.getElementById("routes");
+    if (!rail) return;
+    const chosen = rail.querySelector("[data-route].sel");
+    if (chosen) {
+      const left = chosen.getBoundingClientRect().left - rail.getBoundingClientRect().left + rail.scrollLeft;
+      rail.scrollLeft = left;
+    } else {
+      rail.scrollLeft = 0;
+    }
+  }
 }
 
 document.querySelectorAll("[data-go]").forEach((button) => {
   button.addEventListener("click", () => go(Number(button.dataset.go)));
 });
 
+const skipLink = document.querySelector(".skip-link");
+if (skipLink) {
+  skipLink.addEventListener("click", (event) => {
+    const main = document.getElementById("main-content");
+    if (!main) return;
+    event.preventDefault();
+    main.focus({ preventScroll: true });
+    main.scrollIntoView({ block: "start" });
+  });
+}
+
 window.addEventListener("keydown", (event) => {
-  if (["0", "1", "2", "3", "4"].includes(event.key)) go(Number(event.key));
+  if (!["0", "1", "2", "3", "4"].includes(event.key)) return;
+  if (event.altKey || event.ctrlKey || event.metaKey) return;
+  const target = event.target;
+  if (
+    target instanceof HTMLElement &&
+    (target.closest("input, textarea, select, [contenteditable='true']") ||
+      target.isContentEditable)
+  ) {
+    return;
+  }
+  go(Number(event.key));
 });
 
 const confirmBtn = document.getElementById("btn-confirm");
@@ -75,6 +103,8 @@ const claimSourceStatus = document.getElementById("claim-source-status");
 const claims = [...document.querySelectorAll("#s2 .claim")];
 const stockStrong = document.querySelector("#c-stock strong");
 const originalStockText = stockStrong.textContent;
+const trainDetail = document.querySelector("#c-train .muted");
+const originalTrainDetail = trainDetail ? trainDetail.textContent : "";
 const qTiny = document.querySelector("#q-panel .tiny");
 const qText = document.getElementById("q-text");
 const qWhy = document.getElementById("q-why");
@@ -102,9 +132,10 @@ function resetEvidence() {
     el.classList.remove("strong");
   });
   stockClaim.classList.add("weak");
-  setStatusChip(stockScore, "Score 1 · weak", "chip-rep");
+  setStatusChip(stockScore, "Score 1 · weak · load-bearing", "chip-rep");
   setStatusChip(claimSourceStatus, "From CV · awaiting confirmation", "chip-rep");
   stockStrong.textContent = originalStockText;
+  if (trainDetail) trainDetail.textContent = originalTrainDetail;
   stockDetail.textContent = "No number, no system, no date. Matters for a reachable inventory route — tap to confirm, then we ask.";
   confirmState.textContent = "Not confirmed yet · tap a line or this button";
   confirmBtn.classList.add("primary");
@@ -140,6 +171,8 @@ function openQuestions() {
   claims.forEach((el) => {
     el.disabled = true;
   });
+  if (trainDetail) trainDetail.textContent = "Confirmed. Original CV wording.";
+  stockDetail.textContent = "Confirmed. Questions can add a number, system, or date — or they can skip.";
   showEl(qPanel);
   afterTitle.textContent = "Waiting on their words";
   afterBody.textContent = "The question is tied to the weak stock claim. The worker can skip.";
@@ -396,10 +429,15 @@ document.querySelectorAll("[data-route]").forEach((card) => {
 });
 
 function bindGroup(id) {
-  document.querySelectorAll("#" + id + " .opt").forEach((button) => {
+  const buttons = [...document.querySelectorAll("#" + id + " .opt")];
+  buttons.forEach((button) => {
     button.addEventListener("click", () => {
-      document.querySelectorAll("#" + id + " .opt").forEach((item) => item.classList.remove("on"));
+      buttons.forEach((item) => {
+        item.classList.remove("on");
+        item.setAttribute("aria-pressed", "false");
+      });
       button.classList.add("on");
+      button.setAttribute("aria-pressed", "true");
       syncQuestion();
     });
   });

@@ -4,7 +4,7 @@ SkillsAtlas is a two-week proof-of-concept for the TechIreland National AI Chall
 
 **Hub:** 14 Sep 2026. **Slides freeze:** 13 Sep 2026, 2pm.
 
-**Live URL:** https://skillsatlas.vercel.app — clickable prototype in `docs/wireframes/`.
+**Live URL:** https://skillsatlas.vercel.app — clickable prototype in `docs/wireframes/`. Root `vercel.json` maps `/` onto that folder so a whole-repo Vercel deploy still opens the sitting.
 
 ## Source of truth
 

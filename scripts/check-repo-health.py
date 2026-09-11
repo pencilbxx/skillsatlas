@@ -60,6 +60,7 @@ REQUIRED_FILES = [
     "data/README.md",
     ".gitignore",
     ".env.example",
+    "vercel.json",
 ]
 
 STALE_STRINGS = [

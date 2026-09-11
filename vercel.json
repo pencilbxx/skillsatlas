@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "rewrites": [
+    { "source": "/", "destination": "/docs/wireframes/index.html" },
+    { "source": "/:path*", "destination": "/docs/wireframes/:path*" }
+  ]
+}

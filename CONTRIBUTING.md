@@ -20,7 +20,8 @@ Do not copy wording from `docs/archive/`. Those files are research history.
 
 These paths are load-bearing. Vercel, Cursor rules, and the pitch all depend on them:
 
-- `docs/wireframes/` — Vercel root for https://skillsatlas.vercel.app
+- `docs/wireframes/` — public prototype files. Root `vercel.json` maps https://skillsatlas.vercel.app to this folder.
+- `vercel.json` — required so `/` serves the sitting when Vercel deploys the whole repo
 - `docs/pitch-slide-text.md`
 - `docs/brand.md`
 - `docs/decisions.md`

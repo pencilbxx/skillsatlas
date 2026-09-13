@@ -23,7 +23,7 @@ The talker never holds the mouse. The clicker starts on Screen 02, not Screen 00
 | **0:00–0:45** | Hook and title-without-proof problem | Slides 1–2 |
 | **0:45–0:55** | Confirm · Question · Two routes · Interview Board | Slide 3 |
 | **0:55–1:55** | Existing silent film, about 52 seconds | Slide 4 |
-| **1:55–3:30** | Clickable prototype: Evidence → Routes → Interview Board → PDF | Slide 5, then browser |
+| **1:55–3:30** | Clickable prototype: Evidence → Routes → Interview Board → practice → PDF | Slide 5, then browser |
 | **3:30–6:20** | User and payer, difference, next proof, team, ask | Slides 6–10 |
 | **6:20–7:00** | Stop. Let the ask hold. | Slide 10 |
 | **7:00–10:00** | Questions | Slide 10 |
@@ -36,7 +36,7 @@ If late, shorten Slide 8. Never skip the evidence transformation, the two routes
 
 **Film:** The map behind the sitting. One opening sentence, then silence: *“The system proposes, the worker confirms, and the worker chooses.”*
 
-**Live click:** The prototype is tangible. “Managed stock” becomes stronger wording only after worker review and confirmation. The worker chooses between two unranked routes and saves a route-specific Interview Board as PDF.
+**Live click:** The prototype is tangible. “Managed stock” becomes stronger wording only after worker review and confirmation. The worker chooses between two unranked routes, practises one prepared answer, and saves a route-specific Interview Board as PDF.
 
 **Slides 6–8:** The same four screens can be hosted in two candidate-present settings. The worker is the user; the organisation is the proposed payer. Buyer, workflow fit, privacy requirements, and price remain open.
 
@@ -84,4 +84,4 @@ Keep the film file next to the deck. Test the laptop with sound muted.
 - Candidate-present recruiter setting, not recruiter-alone CRM search.
 - Worker uses; organisation is the proposed payer; not B2C in the current model.
 - WhatsApp is not in the active demonstration or pitch.
-- The separate AI practice-helper task is discussed only after implementation and testing.
+- The Screen 04 helper is a **prepared practice helper**, not a live AI interviewer. It uses confirmed evidence only and does not score the worker.

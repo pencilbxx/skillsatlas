@@ -157,6 +157,7 @@ function resetEvidence() {
   afterBody.textContent = "In the intended production flow, the worker confirms before the claim is used and reviews any stronger wording.";
   afterClass.textContent = "Prepared questions and wording remain examples until the worker confirms them.";
   document.querySelectorAll("[data-route]").forEach((card) => card.classList.remove("sel"));
+  resetPractice();
   syncRoutes();
   syncBoard();
 }
@@ -374,10 +375,14 @@ function boardIsConfirmed() {
   return evidenceState === "base" || evidenceState === "enriched";
 }
 
-function syncQuestion() {
+function settingKey() {
   const stage = document.querySelector("#stage .opt.on").dataset.val;
   const who = document.querySelector("#who .opt.on").dataset.val;
-  const key = stage + "-" + (who === "hm" ? "hm" : "recruiter");
+  return stage + "-" + (who === "hm" ? "hm" : "recruiter");
+}
+
+function syncQuestion() {
+  const key = settingKey();
   const question = boardIsConfirmed()
     ? questions[selectedRoute][key]
     : "Complete the Evidence screen before using a worker-specific interview question.";
@@ -385,6 +390,7 @@ function syncQuestion() {
   document.getElementById("pq-note").textContent = boardIsConfirmed()
     ? "The setting changes the question. The confirmed evidence stays the same."
     : "Practice preview only. No worker-specific evidence is confirmed in this session.";
+  syncHelper();
 }
 
 function syncBoard() {
@@ -591,6 +597,196 @@ pdfBtn.addEventListener("click", () => {
   } finally {
     pdfBtn.disabled = false;
   }
+});
+
+
+/* Prepared practice helper — Screen 04, between the Board and the PDF row.
+   Prepared strings only. No model call, no microphone, no scoring.
+   Content is keyed on evidenceState so a skipped detail is never spoken back. */
+
+const practiceCopy = {
+  a: {
+    enriched: {
+      prepared:
+        "On nights at one site, stock was my job. I looked after about 2,400 product lines in SAP and ran the monthly cycle counts from 2019 to 2024. If a count did not match, I recounted the location and checked the recent movements before it went out.",
+      followup:
+        "You said the monthly cycle counts were yours. Tell me about one count that did not match the system — what did you do next?",
+      tips: [
+        "Lead with the number and the system you confirmed — about 2,400 lines, in SAP. That is the part they can check.",
+        "Put the Action in the middle and make it the longest part: what you actually did when a count was wrong.",
+      ],
+      guard: "Every line above uses wording the worker confirmed on the Evidence screen.",
+    },
+    base: {
+      prepared:
+        "Stock was my job on the night shift at one site. I managed stock day to day, and if something did not look right I checked it before it went out.",
+      followup:
+        "You said stock was the job on your shift. Talk me through what you did when something did not add up.",
+      tips: [
+        "You confirmed \u201Cmanaged stock\u201D. Practise standing over that. Do not add a number or system you did not confirm.",
+        "If they ask for a figure you do not have, say what you can stand over and offer to check it.",
+      ],
+      guard: "Detail was skipped on the Evidence screen, so the helper stays on the original confirmed CV wording.",
+    },
+  },
+  b: {
+    enriched: {
+      prepared:
+        "When new starters came in, I helped them with the site safety paperwork — what the checklist covered and what they had to sign before they went out on the floor.",
+      followup:
+        "Tell me about a new starter who was unsure about the checklist. What did you explain first?",
+      tips: [
+        "You confirmed \u201Chelped new staff with safety paperwork\u201D. Stay on that — you are not claiming a team-lead title.",
+        "Put the Action in the middle: what you showed them, and what they did next.",
+      ],
+      guard: "Every line above uses wording the worker confirmed on the Evidence screen.",
+    },
+    base: {
+      prepared:
+        "When new starters came in, I helped them with the site safety paperwork — what the checklist covered and what they had to sign before they went out on the floor.",
+      followup:
+        "Tell me about a new starter who was unsure about the checklist. What did you explain first?",
+      tips: [
+        "You confirmed \u201Chelped new staff with safety paperwork\u201D. Stay on that — you are not claiming a team-lead title.",
+        "Put the Action in the middle: what you showed them, and what they did next.",
+      ],
+      guard: "The original confirmed CV wording is the only source for this route.",
+    },
+  },
+};
+
+const settingTips = {
+  "screen-recruiter": "This is a phone screen with a recruiter. Keep it to about a minute, in plain words.",
+  "screen-hm": "A hiring manager on the phone wants the short version. One minute, then stop and let them ask.",
+  "first-recruiter": "A first interview is a conversation, not a screen. It is fine to take a breath before you answer.",
+  "first-hm": "A hiring manager in a first interview wants what you did, not the job description.",
+  "panel-recruiter": "On a panel, name the setting first so people outside warehouse work can follow you.",
+  "panel-hm": "On a panel, say the task once, clearly, then give the example.",
+};
+
+const helperRound = document.getElementById("helper-round");
+const helperBlock = document.getElementById("helper-block");
+const helperReply = document.getElementById("helper-reply");
+const helperYou = document.getElementById("helper-you");
+const helperYouText = document.getElementById("helper-you-text");
+const helperQuestion = document.getElementById("helper-question");
+const helperFollowup = document.getElementById("helper-followup");
+const helperTips = document.getElementById("helper-tips");
+const helperGuard = document.getElementById("helper-guard");
+const helperAnswer = document.getElementById("helper-answer");
+const btnPractice = document.getElementById("btn-practice");
+const btnPrepared = document.getElementById("btn-prepared");
+const btnSend = document.getElementById("btn-send");
+const practiceState = document.getElementById("practice-state");
+
+let practiceOpen = false;
+let practiceReplied = false;
+let lastPrepared = "";
+
+function practiceCopyNow() {
+  return practiceCopy[selectedRoute][evidenceState === "enriched" ? "enriched" : "base"];
+}
+
+function renderHelperQuestion() {
+  helperQuestion.textContent = questions[selectedRoute][settingKey()];
+}
+
+function renderHelperReply() {
+  const copy = practiceCopyNow();
+  helperFollowup.textContent = copy.followup;
+  helperTips.textContent = "";
+  copy.tips.concat([settingTips[settingKey()]]).forEach((tip) => {
+    const item = document.createElement("li");
+    item.textContent = tip;
+    helperTips.appendChild(item);
+  });
+  helperGuard.textContent = copy.guard;
+}
+
+function resetPractice() {
+  practiceOpen = false;
+  practiceReplied = false;
+  lastPrepared = "";
+  if (!helperRound) return;
+  if (helperAnswer) helperAnswer.value = "";
+  if (helperYouText) helperYouText.textContent = "";
+  hideEl(helperYou);
+  hideEl(helperReply);
+  hideEl(helperRound);
+  hideEl(helperBlock);
+  practiceState.textContent = "One round, about twenty seconds. The Board and the PDF below do not change.";
+}
+
+function syncHelper() {
+  if (!helperRound) return;
+  if (!boardIsConfirmed()) {
+    hideEl(helperRound);
+    hideEl(helperYou);
+    hideEl(helperReply);
+    if (practiceOpen) showEl(helperBlock);
+    return;
+  }
+  hideEl(helperBlock);
+  if (!practiceOpen) return;
+  renderHelperQuestion();
+  if (helperAnswer.value === lastPrepared) {
+    helperAnswer.value = practiceCopyNow().prepared;
+    lastPrepared = helperAnswer.value;
+    if (helperYouText) helperYouText.textContent = lastPrepared;
+  }
+  if (practiceReplied) renderHelperReply();
+}
+
+function openPractice() {
+  practiceOpen = true;
+  if (!boardIsConfirmed()) {
+    hideEl(helperRound);
+    showEl(helperBlock);
+    practiceState.textContent = "No confirmed evidence in this session — nothing to practise yet.";
+    return;
+  }
+  hideEl(helperBlock);
+  renderHelperQuestion();
+  hideEl(helperYou);
+  hideEl(helperReply);
+  practiceReplied = false;
+  showEl(helperRound);
+  practiceState.textContent = "Reply in the thread, or show a prepared answer.";
+  helperRound.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function showPracticeReply() {
+  if (!boardIsConfirmed()) return;
+  const spoken = helperAnswer.value.trim();
+  if (helperYouText) helperYouText.textContent = spoken;
+  helperYou.classList.add("helper-msg-in");
+  helperReply.classList.add("helper-msg-in");
+  showEl(helperYou);
+  renderHelperReply();
+  showEl(helperReply);
+  practiceReplied = true;
+  practiceState.textContent = "Prepared round. The Interview Board and the PDF are unchanged.";
+  helperReply.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+btnPractice.addEventListener("click", openPractice);
+
+btnPrepared.addEventListener("click", () => {
+  if (!boardIsConfirmed()) return;
+  helperAnswer.value = practiceCopyNow().prepared;
+  lastPrepared = helperAnswer.value;
+  showPracticeReply();
+});
+
+btnSend.addEventListener("click", () => {
+  if (!boardIsConfirmed()) return;
+  if (!helperAnswer.value.trim()) {
+    practiceState.textContent = "Type a line first, or tap Show a prepared answer.";
+    helperAnswer.focus();
+    return;
+  }
+  lastPrepared = "";
+  showPracticeReply();
 });
 
 resetEvidence();

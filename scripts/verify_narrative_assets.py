@@ -87,6 +87,8 @@ def main() -> None:
         'if (evidenceState !== "unconfirmed") return',
         "seeded preview",
         "original CV wording confirmed",
+        "Practice for interview",
+        "prepared practice helper",
     ):
         require(active_demo, marker, "active demo")
     for stale in (
@@ -94,7 +96,7 @@ def main() -> None:
         "cheat-board",
         "Predicted questions",
         "See you in three weeks",
-        "AI practice helper",
+        "live AI interviewer",
         "Scripted practice helper",
     ):
         forbid(active_demo, stale, "active demo")

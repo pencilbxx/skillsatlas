@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./demo.css?v=10" />
+  <link rel="stylesheet" href="./demo.css?v=14" />
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to sitting</a>
@@ -52,7 +52,7 @@
             <ol class="how">
               <li><strong>Confirm</strong> the lines — nothing is used until they say yes.</li>
               <li><strong>Answer or Skip</strong> two questions. Skip is free. No penalty.</li>
-              <li><strong>Pick one of two role routes.</strong> Flip the interview setting. Then save the Interview Board as PDF.</li>
+              <li><strong>Pick one of two role routes.</strong> Flip the interview setting. Practise one short answer. Then save the Interview Board as PDF.</li>
             </ol>
             <div class="row intro-actions">
               <button class="btn primary" type="button" data-go="1">Start with the CV →</button>
@@ -230,7 +230,7 @@
       </section>
 
       <!-- SCREEN 4 -->
-      <section class="screen" id="s4" inert data-say="One next step this week. A page for the professional beside them. This is the SkillsAtlas Interview Board. Change the interview setting, then save the Board as a PDF.">
+      <section class="screen" id="s4" inert data-say="This is the SkillsAtlas Interview Board. Change the interview setting. Practise one short prepared answer. Then save the Board as a PDF.">
         <p class="kicker">04 / Station · Leave with the board</p>
         <h1>They walk out holding <em>proof</em></h1>
         <article class="board" id="board">
@@ -262,8 +262,66 @@
           <p id="pq" style="margin:0"><strong>Walk me through how you knew a count was off.</strong> Hook: stock claim (confirmed).</p>
           <p class="muted" id="pq-note">A phone screen stays short. A hiring-manager panel asks for the story. Same evidence.</p>
         </article>
+
+        <section class="helper" id="helper" aria-labelledby="helper-title">
+          <div class="helper-id">
+            <span class="helper-orb" aria-hidden="true">
+              <svg class="helper-mark" viewBox="0 0 16 16">
+                <circle cx="3.2" cy="12.2" r="1.35" fill="currentColor" />
+                <circle cx="8" cy="3.4" r="1.35" fill="currentColor" />
+                <circle cx="12.8" cy="10.6" r="1.35" fill="currentColor" />
+                <path d="M3.6 11.2 7.4 4.4M8.7 4.1 12.2 9.7M4.4 11.7 11.6 10.8" fill="none" stroke="currentColor" stroke-width="1.15" />
+              </svg>
+            </span>
+            <div class="helper-id-copy">
+              <h2 id="helper-title">Practice helper</h2>
+              <p class="tiny">prepared practice helper · not a live model</p>
+            </div>
+          </div>
+          <p class="muted helper-intro">One short back-and-forth from confirmed evidence. The helper asks, you answer, it helps you say it. It does not score or decide whether they would be hired.</p>
+          <div class="row helper-launch">
+            <button class="btn helper-btn" type="button" id="btn-practice">Practice for interview</button>
+            <span class="muted" id="practice-state" role="status">One round, about twenty seconds. The Board and the PDF below do not change.</span>
+          </div>
+
+          <div class="helper-round" id="helper-round" hidden>
+            <div class="helper-thread">
+              <article class="helper-msg helper-msg-ai">
+                <p class="tiny helper-who">Helper</p>
+                <p id="helper-question" class="helper-bubble"></p>
+              </article>
+              <article class="helper-msg helper-msg-you" id="helper-you" hidden>
+                <p class="tiny helper-who">You</p>
+                <p id="helper-you-text" class="helper-bubble"></p>
+              </article>
+              <article class="helper-msg helper-msg-ai" id="helper-reply" hidden>
+                <p class="tiny helper-who">Helper</p>
+                <p id="helper-followup" class="helper-bubble"></p>
+                <div class="helper-tips-card">
+                  <p class="tiny">How to say it</p>
+                  <ul class="plain" id="helper-tips"></ul>
+                  <p class="helper-guard" id="helper-guard"></p>
+                </div>
+              </article>
+            </div>
+            <div class="helper-compose">
+              <label class="tiny" for="helper-answer">Reply — short is fine</label>
+              <textarea id="helper-answer" rows="2" placeholder="Say it the way you would say it in the room…"></textarea>
+              <div class="row helper-actions">
+                <button class="btn helper-btn" type="button" id="btn-prepared">Show a prepared answer</button>
+                <button class="btn helper-btn-ghost" type="button" id="btn-send">Send</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="helper-block" id="helper-block" hidden>
+            <p class="helper-bubble"><strong>Finish the Evidence screen first.</strong></p>
+            <p class="helper-guard">The helper only practises wording the worker has already confirmed. Nothing is prepared from an unconfirmed claim.</p>
+          </div>
+        </section>
+
         <div class="save-row">
-          <button class="btn primary" type="button" id="btn-pdf">Save Interview Board as PDF</button>
+          <button class="btn" type="button" id="btn-pdf">Save Interview Board as PDF</button>
           <span class="muted" id="pdf-state" role="status">Downloads the interview board to this computer.</span>
         </div>
         <p class="muted board-aside">Adviser can sit with them. This sitting does not wait for an approve click. We never say they would be hired.</p>
@@ -276,6 +334,6 @@
     </footer>
   </div>
 
-  <script src="./demo.js?v=8"></script>
+  <script src="./demo.js?v=11"></script>
 </body>
 </html>

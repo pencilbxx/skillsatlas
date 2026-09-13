@@ -22,8 +22,10 @@ SKIP_DIRS = {
     ".venv",
     "venv",
     "out",
+    ".tmp",
     ".remotion",
     "__pycache__",
+    "__MACOSX",
 }
 
 REQUIRED_FILES = [

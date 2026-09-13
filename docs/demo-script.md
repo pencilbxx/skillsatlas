@@ -26,9 +26,9 @@ Do not use the skip branch on stage. It is there to prove the worker can refuse;
 
 ## Screen 04 — SkillsAtlas Interview Board
 
-> “This is the SkillsAtlas Interview Board. The chosen route changes the story and question. Change the interview stage or who is in the room: the confirmed evidence stays; the question changes. The close is the PDF the worker takes away.”
+> “This is the SkillsAtlas Interview Board. The chosen route changes the story and question. Change the interview stage or who is in the room: the confirmed evidence stays; the question changes. Then one short prepared practice round. The PDF underneath is what they take away.”
 
-**Clicker:** Change one interview setting → **Save Interview Board as PDF**.
+**Clicker:** Change one interview setting → **Practice for interview** → **Show a prepared answer** → **Save Interview Board as PDF**.
 
 ## Do not show or claim
 
@@ -37,7 +37,7 @@ Do not use the skip branch on stage. It is there to prove the worker can refuse;
 - Do not call course examples live or verified recommendations.
 - Do not say Turas Nua is a customer or pilot.
 - Do not call the recruiter CRM-search problem part of this product.
-- Do not mention the separate AI practice-helper task until it has been implemented, labelled honestly, and tested.
+- If you show the helper, call it a **prepared practice helper**, not a live AI interviewer.
 
 ## Recovery
 

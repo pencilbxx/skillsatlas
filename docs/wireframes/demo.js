@@ -132,7 +132,7 @@ function resetEvidence() {
     el.classList.remove("strong");
   });
   stockClaim.classList.add("weak");
-  setStatusChip(stockScore, "Score 1 · weak · load-bearing", "chip-rep");
+  setStatusChip(stockScore, "Thin — load-bearing", "chip-rep");
   setStatusChip(claimSourceStatus, "From CV · awaiting confirmation", "chip-rep");
   stockStrong.textContent = originalStockText;
   if (trainDetail) trainDetail.textContent = originalTrainDetail;
@@ -251,7 +251,7 @@ function proposeStrongerWording() {
 
 function confirmStrongerWording() {
   evidenceState = "enriched";
-  setStatusChip(stockScore, "Score 3 · worker confirmed", "chip-obs");
+  setStatusChip(stockScore, "Confirmed", "chip-obs");
   stockDetail.textContent = "Number, system, and dates — worker-confirmed practice-case wording.";
   afterTitle.textContent = "Confirmed evidence";
   afterBody.textContent = "Number, system, and dates. This confirmed practice-case wording may now support the two routes and Interview Board.";
@@ -294,23 +294,24 @@ btnSkip.addEventListener("click", () => {
 btnReviewEvidence.addEventListener("click", confirmStrongerWording);
 
 function syncRoutes() {
+  const task = "Pick one of these two roles to take into the Interview Board.";
   if (evidenceState === "enriched") {
-    routeLead.textContent = "Two prepared route examples using worker-confirmed practice-case evidence. Not jobs available now, not a hiring promise, and not a ranking. Learning options are illustrative.";
+    routeLead.textContent = task + " Two prepared examples from confirmed evidence. Not jobs available now, and not a ranking.";
     setStatusChip(routeAStatus, "Confirmed evidence", "chip-obs");
     setStatusChip(routeBStatus, "Confirmed evidence", "chip-obs");
     routeAStock.textContent = "Stock control — 2,400 product lines in SAP, monthly cycle counts";
   } else if (evidenceState === "base") {
-    routeLead.textContent = "Two prepared route examples using the original confirmed CV wording. The stock evidence remains weak because detail was skipped. Learning options are illustrative.";
+    routeLead.textContent = task + " These use the original confirmed CV wording. The stock detail stays open because it was skipped.";
     setStatusChip(routeAStatus, "Confirmed CV wording", "chip-obs");
     setStatusChip(routeBStatus, "Confirmed CV wording", "chip-obs");
     routeAStock.textContent = "Managed stock — confirmed CV wording; detail still open";
   } else if (evidenceState === "proposed") {
-    routeLead.textContent = "Preview only. The stronger stock wording still needs worker confirmation before routes or the Interview Board may use it.";
+    routeLead.textContent = task + " Preview only. Confirm the stronger stock wording on Evidence before a route can use it. You can still pick a role to look ahead.";
     setStatusChip(routeAStatus, "Awaiting worker confirmation", "chip-prop");
     setStatusChip(routeBStatus, "Practice preview", "chip-prop");
     routeAStock.textContent = "Managed stock — stronger wording not confirmed yet";
   } else {
-    routeLead.textContent = "Preview only. Complete the Evidence screen before treating these prepared route examples as worker-specific.";
+    routeLead.textContent = task + " Preview only. Confirm the lines on Evidence first. You can still pick a role to look ahead.";
     setStatusChip(routeAStatus, "Practice preview", "chip-prop");
     setStatusChip(routeBStatus, "Practice preview", "chip-prop");
     routeAStock.textContent = "Managed stock — practice CV; not confirmed in this session";
@@ -714,7 +715,7 @@ function resetPractice() {
   hideEl(helperReply);
   hideEl(helperRound);
   hideEl(helperBlock);
-  practiceState.textContent = "One round, about twenty seconds. The Board and the PDF below do not change.";
+  practiceState.textContent = "One round, about twenty seconds. The Board and the PDF do not change.";
 }
 
 function syncHelper() {

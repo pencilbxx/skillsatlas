@@ -94,7 +94,7 @@
     }
     .brand { font-family: var(--serif); font-size: 1.35rem; letter-spacing: 0.02em; white-space: nowrap; display: flex; align-items: center; gap: 0.45rem; }
     .brand-mark { width: 1.35rem; height: 1.35rem; object-fit: contain; flex-shrink: 0; }
-    .brand span { color: var(--accent-text); font-style: italic; }
+    .brand-word em { color: var(--accent-text); font-style: italic; }
     nav { display: flex; gap: 0.35rem; flex-wrap: wrap; }
     nav button {
       border: 1px solid transparent;
@@ -149,9 +149,11 @@
       position: relative;
       border-radius: var(--radius);
       overflow: hidden;
-      min-height: 16rem;
-      margin-bottom: 1.75rem;
+      min-height: calc(100dvh - 8.5rem);
+      margin-bottom: 2.75rem;
       color: #fff;
+      display: flex;
+      align-items: flex-end;
     }
     .home-hero-img {
       position: absolute;
@@ -170,8 +172,8 @@
     .home-hero-copy {
       position: relative;
       z-index: 1;
-      padding: 1.85rem 1.6rem 1.75rem;
-      max-width: 38rem;
+      padding: 2.5rem 1.9rem 2.3rem;
+      max-width: 40rem;
     }
     .kicker-on-dark { color: var(--accent); }
     .home-hero .kicker-on-dark { color: var(--accent); }
@@ -182,9 +184,11 @@
       margin: 0 0 0.55rem;
       color: #e8eeec;
     }
-    .home-hero h1 { color: #fff; margin-bottom: 0.85rem; }
+    .home-hero h1 { color: #fff; margin-bottom: 1rem; }
     .home-hero h1 em { color: var(--accent); }
     .home-hero p { color: #f3f6f5; max-width: 36rem; margin: 0; }
+    .home-hero-actions { margin-top: 1.6rem; }
+    .home-hero-actions .btn { text-decoration: none; display: inline-flex; align-items: center; }
     .home-grid {
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
@@ -349,7 +353,7 @@
     .g-route .card { display: flex; flex-direction: column; }
     .g-route [data-pick] { width: 100%; margin-top: auto; }
     @media (max-width: 860px) {
-      .g2, .g3, .home-grid { grid-template-columns: 1fr; }
+      .g2, .g3, .g-route, .home-grid { grid-template-columns: 1fr; }
       .team-strip { grid-template-columns: 5.5rem 1fr; }
     }
     .card {
@@ -415,10 +419,25 @@
         radial-gradient(1200px 400px at 80% -10%, rgb(30, 93, 94), transparent 55%),
         var(--navy);
       color: #fff;
-      padding: 1.9rem 1.7rem 1.7rem;
+      padding: 2.2rem 1.8rem 2rem;
       border-radius: var(--radius);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
     }
+    .hero-dark h1 { margin-bottom: 0.85rem; }
+    .problem-cv {
+      max-width: 34rem;
+      padding: 1.7rem 1.6rem 1.55rem;
+    }
+    .problem-cv h2 {
+      font-size: clamp(1.7rem, 3vw, 2.15rem);
+      margin: 0.45rem 0 0;
+    }
+    .problem-cv ul.plain {
+      margin: 1.15rem 0 0;
+      font-size: 1.15rem;
+    }
+    .problem-cv ul.plain li { margin: 0.5rem 0; }
+    .problem-cv-actions { margin-top: 1.55rem; }
     .hero-dark p { color: #f3f6f5; max-width: 38rem; }
     .hero-dark .cite {
       color: #fff;
@@ -645,7 +664,7 @@
       }
       .nav-name { font-size: 0.58rem; letter-spacing: 0.04em; font-weight: 700; }
       main { padding: 0.9rem 0.85rem 1.25rem; }
-      .home-hero-copy { padding: 1.05rem 0.95rem 1.1rem; }
+      .home-hero-copy { padding: 1.6rem 1.15rem 1.55rem; }
       .shore img { height: 14rem; }
       .rail { padding-left: 0.9rem; }
       .how { padding: 0.65rem 0.8rem 0.65rem 1.45rem; }
@@ -653,8 +672,10 @@
       h1 { font-size: clamp(1.55rem, 8vw, 2.4rem); }
       h2 { font-size: 1.25rem; }
       p.lead { margin-bottom: 0.85rem; }
-      .kicker { margin-bottom: 0.25rem; }
-      .hero-dark { padding: 1.25rem 1.05rem 1.2rem; }
+      .kicker { margin-bottom: 0.55rem; }
+      .hero-dark { padding: 1.6rem 1.15rem 1.5rem; }
+      .problem-cv { padding: 1.25rem 1.1rem 1.2rem; }
+      .problem-cv ul.plain { font-size: 1.05rem; }
       .statline {
         grid-template-columns: 1fr;
         gap: 0.85rem;
@@ -685,25 +706,10 @@
     }
     @media (max-width: 640px) {
       .g-route {
-        display: flex;
-        gap: 0.7rem;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scroll-padding-inline: 0.15rem;
-        padding-bottom: 0.45rem;
-        overscroll-behavior-x: contain;
-        scrollbar-color: var(--teal) var(--bg);
-        scrollbar-width: thin;
-      }
-      .g-route::-webkit-scrollbar { height: 6px; }
-      .g-route::-webkit-scrollbar-thumb {
-        background: var(--teal);
-        border-radius: 99px;
-      }
-      .g-route .card {
-        flex: 0 0 min(21rem, calc(100% - 2.35rem));
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+        overflow-x: visible;
       }
     }
     @media (prefers-reduced-motion: reduce) {

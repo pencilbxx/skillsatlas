@@ -2,6 +2,31 @@
 
 Written down when made. Newest first.
 
+## 13 Sep 2026 — Hub deck follows the team’s final_final revision
+
+**Decision:** Public Hub deck words come from the team’s revised `SkillsAtlas_Hub_Pitch_Deck_final_final` (the 13:40 download). Rebuild remains `node scripts/deck/build_hub_pitch_deck.cjs` → `docs/SkillsAtlas_Hub_Pitch_Deck.pptx`.
+
+- Opening line is the recruiter/adviser sentence from their note slide.
+- Alternatives and the four-step “before you watch” slides are out. A roadmap slide is in: sitting now, CRM next, marketplace later. Do not present Connect / Ask / Close the gap as already built.
+- Problem slide uses their job-list copy. Chart stays CSO LFS 4.8% → 5.1%. 99% and 55% are off this deck.
+- Latest team wording stays unless it is a typo, a leftover instruction, or an empty box.
+
+**Leave:** treating the CRM search or agent-to-agent marketplace as live product this week; naming Turas Nua as a customer.
+
+## 13 Sep 2026 — Hub deck rebuilt from the 12 Sep team notes
+
+**Decision:** Rebuild the Hub slides as an editable PowerPoint from the annotated Bri deck plus the two 12 Sep team reviews. Public file: `docs/SkillsAtlas_Hub_Pitch_Deck.pptx`. Rebuild with `node scripts/deck/build_hub_pitch_deck.cjs`.
+
+- Slide words use **validated experience**, not “proof”, and keep **Interview Board** as the artefact.
+- Problem slide: unemployment-rate chart and CSO growing/tightening sectors. Drop the ~700 Covalen figure and the tech-loss headline. Do not name AI as the cause of unemployment. Keep 99% and 55% with source lines.
+- Solution slide: person + market, gaps and openings, one next step.
+- Add an alternatives slide. Show the four-step sitting **before** the live demo. Film is not a deck slide.
+- B2B only: recruitment firms / employment agencies and mid-tier HR are customers; job seekers are beneficiaries. Ireland numbers: 200+ ERF members; 4,662 medium firms (CSO 2023). Proposed model: per seat, per caseworker, about 3–5 candidates a day. Price stays open.
+- Traction is one field conversation, positive, with an estimated two hours back per candidate. Not a customer, pilot, or measured study. Next step is product testing with recruitment firms. End on team + thank you.
+- Technical talk stays in plain English. Clickable prototype, not a live AI system.
+
+**Leave:** treating Turas Nua as a customer; putting a euro price on the slide; restoring the 700 / tech-loss headline; adding WhatsApp or a CRM-search product.
+
 ## 10 Sep 2026 — Repository layout for contributors
 
 **Decision:** Keep canonical public paths stable. Reorganise everything else so a new contributor can find the live prototype, the pitch source, and historical research without mixing them.

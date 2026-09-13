@@ -6,8 +6,15 @@ Every number here has a source and a date. The deck quotes from this file and no
 
 | Figure | Value | Source | Date |
 | --- | --- | --- | --- |
-| People in employment, Ireland | 2.83m | CSO Labour Force Survey | Q4 2025 |
-| Unemployment rate | 4.4% | CSO LFS | Q4 2025 |
+| People in employment, Ireland | 2.839m | CSO Labour Force Survey | Q2 2026 |
+| Unemployment rate | 5.1% (151,000 people) | [CSO LFS Q2 2026](https://www.cso.ie/en/releasesandpublications/ep/p-lfs/labourforcesurveyquarter22026/unemployment/) | 20 Aug 2026 |
+| Unemployment rate, recent quarters | Q2 24 4.6% · Q1 25 4.3% · Q2 25 4.8% · Q3 25 5.3% · Q4 25 4.4% · Q1 26 4.9% · Q2 26 5.1% | Same CSO LFS Table 2.1 | Q2 2026 |
+| Education employment, year-on-year | +14,200 (+5.9%) | [CSO LFS Q2 2026 Employment](https://www.cso.ie/en/releasesandpublications/ep/p-lfs/labourforcesurveyquarter22026/employment/) | Q2 2026 |
+| Transport and storage employment, year-on-year | +9,800 (+7.9%) | Same CSO LFS release | Q2 2026 |
+| Professional, scientific and technical employment, year-on-year | −17,100 (−8.2%) | Same CSO LFS release | Q2 2026 |
+| Information and communication hours worked | 6.5m → 6.2m → 6.0m hours/week | Same CSO LFS Table 2.2 | Q2 2024–Q2 2026 |
+| Medium Irish enterprises (50–249 people) | 4,662 | CSO Business in Ireland 2023 | 2023 |
+| ERF member recruitment firms | 200+ | Employment & Recruitment Federation public member line | 2025–26 |
 | Adult lifelong learning participation | 15.7% | SOLAS Skills and Labour Market Research | Q4 2025 |
 | Job vacancy rate | 1.3% | CSO Earnings & Labour Costs | Q4 2025 |
 | Tech-sector jobs, year-on-year change | −11% | Government analysis via Bloomberg/LA Times | Q1 2026 |
@@ -93,6 +100,17 @@ The clickable prototype processes no personal data; the warehouse case is synthe
 - **“Men apply at 60% qualified, women only at 100%.”** Folklore from a speculative HP comment, repeated in Lean In / HBR. Behavioural Insights Team and a 2024 peer-reviewed study (Salwender et al.) did not find a robust gap. Teammate pack flagged this 7 Sep. If it is in any draft slide, pull it.
 - **“Job Care”** as a named Irish comparator. Did not verify. Confirm the real name before anyone external hears it.
 
+## Studies the 13 Sep deck may quote (Reported — coverage must travel with the claim)
+
+These are not Irish Live Register facts. Say the source on the slide.
+
+| Figure | Value | Source | Date | How to say it |
+| --- | --- | --- | --- | --- |
+| Career returners who still found going back hard | 99% of 733 surveyed returners (89% women) | [Career Returners Indicator 2026](https://careerreturners.com/career-returners-indicator-2026/) | 2026 | A returner survey, not the Irish Live Register |
+| Recruiter accuracy from a CV vs who later passed interview | 55% | [interviewing.io / Aline Lerner](https://interviewing.io/blog/are-recruiters-better-than-a-coin-flip-at-judging-resumes) | 2025 study (76 technical recruiters) | Slightly better than a coin flip; methodology is thin; team voted to keep it |
+
+**Do not say** AI caused the unemployment rise. Use the CSO sector shift to support reskilling into work that is hiring.
+
 ## Teammate research (7 Sep) — not on a slide until sourced here
 
 These were useful pointers. They are **not** Observed in this file yet. Do not put them on Hub slides until someone adds source, date, and a URL.
@@ -102,7 +120,7 @@ These were useful pointers. They are **not** Observed in this file yet. Do not p
 | FIT: 250,000 jobseekers completed; 120,000 into work | Programme-scale colour if we wrap a FIT room | Unsourced here |
 | Women ReBOOT: 500+ re-entered; 90% into full-time roles | Only if that *room* is the spoken sentence — not a SkillsAtlas outcome | Unsourced here |
 | Generation Ireland: 200–250 people/year; mentor after the bootcamp | Parallel to “gap after the programme” | Unsourced here |
-| Career Returners Indicator 2026: 99% still struggle after upskilling | Returner *room* only; wrong headline for an Intreo Partner sitting | Unsourced here |
-| interviewing.io: recruiters 55% accurate from resume alone | Backup “CVs are a bad instrument” — not Slide 2 | Unsourced here |
+| Career Returners Indicator 2026: 99% still struggle after upskilling | Now sourced above. Keep the survey coverage on the slide. | On the 13 Sep Hub deck |
+| interviewing.io: recruiters 55% accurate from resume alone | Now sourced above. Team voted 12 Sep to keep it despite a weak method. | On the 13 Sep Hub deck |
 
 Pitch freeze that uses this file: `docs/archive/pitch/pitch-8sep-freeze.md` (historical). Current public copy is `docs/pitch-slide-text.md`.

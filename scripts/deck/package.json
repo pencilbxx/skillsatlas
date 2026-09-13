@@ -1,0 +1,9 @@
+{
+  "name": "skillsatlas-hub-deck",
+  "private": true,
+  "description": "Editable SkillsAtlas Hub pitch deck builder",
+  "type": "commonjs",
+  "dependencies": {
+    "pptxgenjs": "^4.0.1"
+  }
+}

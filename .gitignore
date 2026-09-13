@@ -16,6 +16,9 @@ __pycache__/
 .venv/
 venv/
 
+# Local scratch (deck QA dumps, extracted slides)
+.tmp/
+
 # Local design-tooling. Do not commit binaries or session output.
 .impeccable/
 .cursor/skills/

@@ -36,7 +36,7 @@ Use **SkillsAtlas Interview Board**, **two credible role routes**, **illustrativ
 
 Do not call fixed prepared strings live AI output. Do not call the displayed learning options verified/current unless a real provider listing is checked and linked.
 
-WhatsApp is removed from the active prototype and pitch. Historical/code references remain elsewhere. Screen 04 includes a **prepared practice helper** between the Interview Board and the PDF.
+WhatsApp is removed from the active prototype and pitch. Historical/code references remain elsewhere. Screen 04 saves the Interview Board as a PDF, then shows a **prepared practice helper** as an attachment.
 
 ## Local use
 

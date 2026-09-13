@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./demo.css?v=15" />
+  <link rel="stylesheet" href="./demo.css?v=18" />
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to sitting</a>
@@ -17,7 +17,7 @@
     <header>
       <div class="brand">
         <img class="brand-mark" src="./media/atlas-mark.webp" width="28" height="28" alt="" />
-        SKILLS <span>Atlas</span>
+        <span class="brand-word">Skills<em>Atlas</em></span>
       </div>
       <nav aria-label="Demo screens">
         <button type="button" data-go="0" aria-current="true"><span class="nav-num">00</span><span class="nav-name">Start</span></button>
@@ -34,33 +34,18 @@
 
     <main id="main-content" tabindex="-1">
       <!-- SCREEN 0 — judge landing + film -->
-      <section class="screen on" id="s0" data-say="SkillsAtlas. Challenge team RedeployMate. Watch the silent film if you want. Then we start at the problem.">
+      <section class="screen on" id="s0" data-say="SkillsAtlas. An AI career-transition guide. Watch the silent film if you want. Then we start at the problem.">
         <div class="home-hero">
           <img class="home-hero-img" src="./media/atlas-hero.webp" alt="" fetchpriority="high" decoding="async" />
           <div class="home-hero-shade"></div>
           <div class="home-hero-copy">
-            <p class="kicker kicker-on-dark">Clickable prototype · TechIreland National AI Challenge 2026</p>
-            <p class="home-who">SkillsAtlas · challenge team RedeployMate</p>
-            <h1>A list gives you options.<br />SkillsAtlas gives you <em>proof.</em></h1>
+            <p class="home-who">SkillsAtlas</p>
+            <h1>AI career-transition <em>guide</em></h1>
             <p>In one sitting, a worker confirms what they did, chooses between two credible role routes, and leaves with a SkillsAtlas Interview Board.</p>
-          </div>
-        </div>
-
-        <div class="home-grid">
-          <div class="rail">
-            <p class="muted intro-for">For a worker facing redundancy, with the adviser or recruiter already beside them. The organisation running this sitting would pay. The worker does not. This is a practice walkthrough with a sample CV — prepared screens, not a live AI.</p>
-            <ol class="how">
-              <li><strong>Confirm</strong> the lines — nothing is used until they say yes.</li>
-              <li><strong>Answer or Skip</strong> two questions. Skip is free. No penalty.</li>
-              <li><strong>Pick one of two role routes.</strong> Choose the interview setting. Practise one short answer. Then save the Interview Board as PDF.</li>
-            </ol>
-            <div class="row intro-actions">
+            <div class="row home-hero-actions">
               <button class="btn primary" type="button" data-go="1">Start with the CV →</button>
             </div>
           </div>
-          <figure class="shore">
-            <img src="./media/shore-route.webp" alt="" width="960" height="640" loading="lazy" decoding="async" />
-          </figure>
         </div>
 
         <figure class="film">
@@ -79,60 +64,42 @@
               <source src="./media/skillsatlas-process-v2.mp4?v=29" type="video/mp4" />
             </video>
           </div>
-          <figcaption>Watch about a minute (silent), then start. The film is optional.</figcaption>
+          <figcaption>Optional. Silent.</figcaption>
         </figure>
-
-        <aside class="team-strip">
-          <img src="./media/pencil-team.png" alt="" width="120" height="83" loading="lazy" decoding="async" />
-          <p><strong>RedeployMate</strong> built this sitting for the challenge. SkillsAtlas is the product name. Four screens after this one.</p>
-        </aside>
       </section>
 
       <!-- SCREEN 1 -->
-      <section class="screen" id="s1" inert data-say="A title can show where someone might go. It does not show the evidence, gap, and next step that make the route credible. We use the same CV.">
+      <section class="screen" id="s1" inert data-say="Job lists show openings, not how to reach them. The warehouse CV says managed stock. That is a claim, not yet proof.">
         <p class="kicker" id="station">01 · The problem</p>
         <div class="hero-dark">
-          <h1>You can see the <em>title.</em><br />Not yet the proof.</h1>
-          <p>A CV, vacancy, or course list can point at a route. It does not show the evidence they can stand over, the specific gap, and the next step.</p>
+          <h1>Job lists show openings—<br />not how to <em>reach</em> them</h1>
+          <p>A CV or vacancy can point at a title. It does not show the evidence, the gap, or the next step.</p>
           <div class="statline">
-            <div><strong>1 · CV claim</strong><span>What the document says</span></div>
-            <div><strong>2 · Target title</strong><span>Where they might go</span></div>
-            <div><strong>3 · Missing proof</strong><span>Evidence · gap · next step</span></div>
+            <div><strong>Evidence</strong><span>What they can stand over</span></div>
+            <div><strong>The gap</strong><span>What is still missing</span></div>
+            <div><strong>Next step</strong><span>What to do this week</span></div>
           </div>
           <p class="cite">Practice case · warehouse worker facing redundancy</p>
         </div>
-        <aside class="journey">
-          <p class="tiny">How the file gets here</p>
-          <p><strong>Same CV.</strong> The adviser may already have the file, or the person brings it.</p>
-          <p class="muted">This demo already has a sample CV. You do not upload one.</p>
-        </aside>
-        <div class="grid g2">
-          <article class="card">
-            <p class="tiny">Practice CV · same file</p>
-            <h2>Warehouse operative</h2>
-            <p class="muted">Sample warehouse CV. Not a real person's file.</p>
-            <ul class="plain">
-              <li>Managed stock</li>
-              <li>Helped new staff with safety</li>
-              <li>Worked nights, one site, long spell</li>
-            </ul>
-          </article>
-          <article class="card navy">
-            <p class="tiny" style="color:var(--accent)">What happens next</p>
-            <h2 style="color:#fff">Evidence → two routes → Interview Board</h2>
-            <p>Not a hiring prediction and not a ranking. Nothing goes onto the Interview Board unless the worker has said it is true.</p>
-            <div class="row" style="margin-top:1.25rem">
-              <button class="btn primary" type="button" data-go="2">Turn this CV into evidence →</button>
-            </div>
-          </article>
-        </div>
+        <article class="card problem-cv">
+          <p class="tiny">Sample CV · not a real person's file</p>
+          <h2>Warehouse operative</h2>
+          <ul class="plain">
+            <li><strong>Managed stock</strong></li>
+            <li>Helped new staff with safety</li>
+            <li>Worked nights, one site, long spell</li>
+          </ul>
+          <div class="row problem-cv-actions">
+            <button class="btn primary" type="button" data-go="2">Turn this CV into evidence →</button>
+          </div>
+        </article>
       </section>
 
       <!-- SCREEN 2 -->
-      <section class="screen" id="s2" inert data-say="This prepared practice case shows the intended flow. The worker confirms before use, answers or skips two questions, then reviews the stronger wording.">
-        <p class="kicker">02 / Station · Experience becomes evidence</p>
-        <h1>Nothing is used until they <em>say yes</em></h1>
-        <p class="lead">This prepared practice case shows the intended flow: extract, confirm, then two focused questions. Skip is one tap, with no penalty.</p>
+      <section class="screen" id="s2" inert data-say="Confirm the CV lines that are true. Then answer two short questions, or skip. Skip is free.">
+        <p class="kicker">02 · Confirm the lines</p>
+        <h1>Confirm what you <em>did</em></h1>
+        <p class="lead">Tap a line if it is true. Then answer two short questions, or skip — no penalty.</p>
         <div class="grid g3">
           <div>
             <article class="card" style="margin-bottom:1rem">
@@ -141,11 +108,11 @@
                 <span class="chip chip-rep" id="claim-source-status">From CV · awaiting confirmation</span>
               </div>
               <button type="button" class="claim" id="c-train" aria-pressed="false">
-                <div class="row"><strong>Helped new staff with safety paperwork</strong><span class="chip chip-obs">Score 2</span></div>
+                <div class="row"><strong>Helped new staff with safety paperwork</strong><span class="chip chip-obs">Has a task</span></div>
                 <p class="muted" style="margin:0.3rem 0 0">Has a task. Still thin on number and date. Tap to confirm.</p>
               </button>
               <button type="button" class="claim weak" id="c-stock" aria-pressed="false">
-                <div class="row"><strong>Managed stock</strong><span class="chip chip-rep" id="stock-score">Score 1 · weak · load-bearing</span></div>
+                <div class="row"><strong>Managed stock</strong><span class="chip chip-rep" id="stock-score">Thin — load-bearing</span></div>
                 <p class="muted" id="stock-detail" style="margin:0.3rem 0 0">No number, no system, no date. Matters for a reachable inventory route — tap to confirm, then we ask.</p>
               </button>
               <div class="row" style="margin-top:0.75rem">
@@ -177,11 +144,11 @@
       </section>
 
       <!-- SCREEN 3 -->
-      <section class="screen" id="s3" inert data-say="Exactly two credible role routes. Not jobs available now and not a ranking. The worker chooses. Learning options are illustrative in this prototype.">
-        <p class="kicker">03 / Station · Two reachable routes</p>
-        <h1>Exactly two next roles — <em>not a job board</em></h1>
-        <p class="lead" id="route-lead">Prepared route examples from this practice case. Not “jobs available now,” not a hiring promise, and not a ranking. Learning options are illustrative in this prototype.</p>
-        <div class="grid g-route" id="routes">
+      <section class="screen" id="s3" inert data-say="Pick one of these two possible next roles. They are not jobs available now and not a ranking.">
+        <p class="kicker">03 · Choose a role</p>
+        <h1>Choose one of these <em>two</em> roles</h1>
+        <p class="lead" id="route-lead">Pick one of these two roles to take into the Interview Board. Preview only. Confirm the lines on Evidence first. You can still pick a role to look ahead.</p>
+        <div class="grid g-route" id="routes" aria-label="Two unranked role routes">
           <article class="card" data-route="a">
             <div class="row" style="justify-content:space-between">
               <p class="tiny">Reachable route</p>
@@ -229,9 +196,10 @@
       </section>
 
       <!-- SCREEN 4 -->
-      <section class="screen" id="s4" inert data-say="This is the SkillsAtlas Interview Board. Change the interview setting. Practise one short prepared answer. Then save the Board as a PDF.">
-        <p class="kicker">04 / Station · Leave with the board</p>
-        <h1>They walk out holding <em>proof</em></h1>
+      <section class="screen" id="s4" inert data-say="This is your Interview Board. Practise your story. Change the interview setting. Then save it as a PDF.">
+        <p class="kicker">04 · Interview Board</p>
+        <h1>Your Interview <em>Board</em></h1>
+        <p class="lead">Practise your story. Change the interview setting. Then save it as a PDF.</p>
         <article class="board" id="board">
           <div class="row board-head">
             <p class="tiny" id="board-status">SkillsAtlas Interview Board · practice case</p>
@@ -262,6 +230,11 @@
           <p class="muted" id="pq-note">A phone screen stays short. A hiring-manager panel asks for the story. Same evidence.</p>
         </article>
 
+        <div class="save-row">
+          <button class="btn primary" type="button" id="btn-pdf">Save Interview Board as PDF</button>
+          <span class="muted" id="pdf-state" role="status">Downloads the interview board to this computer.</span>
+        </div>
+
         <section class="helper" id="helper" aria-labelledby="helper-title">
           <div class="helper-id">
             <span class="helper-orb" aria-hidden="true">
@@ -280,7 +253,7 @@
           <p class="muted helper-intro">One short back-and-forth from confirmed evidence. The helper asks, you answer, it helps you say it. It does not score or decide whether they would be hired.</p>
           <div class="row helper-launch">
             <button class="btn helper-btn" type="button" id="btn-practice">Practice for interview</button>
-            <span class="muted" id="practice-state" role="status">One round, about twenty seconds. The Board and the PDF below do not change.</span>
+            <span class="muted" id="practice-state" role="status">One round, about twenty seconds. The Board and the PDF do not change.</span>
           </div>
 
           <div class="helper-round" id="helper-round" hidden>
@@ -318,11 +291,6 @@
             <p class="helper-guard">The helper only practises wording the worker has already confirmed. Nothing is prepared from an unconfirmed claim.</p>
           </div>
         </section>
-
-        <div class="save-row">
-          <button class="btn" type="button" id="btn-pdf">Save Interview Board as PDF</button>
-          <span class="muted" id="pdf-state" role="status">Downloads the interview board to this computer.</span>
-        </div>
         <p class="muted board-aside">Adviser can sit with them. This sitting does not wait for an approve click. We never say they would be hired.</p>
       </section>
     </main>
@@ -333,6 +301,6 @@
     </footer>
   </div>
 
-  <script src="./demo.js?v=11"></script>
+  <script src="./demo.js?v=13"></script>
 </body>
 </html>

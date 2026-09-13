@@ -15,6 +15,7 @@ Start with `README.md` at the repo root. This folder is the rest of the kit.
 | [team-workplan-10sep.md](team-workplan-10sep.md) | Ownership, branches, freeze gates |
 | [brand.md](brand.md) | Names, palette, public terms |
 | [pitch-deck-brand.md](pitch-deck-brand.md) | Deck-only look sheet for Bridget |
+| [SkillsAtlas_Hub_Pitch_Deck.pptx](SkillsAtlas_Hub_Pitch_Deck.pptx) | Editable Hub slides. Rebuild: `node scripts/deck/build_hub_pitch_deck.cjs` |
 | [decisions.md](decisions.md) | Dated product boundaries |
 | [evidence-base.md](evidence-base.md) | The only numbers the deck may quote |
 | [partner-rooms.md](partner-rooms.md) | Sitting types the same four screens can wrap |

@@ -17,5 +17,14 @@ python scripts/verify_narrative_assets.py
 | `fill-lean-canvas.py` | Rebuilds `docs/canvas/lean-canvas-working.pdf`. |
 | `verify_narrative_assets.py` | Extra narrative checks (needs PyMuPDF and python-docx). |
 | `build-pitch-pack.py` | Historical Word pack generator. Writes into `docs/archive/pitch/`. Do not treat it as current Hub copy. |
+| `deck/build_hub_pitch_deck.cjs` | Builds the editable Hub PowerPoint `docs/SkillsAtlas_Hub_Pitch_Deck.pptx`. |
+
+Hub deck (from the repo root):
+
+```bash
+cd scripts/deck
+npm install
+node build_hub_pitch_deck.cjs
+```
 
 Thin shims remain at `docs/build-pitch-slide-text-docx.py` and `docs/fill-lean-canvas.py` so an old command still runs the new scripts.

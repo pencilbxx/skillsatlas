@@ -10,6 +10,7 @@ import {
 } from "remotion";
 import { colors, RADIUS, RADIUS_LG } from "../theme";
 import { fontSans, fontSerif } from "../fonts";
+import { StepCaption } from "./v2/StepCaption";
 
 export const EmailOutro: React.FC = () => {
   const frame = useCurrentFrame();
@@ -76,7 +77,7 @@ export const EmailOutro: React.FC = () => {
           textTransform: "uppercase",
         }}
       >
-        They leave with the board
+        Board in the inbox
       </div>
 
       <div
@@ -308,6 +309,7 @@ export const EndCard: React.FC = () => {
         alignItems: "center",
         justifyContent: "center",
         gap: 22,
+        paddingBottom: 110,
       }}
     >
       <div
@@ -401,6 +403,10 @@ export const EndCard: React.FC = () => {
           );
         })}
       </div>
+      <StepCaption
+        text="Accelerating Career Transition"
+        localFrame={frame}
+      />
     </AbsoluteFill>
   );
 };

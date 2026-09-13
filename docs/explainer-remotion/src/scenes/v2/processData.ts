@@ -10,9 +10,11 @@ export type VignetteKind =
   | "parse-cv"
   | "write-questions"
   | "fold-answers"
+  | "esco-search"
   | "pick-2-routes"
   | "explain-routes"
-  | "star-board";
+  | "star-board"
+  | "practice-helper";
 
 export type ProcessNode = {
   id: string;
@@ -39,7 +41,7 @@ export const PHASES: Array<{
   { id: "CAPTURE", label: "CAPTURE", y: 28, focusY: 140 },
   { id: "QUESTIONING", label: "QUESTIONING", y: 248, focusY: 360 },
   { id: "TWO ROUTES", label: "TWO ROUTES", y: 468, focusY: 580 },
-  { id: "BOARD", label: "BOARD", y: 688, focusY: 800 },
+  { id: "BOARD", label: "BOARD + PRACTICE", y: 688, focusY: 800 },
 ];
 
 const NW = 168;
@@ -161,6 +163,7 @@ export const NODES: ProcessNode[] = [
     y: 550,
     w: NW_WIDE,
     h: NH,
+    vignette: "esco-search",
   },
   {
     id: "pick2",
@@ -233,22 +236,23 @@ export const NODES: ProcessNode[] = [
     vignette: "star-board",
   },
   {
-    id: "never",
-    label: "Never-invent",
-    sub: "CODE",
-    kind: "code",
+    id: "practice",
+    label: "Practice helper",
+    sub: "AI",
+    kind: "ai",
     phase: "BOARD",
     x: 740,
     y: 770,
-    w: NW_WIDE,
+    w: 210,
     h: NH,
+    vignette: "practice-helper",
   },
   {
     id: "end",
-    label: "Leave with board",
+    label: "Leave with PDF",
     kind: "end",
     phase: "BOARD",
-    x: 1010,
+    x: 1020,
     y: 778,
     w: 72,
     h: 72,
@@ -273,8 +277,8 @@ export const EDGES: Edge[] = [
   { from: "choose", to: "join" },
   { from: "join", to: "commit" },
   { from: "commit", to: "adviser" },
-  { from: "adviser", to: "never" },
-  { from: "never", to: "end" },
+  { from: "adviser", to: "practice" },
+  { from: "practice", to: "end" },
 ];
 
 export function nodeCenter(n: ProcessNode): { x: number; y: number } {
@@ -386,8 +390,9 @@ export function buildEdgeGeoms(): { edges: EdgeGeom[]; total: number } {
 }
 
 /**
- * Timeline for diagram scene (~1120 frames).
- * Token progresses along edges; AI nodes pause for vignette cutaways.
+ * Timeline for the diagram scene.
+ * Reading pauses sit on the node before a cutaway opens.
+ * Token hops stay short. Captions do not change mid-hop.
  */
 export type Beat =
   | { type: "travel"; fromNode: string; toNode: string; frames: number }
@@ -395,47 +400,49 @@ export type Beat =
   | { type: "vignette"; nodeId: string; kind: VignetteKind; frames: number };
 
 export const DIAGRAM_BEATS: Beat[] = [
-  { type: "dwell", nodeId: "cv-in", frames: 24 },
+  { type: "dwell", nodeId: "cv-in", frames: 42 },
   { type: "travel", fromNode: "cv-in", toNode: "parse", frames: 22 },
-  { type: "dwell", nodeId: "parse", frames: 18 },
-  { type: "vignette", nodeId: "parse", kind: "parse-cv", frames: 78 },
+  { type: "dwell", nodeId: "parse", frames: 30 },
+  { type: "vignette", nodeId: "parse", kind: "parse-cv", frames: 64 },
   { type: "travel", fromNode: "parse", toNode: "guard1", frames: 18 },
-  { type: "dwell", nodeId: "guard1", frames: 22 },
+  { type: "dwell", nodeId: "guard1", frames: 46 },
   { type: "travel", fromNode: "guard1", toNode: "confirm", frames: 18 },
-  { type: "dwell", nodeId: "confirm", frames: 44 },
+  { type: "dwell", nodeId: "confirm", frames: 62 },
   { type: "travel", fromNode: "confirm", toNode: "score", frames: 18 },
-  { type: "dwell", nodeId: "score", frames: 28 },
-  { type: "travel", fromNode: "score", toNode: "write-q", frames: 28 },
-  { type: "dwell", nodeId: "write-q", frames: 16 },
-  { type: "vignette", nodeId: "write-q", kind: "write-questions", frames: 78 },
+  { type: "dwell", nodeId: "score", frames: 46 },
+  { type: "travel", fromNode: "score", toNode: "write-q", frames: 12 },
+  { type: "dwell", nodeId: "write-q", frames: 30 },
+  { type: "vignette", nodeId: "write-q", kind: "write-questions", frames: 90 },
   { type: "travel", fromNode: "write-q", toNode: "guard2", frames: 18 },
-  { type: "dwell", nodeId: "guard2", frames: 20 },
+  { type: "dwell", nodeId: "guard2", frames: 40 },
   { type: "travel", fromNode: "guard2", toNode: "answer", frames: 18 },
-  { type: "dwell", nodeId: "answer", frames: 42 },
+  { type: "dwell", nodeId: "answer", frames: 60 },
   { type: "travel", fromNode: "answer", toNode: "fold", frames: 18 },
-  { type: "dwell", nodeId: "fold", frames: 20 },
-  { type: "vignette", nodeId: "fold", kind: "fold-answers", frames: 96 },
-  { type: "travel", fromNode: "fold", toNode: "esco", frames: 28 },
-  { type: "dwell", nodeId: "esco", frames: 22 },
+  { type: "dwell", nodeId: "fold", frames: 32 },
+  { type: "vignette", nodeId: "fold", kind: "fold-answers", frames: 104 },
+  { type: "travel", fromNode: "fold", toNode: "esco", frames: 12 },
+  { type: "dwell", nodeId: "esco", frames: 20 },
+  { type: "vignette", nodeId: "esco", kind: "esco-search", frames: 114 },
   { type: "travel", fromNode: "esco", toNode: "pick2", frames: 18 },
-  { type: "dwell", nodeId: "pick2", frames: 14 },
+  { type: "dwell", nodeId: "pick2", frames: 24 },
   { type: "vignette", nodeId: "pick2", kind: "pick-2-routes", frames: 84 },
   { type: "travel", fromNode: "pick2", toNode: "explain", frames: 18 },
-  { type: "dwell", nodeId: "explain", frames: 12 },
+  { type: "dwell", nodeId: "explain", frames: 22 },
   { type: "vignette", nodeId: "explain", kind: "explain-routes", frames: 132 },
   { type: "travel", fromNode: "explain", toNode: "choose", frames: 18 },
-  { type: "dwell", nodeId: "choose", frames: 26 },
+  { type: "dwell", nodeId: "choose", frames: 46 },
   { type: "travel", fromNode: "choose", toNode: "join", frames: 18 },
-  { type: "dwell", nodeId: "join", frames: 22 },
-  { type: "travel", fromNode: "join", toNode: "commit", frames: 28 },
-  { type: "dwell", nodeId: "commit", frames: 24 },
-  { type: "travel", fromNode: "commit", toNode: "adviser", frames: 18 },
-  { type: "dwell", nodeId: "adviser", frames: 14 },
-  { type: "vignette", nodeId: "adviser", kind: "star-board", frames: 72 },
-  { type: "travel", fromNode: "adviser", toNode: "never", frames: 18 },
-  { type: "dwell", nodeId: "never", frames: 24 },
-  { type: "travel", fromNode: "never", toNode: "end", frames: 20 },
-  { type: "dwell", nodeId: "end", frames: 36 },
+  { type: "dwell", nodeId: "join", frames: 44 },
+  { type: "travel", fromNode: "join", toNode: "commit", frames: 12 },
+  { type: "dwell", nodeId: "commit", frames: 36 },
+  { type: "travel", fromNode: "commit", toNode: "adviser", frames: 14 },
+  { type: "dwell", nodeId: "adviser", frames: 20 },
+  { type: "vignette", nodeId: "adviser", kind: "star-board", frames: 84 },
+  { type: "travel", fromNode: "adviser", toNode: "practice", frames: 12 },
+  { type: "dwell", nodeId: "practice", frames: 20 },
+  { type: "vignette", nodeId: "practice", kind: "practice-helper", frames: 120 },
+  { type: "travel", fromNode: "practice", toNode: "end", frames: 12 },
+  { type: "dwell", nodeId: "end", frames: 72 },
 ];
 
 export function beatsTotalFrames(beats: Beat[] = DIAGRAM_BEATS): number {
@@ -452,7 +459,32 @@ export type TimelineState = {
   vignetteLocalFrame: number;
   vignetteLength: number;
   traveling: boolean;
+  beatLocalFrame: number;
+  /** Frames since this node's caption started (travel-in + dwell + cutaway). */
+  captionHoldFrame: number;
 };
+
+function beatTargetNode(beat: Beat): string {
+  return beat.type === "travel" ? beat.toNode : beat.nodeId;
+}
+
+function captionHoldAt(frame: number, activeNodeId: string): number {
+  let t = 0;
+  let holdStart = 0;
+  let current = NODES[0].id;
+  for (const beat of DIAGRAM_BEATS) {
+    const next = beatTargetNode(beat);
+    if (next !== current) {
+      current = next;
+      holdStart = t;
+    }
+    if (frame < t + beat.frames) {
+      return current === activeNodeId ? frame - holdStart : 0;
+    }
+    t += beat.frames;
+  }
+  return 0;
+}
 
 export function resolveTimeline(frame: number): TimelineState {
   const { edges, total } = buildEdgeGeoms();
@@ -527,6 +559,8 @@ export function resolveTimeline(frame: number): TimelineState {
         vignetteLocalFrame,
         vignetteLength,
         traveling,
+        beatLocalFrame: local,
+        captionHoldFrame: captionHoldAt(frame, activeNodeId),
       };
     }
 
@@ -561,6 +595,8 @@ export function resolveTimeline(frame: number): TimelineState {
     vignetteLocalFrame: 0,
     vignetteLength: 0,
     traveling: false,
+    beatLocalFrame: 0,
+    captionHoldFrame: 0,
   };
 }
 
@@ -592,3 +628,68 @@ export function getVignetteSequences(beats: Beat[] = DIAGRAM_BEATS): VignetteSeq
 }
 
 export const VIGNETTE_SEQUENCES = getVignetteSequences();
+
+/** Back-row captions. Short. Simple English. One idea per step. */
+export const STEP_CAPTIONS: Record<string, string> = {
+  parse: "The system reads the CV and lists claims it can check.",
+  guard1: "A rule check. No made-up facts. No private traits.",
+  confirm: "The worker says yes to a line — or skips. Skip is free.",
+  score: "Code scores how strong each confirmed line is.",
+  "write-q": "A weak line gets one clear question. Not a long form.",
+  // Same words as guard1 so the bar does not blink on a repeat check.
+  guard2: "A rule check. No made-up facts. No private traits.",
+  answer: "They answer in their own words, or they skip.",
+  fold: "If they confirm it, the weak line becomes a stronger claim.",
+  esco: "Code looks up official European job names for those skills.",
+  pick2: "Code keeps two reachable routes. The worker will choose.",
+  explain: "It shows the route in plain words, plus an example course.",
+  choose: "The worker picks one of the two routes.",
+  join: "Code adds an example course. It is not a booked place.",
+  commit: "They pick one next step for this week.",
+  adviser: "The Interview Board. A story they can stand over.",
+  practice: "They practise saying it. The helper does not score them.",
+  end: "They take the Interview Board as a PDF.",
+};
+
+export function captionForNode(nodeId: string): string {
+  return STEP_CAPTIONS[nodeId] ?? "";
+}
+
+export type CaptionState = {
+  text: string;
+  prevText: string;
+  sinceChange: number;
+};
+
+/**
+ * Caption follows the settled step, not the token hop.
+ * Travel keeps the previous line so the bar does not blink mid-move.
+ */
+export function getCaptionState(frame: number): CaptionState {
+  let t = 0;
+  let text = "";
+  let prevText = "";
+  let changeAt = 0;
+
+  for (const beat of DIAGRAM_BEATS) {
+    if (frame < t) break;
+    const nodeId = beat.type === "travel" ? beat.fromNode : beat.nodeId;
+    const next = STEP_CAPTIONS[nodeId] ?? "";
+    if (next !== text) {
+      if (next === "") {
+        // keep the last readable line through hops with no copy
+      } else {
+        prevText = text;
+        text = next;
+        changeAt = t;
+      }
+    }
+    t += beat.frames;
+  }
+
+  return {
+    text,
+    prevText,
+    sinceChange: Math.max(0, frame - changeAt),
+  };
+}

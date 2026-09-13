@@ -4,13 +4,13 @@
 > Lives under `docs/explainer-remotion/` inside the SkillsAtlas kit repo. Run install / studio / render from **this directory**.
 
 Silent branded process cut explaining the SkillsAtlas CV to evidence to adviser flow.
-Built with Remotion; primary composition is **SkillsAtlasExplainerV2** (V2.4).
+Built with Remotion; primary composition is **SkillsAtlasExplainerV2** (V2.8).
 
 ## Deliverable
 
 | Path | Notes |
 |------|--------|
-| `docs/explainer-remotion/deliverables/skillsatlas-process-v2.mp4` | **Ship this.** Final V2.4 render (1920x1080, ~52s @ 30fps). |
+| `docs/explainer-remotion/deliverables/skillsatlas-process-v2.mp4` | **Ship this.** Final V2.8 render (1920x1080 @ 30fps). |
 | `out/` (local, gitignored) | Render scratch under this folder. Copy a good render into `deliverables/` when shipping. |
 
 Composition ID: `SkillsAtlasExplainerV2`.
@@ -47,8 +47,9 @@ Hard constraints for this cut — do not regress:
 5. **FETCH hold + scroll** — explain-routes cutaway holds, then scrolls the FETCH crop (not a static flash).
 6. **Evidence wow** — evidence beats read as payoff, not filler.
 7. **Pick-2** — route-card cutaway for the two-route choice.
-8. **STAR board** — leave-with-the-board artefact (STAR panel), not the problem screen.
-9. **No overlaps** — no stacked text/UI collisions across fades and cutaways.
+8. **STAR board** — Interview Board artefact (STAR panel), not the problem screen.
+9. **Practice helper close** — last diagram box and last cutaway are the shipped Screen 04 helper (Practice for interview). PDF remains the takeaway, not deleted.
+10. **No overlaps** — no stacked text/UI collisions across fades and cutaways.
 
 ## Version history
 
@@ -60,6 +61,11 @@ Hard constraints for this cut — do not regress:
 | **V2.2** | FETCH crop + STAR board artefact (leave with the board), not the problem screen. |
 | **V2.3** | Pick-2 route cards; FETCH hold-then-scroll; layout / two-routes clarity. |
 | **V2.4** | Brand-unified tokens; path token; matching cutaways; quality bar locked; deliverable MP4 shipped. |
+| **V2.5** | Last diagram step is **Practice helper** (Screen 04 WOW). STAR stays, PDF end remains. Inter-phase token hops are faster so length stays ~52s. |
+| **V2.6** | ESCO search cutaway from the official portal (`Classification → Occupations`). First three checkpoints (parse / questions / fold) are shorter so length stays ~52s. |
+| **V2.7** | Write-questions and fold stay open longer. Back-row captions in simple English sit under the UI, not on top of it. |
+| **V2.8** | Captions stay put through token hops (crossfade, no blink). Extra reading pauses on longer lines. About +10s. |
+| **V2.9** | Pop-ups centred. Parse / STAR / Leave-with-PDF hold longer. Evidence column gets a quiet glow when a claim is saved. |
 
 Legacy V1 compositions remain registered under Remotion Studio folder `Scenes-V1` for comparison.
 Rejected V1 Modeler screenshot PNGs live in `archive/` (do not use in the ship composition).
@@ -108,7 +114,7 @@ npx remotion upgrade
 ```
 docs/explainer-remotion/
   src/
-    SkillsAtlasExplainerV2.tsx   # V2.4 main timeline
+    SkillsAtlasExplainerV2.tsx   # V2.8 main timeline
     SkillsAtlasExplainer.tsx     # V1
     theme.ts / fonts.ts
     scenes/                      # V1 shared open/email + vignettes

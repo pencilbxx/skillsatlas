@@ -67,7 +67,7 @@ const NODE_ORDER = [
   "join",
   "commit",
   "adviser",
-  "never",
+  "practice",
   "end",
 ];
 
@@ -94,8 +94,11 @@ export const EvidenceBoard: React.FC<{
   activeNodeId: string;
   phase: PhaseId;
   dimmed?: boolean;
-}> = ({ completedIds, activeNodeId, phase, dimmed }) => {
+  /** 0–1: something just landed in this column. */
+  attention?: number;
+}> = ({ completedIds, activeNodeId, phase, dimmed, attention = 0 }) => {
   const frame = useCurrentFrame();
+  const glow = Math.max(0, Math.min(1, attention));
 
   const enter = interpolate(frame, [18, 38], [0, 1], {
     extrapolateLeft: "clamp",
@@ -121,10 +124,20 @@ export const EvidenceBoard: React.FC<{
         flexDirection: "column",
         gap: 8,
         padding: "12px 10px",
-        background: colors.card,
+        background:
+          glow > 0.02
+            ? `linear-gradient(180deg, ${colors.tealBg} 0%, ${colors.card} 58%)`
+            : colors.card,
         borderRadius: RADIUS + 4,
-        border: `1px solid ${colors.border}`,
-        boxShadow: "0 16px 40px rgba(16,43,63,0.08)",
+        border: `${glow > 0.08 ? 2 : 1}px solid ${
+          glow > 0.08 ? colors.teal : colors.border
+        }`,
+        boxShadow:
+          glow > 0.02
+            ? `inset 3px 0 0 ${colors.teal}, 0 0 0 ${3 + glow * 3}px rgba(30,93,94,${0.14 + glow * 0.18}), 0 16px 40px rgba(16,43,63,0.08)`
+            : "0 16px 40px rgba(16,43,63,0.08)",
+        transform: `scale(${1 + glow * 0.01})`,
+        transformOrigin: "center top",
         opacity: Math.max(0, Math.min(1, opacity)),
         fontFamily: fontSans,
       }}

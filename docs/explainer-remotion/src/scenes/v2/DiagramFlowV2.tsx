@@ -16,9 +16,11 @@ import {
   DIAGRAM_DURATION,
   PHASES,
   VIGNETTE_SEQUENCES,
+  getCaptionState,
   resolveTimeline,
   VB,
 } from "./processData";
+import { StepCaption } from "./StepCaption";
 
 export { DIAGRAM_DURATION };
 
@@ -26,6 +28,7 @@ export const DiagramFlowV2: React.FC = () => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
   const state = resolveTimeline(frame);
+  const caption = getCaptionState(frame);
 
   const fadeIn = interpolate(frame, [0, 16], [0, 1], {
     extrapolateLeft: "clamp",
@@ -74,6 +77,19 @@ export const DiagramFlowV2: React.FC = () => {
 
   const showBoard =
     state.phase === "CAPTURE" || state.phase === "QUESTIONING";
+
+  const evidenceAttention =
+    !state.traveling &&
+    !state.vignette &&
+    (state.activeNodeId === "parse" ||
+      state.activeNodeId === "confirm" ||
+      state.activeNodeId === "score" ||
+      state.activeNodeId === "fold")
+      ? interpolate(state.beatLocalFrame, [0, 10, 28, 52], [0, 1, 0.7, 0], {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+        })
+      : 0;
 
   const chips = [
     { label: "CODE", bg: colors.codeFill, fg: colors.code, dot: colors.code },
@@ -132,7 +148,7 @@ export const DiagramFlowV2: React.FC = () => {
               fontFamily: fontSerif,
             }}
           >
-            {state.phase}
+            {state.phase === "BOARD" ? "BOARD · PRACTICE" : state.phase}
           </div>
           <div
             style={{
@@ -179,7 +195,7 @@ export const DiagramFlowV2: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          inset: "78px 20px 28px 36px",
+          inset: "78px 20px 128px 36px",
           display: "flex",
           gap: 22,
           alignItems: "stretch",
@@ -221,6 +237,7 @@ export const DiagramFlowV2: React.FC = () => {
             activeNodeId={state.activeNodeId}
             phase={state.phase}
             dimmed={vignetteDim}
+            attention={evidenceAttention}
           />
         )}
       </div>
@@ -236,6 +253,13 @@ export const DiagramFlowV2: React.FC = () => {
           <AiVignetteV2 kind={v.kind} length={v.frames} />
         </Sequence>
       ))}
+
+      <StepCaption
+        text={caption.text}
+        prevText={caption.prevText}
+        sinceChange={caption.sinceChange}
+        localFrame={frame}
+      />
     </AbsoluteFill>
   );
 };

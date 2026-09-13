@@ -182,7 +182,7 @@ const TaskNode: React.FC<{
         y={node.y + 52}
         textAnchor="middle"
         fill={colors.textDark}
-        fontSize={18}
+        fontSize={node.label.length > 12 ? 16 : 18}
         fontWeight={700}
       >
         {node.label}

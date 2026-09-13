@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./demo.css?v=14" />
+  <link rel="stylesheet" href="./demo.css?v=15" />
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to sitting</a>
@@ -48,11 +48,11 @@
 
         <div class="home-grid">
           <div class="rail">
-            <p class="muted intro-for">For a worker facing redundancy, with the adviser or recruiter already beside them. The organisation is the proposed payer; the worker does not pay. This clickable prototype uses a practice CV. SkillsAtlas proposes. The worker confirms, skips, and chooses.</p>
+            <p class="muted intro-for">For a worker facing redundancy, with the adviser or recruiter already beside them. The organisation running this sitting would pay. The worker does not. This is a practice walkthrough with a sample CV — prepared screens, not a live AI.</p>
             <ol class="how">
               <li><strong>Confirm</strong> the lines — nothing is used until they say yes.</li>
               <li><strong>Answer or Skip</strong> two questions. Skip is free. No penalty.</li>
-              <li><strong>Pick one of two role routes.</strong> Flip the interview setting. Practise one short answer. Then save the Interview Board as PDF.</li>
+              <li><strong>Pick one of two role routes.</strong> Choose the interview setting. Practise one short answer. Then save the Interview Board as PDF.</li>
             </ol>
             <div class="row intro-actions">
               <button class="btn primary" type="button" data-go="1">Start with the CV →</button>
@@ -65,7 +65,7 @@
 
         <figure class="film">
           <p class="film-idle" id="film-idle">
-            <span>Silent · about 52 seconds</span>
+            <span>Silent · about 67 seconds</span>
             <strong>The sitting, on film</strong>
           </p>
           <div class="film-frame">
@@ -74,26 +74,26 @@
               controls
               preload="metadata"
               playsinline
-              title="SkillsAtlas sitting — silent, about 52 seconds"
+              title="SkillsAtlas sitting — silent, about 67 seconds"
             >
-              <source src="./media/skillsatlas-process-v2.mp4" type="video/mp4" />
+              <source src="./media/skillsatlas-process-v2.mp4?v=29" type="video/mp4" />
             </video>
           </div>
-          <figcaption>Watch 52 seconds (silent), then start. The film is optional.</figcaption>
+          <figcaption>Watch about a minute (silent), then start. The film is optional.</figcaption>
         </figure>
 
         <aside class="team-strip">
           <img src="./media/pencil-team.png" alt="" width="120" height="83" loading="lazy" decoding="async" />
-          <p><strong>RedeployMate</strong> built this sitting for the challenge. SkillsAtlas is the product name. Four screens after this one. You can skip the film.</p>
+          <p><strong>RedeployMate</strong> built this sitting for the challenge. SkillsAtlas is the product name. Four screens after this one.</p>
         </aside>
       </section>
 
       <!-- SCREEN 1 -->
       <section class="screen" id="s1" inert data-say="A title can show where someone might go. It does not show the evidence, gap, and next step that make the route credible. We use the same CV.">
-        <p class="kicker" id="station">01 / Station · The problem</p>
+        <p class="kicker" id="station">01 · The problem</p>
         <div class="hero-dark">
           <h1>You can see the <em>title.</em><br />Not yet the proof.</h1>
-          <p>A CV, vacancy, or course list can point at a route. It does not show the confirmed evidence, specific gap, and next step that make the worker credible for it.</p>
+          <p>A CV, vacancy, or course list can point at a route. It does not show the evidence they can stand over, the specific gap, and the next step.</p>
           <div class="statline">
             <div><strong>1 · CV claim</strong><span>What the document says</span></div>
             <div><strong>2 · Target title</strong><span>Where they might go</span></div>
@@ -103,26 +103,25 @@
         </div>
         <aside class="journey">
           <p class="tiny">How the file gets here</p>
-          <p><strong>Same CV.</strong> The worker confirms every line before it can be used.</p>
-          <p class="muted">The adviser may already have the file, or the person brings it. This demo is seeded — no upload form.</p>
+          <p><strong>Same CV.</strong> The adviser may already have the file, or the person brings it.</p>
+          <p class="muted">This demo already has a sample CV. You do not upload one.</p>
         </aside>
         <div class="grid g2">
           <article class="card">
             <p class="tiny">Practice CV · same file</p>
             <h2>Warehouse operative</h2>
-            <p class="muted">Synthetic persona. Not a real worker.</p>
+            <p class="muted">Sample warehouse CV. Not a real person's file.</p>
             <ul class="plain">
               <li>Managed stock</li>
               <li>Helped new staff with safety</li>
               <li>Worked nights, one site, long spell</li>
             </ul>
-            <p class="muted" style="margin-top:0.8rem">A title or course list can point somewhere. It does not make these claims usable evidence.</p>
           </article>
           <article class="card navy">
-            <p class="tiny" style="color:var(--accent)">What we replace it with</p>
+            <p class="tiny" style="color:var(--accent)">What happens next</p>
             <h2 style="color:#fff">Evidence → two routes → Interview Board</h2>
-            <p>Not a hiring prediction and not a ranking. SkillsAtlas proposes. The worker confirms, skips, and chooses. Production Board content must trace to confirmed evidence.</p>
-            <div class="row" style="margin-top:1rem">
+            <p>Not a hiring prediction and not a ranking. Nothing goes onto the Interview Board unless the worker has said it is true.</p>
+            <div class="row" style="margin-top:1.25rem">
               <button class="btn primary" type="button" data-go="2">Turn this CV into evidence →</button>
             </div>
           </article>

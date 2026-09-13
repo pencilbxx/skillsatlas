@@ -71,7 +71,7 @@ export const colors = {
   chipAccentFg: "#102B3F",
 
   /** Overlay for cutaways */
-  vignetteScrim: "rgba(16, 43, 63, 0.52)",
+  vignetteScrim: "rgba(16, 43, 63, 0.38)",
 };
 
 /** ~0.35rem at video scale — slightly open for 1080p readability */

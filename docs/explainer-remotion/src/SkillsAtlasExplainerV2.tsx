@@ -8,9 +8,9 @@ import { EmailOutro, EndCard } from "./scenes/EmailOutro";
 import { colors } from "./theme";
 
 /**
- * V2.4 brand-unified timeline (~52s @ 30fps):
+ * V2.9 timeline:
  * Open 75 + Diagram DIAGRAM_DURATION + Email 120 + End 75 − 2×15 fades
- * Cutaways: Pick-2 route cards; FETCH hold-then-scroll (explain-routes); STAR board.
+ * Captions stay through hops (no blink). Extra reading pauses, +~10s.
  */
 export const OPEN_FRAMES = 75;
 export const EMAIL_FRAMES = 120;

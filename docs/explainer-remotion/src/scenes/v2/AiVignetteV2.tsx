@@ -18,7 +18,8 @@ import type { VignetteKind } from "./processData";
  */
 export const RECORDING_FILES: Partial<Record<VignetteKind, string>> = {
   "explain-routes": "recordings/fetch-courses-scroll-cropped.mp4",
-  // V2.3: explain-routes = hold-then-scroll FETCH crop; star-board = STAR panel (not problem screen)
+  // V2.3: explain-routes = hold-then-scroll FETCH crop; star-board = STAR panel
+  // V2.5: practice-helper is an animated mock of the shipped Screen 04 helper
 };
 
 export const STILL_FILES: Partial<Record<VignetteKind, string>> = {
@@ -30,9 +31,11 @@ const TITLES: Record<VignetteKind, string> = {
   "parse-cv": "skillsatlas.app / capture / parse",
   "write-questions": "skillsatlas.app / questioning / write",
   "fold-answers": "skillsatlas.app / questioning / fold",
+  "esco-search": "esco.ec.europa.eu / classification / occupations",
   "pick-2-routes": "skillsatlas.app / routes / pick-2",
   "explain-routes": "skillsatlas.app / routes / courses",
   "star-board": "skillsatlas.vercel.app/demo.html · 04 BOARD",
+  "practice-helper": "skillsatlas.vercel.app/demo.html · 04 PRACTICE",
 };
 
 const BrowserChrome: React.FC<{
@@ -40,7 +43,8 @@ const BrowserChrome: React.FC<{
   children: React.ReactNode;
   scale: number;
   flush?: boolean;
-}> = ({ title, children, scale, flush }) => (
+  badge?: string;
+}> = ({ title, children, scale, flush, badge = "AI" }) => (
   <div
     style={{
       width: 1280,
@@ -91,7 +95,7 @@ const BrowserChrome: React.FC<{
           textTransform: "uppercase",
         }}
       >
-        AI
+        {badge}
       </div>
     </div>
     <div style={{ padding: flush ? 0 : 28, minHeight: flush ? 0 : 440, background: colors.bg }}>
@@ -302,12 +306,12 @@ const WriteQuestionsMock: React.FC<{ frame: number; length: number }> = ({
   frame,
   length,
 }) => {
-  const evidenceIn = interpolate(frame, [0, 14], [0, 1], {
+  const evidenceIn = interpolate(frame, [0, length * 0.16], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.bezier(0.16, 1, 0.3, 1),
   });
-  const qIn = interpolate(frame, [16, 32], [0, 1], {
+  const qIn = interpolate(frame, [length * 0.2, length * 0.38], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.bezier(0.16, 1, 0.3, 1),
@@ -456,27 +460,27 @@ const FoldAnswersMock: React.FC<{ frame: number; length: number }> = ({
   frame,
   length,
 }) => {
-  const answerIn = interpolate(frame, [0, 16], [0, 1], {
+  const answerIn = interpolate(frame, [0, length * 0.12], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.bezier(0.16, 1, 0.3, 1),
   });
-  const foldProg = interpolate(frame, [28, length * 0.72], [0, 1], {
+  const foldProg = interpolate(frame, [length * 0.16, length * 0.48], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.bezier(0.22, 1, 0.36, 1),
   });
-  const cardIn = interpolate(frame, [42, 62], [0, 1], {
+  const cardIn = interpolate(frame, [length * 0.3, length * 0.46], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.bezier(0.16, 1, 0.3, 1),
   });
-  const badgeIn = interpolate(frame, [58, 74], [0, 1], {
+  const badgeIn = interpolate(frame, [length * 0.44, length * 0.56], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.bezier(0.16, 1, 0.3, 1),
   });
-  const scoreFill = interpolate(frame, [64, 88], [0.22, 0.92], {
+  const scoreFill = interpolate(frame, [length * 0.48, length * 0.7], [0.22, 0.92], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.bezier(0.22, 1, 0.36, 1),
@@ -1312,6 +1316,554 @@ const StarBoardMock: React.FC<{ frame: number; length: number }> = ({
   );
 };
 
+/**
+ * V2.5 close: shipped Screen 04 helper — Practice for interview →
+ * prepared answer → follow-up + how-to-say-it tips. PDF stays underneath.
+ * Prepared strings only; no scoring; confirmed evidence only.
+ */
+const PREPARED_ANSWER =
+  "On nights at one site, stock was my job. I looked after about 2,400 product lines in SAP and ran the monthly cycle counts. If a count did not match, I recounted the location before it went out.";
+
+const PRACTICE_TIPS = [
+  "Lead with the number and the system you confirmed — about 2,400 lines, in SAP.",
+  "Put the Action in the middle and make it the longest part.",
+  "This is a phone screen with a recruiter. Keep it to about a minute.",
+];
+
+const PracticeHelperMock: React.FC<{ frame: number; length: number }> = ({
+  frame,
+  length,
+}) => {
+  const peach = colors.accent;
+  const navy = colors.navy;
+  const cream = colors.bg;
+  const ink = colors.textDark;
+  const mute = colors.textMuted;
+
+  const headerIn = interpolate(frame, [0, 10], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  });
+  const panelIn = interpolate(frame, [6, 18], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  });
+  const press = interpolate(frame, [16, 24], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  });
+  const roundIn = interpolate(frame, [22, 34], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  });
+  const typeProg = interpolate(frame, [36, 62], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.22, 1, 0.36, 1),
+  });
+  const replyIn = interpolate(frame, [64, 78], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  });
+  const pdfIn = interpolate(frame, [Math.min(length - 28, 96), Math.min(length - 16, 108)], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  });
+
+  const typed = PREPARED_ANSWER.slice(0, Math.round(typeProg * PREPARED_ANSWER.length));
+  const caretOn = frame % 16 < 10 && typeProg < 1;
+
+  return (
+    <div
+      style={{
+        padding: "18px 22px 16px",
+        background: cream,
+        minHeight: 500,
+        color: ink,
+        fontFamily: fontSans,
+      }}
+    >
+      <div
+        style={{
+          opacity: headerIn,
+          transform: `translateY(${(1 - headerIn) * 10}px)`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: 10,
+        }}
+      >
+        <div
+          style={{
+            fontSize: 12,
+            fontWeight: 800,
+            letterSpacing: "0.08em",
+            color: peach,
+          }}
+        >
+          04 / STATION · PRACTICE FOR INTERVIEW
+        </div>
+        <div
+          style={{
+            fontSize: 12,
+            fontWeight: 700,
+            color: "#fff",
+            background: navy,
+            borderRadius: 999,
+            padding: "5px 12px",
+          }}
+        >
+          ONE PREPARED ROUND
+        </div>
+      </div>
+
+      <div
+        style={{
+          opacity: panelIn,
+          transform: `translateY(${(1 - panelIn) * 14}px)`,
+          background: "#fff",
+          borderRadius: 14,
+          border: `1px solid ${colors.border}`,
+          borderLeft: `5px solid ${peach}`,
+          boxShadow: "0 16px 40px rgba(16,43,63,0.08)",
+          padding: "14px 16px 16px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 12,
+            marginBottom: 10,
+          }}
+        >
+          <div>
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 800,
+                letterSpacing: "0.06em",
+                color: mute,
+                textTransform: "uppercase",
+                marginBottom: 4,
+              }}
+            >
+              Practice · prepared practice helper
+            </div>
+            <div style={{ fontSize: 14, color: mute, lineHeight: 1.35 }}>
+              Confirmed evidence only. Suggests how to say it. Does not score or hire.
+            </div>
+          </div>
+          <div
+            style={{
+              fontSize: 11,
+              fontWeight: 800,
+              letterSpacing: "0.04em",
+              color: colors.amberInk,
+              background: colors.amberBg,
+              borderRadius: 999,
+              padding: "5px 10px",
+              whiteSpace: "nowrap",
+            }}
+          >
+            prepared strings · not a live model
+          </div>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
+          <div
+            style={{
+              background: peach,
+              color: colors.accentInk,
+              fontSize: 16,
+              fontWeight: 800,
+              borderRadius: 8,
+              padding: "9px 14px",
+              transform: `scale(${1 - press * 0.06})`,
+              boxShadow: press > 0.85 ? "none" : "0 8px 18px rgba(237,106,74,0.35)",
+            }}
+          >
+            Practice for interview
+          </div>
+          <div style={{ fontSize: 13, color: mute, fontWeight: 600 }}>
+            {roundIn > 0.4
+              ? "Answer in your own words, or show a prepared answer."
+              : "One round. The Board and the PDF below do not change."}
+          </div>
+        </div>
+
+        <div
+          style={{
+            opacity: roundIn,
+            transform: `translateY(${(1 - roundIn) * 12}px)`,
+            display: "grid",
+            gridTemplateColumns: "1.05fr 0.95fr",
+            gap: 12,
+          }}
+        >
+          <div
+            style={{
+              background: cream,
+              borderRadius: 12,
+              padding: "12px 14px 14px",
+              border: `1px solid ${colors.border}`,
+            }}
+          >
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: 800,
+                letterSpacing: "0.07em",
+                color: mute,
+                marginBottom: 6,
+                textTransform: "uppercase",
+              }}
+            >
+              They ask · this setting
+            </div>
+            <div
+              style={{
+                fontSize: 20,
+                fontWeight: 800,
+                letterSpacing: "-0.02em",
+                lineHeight: 1.3,
+                marginBottom: 10,
+                color: ink,
+              }}
+            >
+              Walk me through how you knew a count was off.
+            </div>
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: 800,
+                letterSpacing: "0.07em",
+                color: mute,
+                marginBottom: 6,
+                textTransform: "uppercase",
+              }}
+            >
+              Your answer — short is fine
+            </div>
+            <div
+              style={{
+                minHeight: 110,
+                background: "#fff",
+                border: `1.5px solid ${typeProg > 0 ? navy : colors.border}`,
+                borderRadius: 8,
+                padding: "10px 12px",
+                fontSize: 15,
+                lineHeight: 1.4,
+                color: ink,
+              }}
+            >
+              {typed}
+              {caretOn ? (
+                <span style={{ color: peach, fontWeight: 800 }}>|</span>
+              ) : null}
+            </div>
+            <div
+              style={{
+                opacity: interpolate(typeProg, [0.55, 0.85], [0, 1], {
+                  extrapolateLeft: "clamp",
+                  extrapolateRight: "clamp",
+                }),
+                marginTop: 10,
+                display: "flex",
+                gap: 8,
+              }}
+            >
+              <div
+                style={{
+                  background: peach,
+                  color: colors.accentInk,
+                  fontSize: 13,
+                  fontWeight: 800,
+                  borderRadius: 8,
+                  padding: "7px 11px",
+                }}
+              >
+                Show a prepared answer
+              </div>
+              <div
+                style={{
+                  background: "#fff",
+                  color: navy,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  borderRadius: 8,
+                  padding: "7px 11px",
+                  border: `1px solid ${colors.border}`,
+                }}
+              >
+                Use what I typed
+              </div>
+            </div>
+          </div>
+
+          <div
+            style={{
+              opacity: replyIn,
+              transform: `translateY(${(1 - replyIn) * 12}px)`,
+              background: colors.aiFill,
+              borderRadius: 12,
+              padding: "12px 14px 14px",
+              border: `2px solid ${colors.ai}`,
+            }}
+          >
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: 800,
+                letterSpacing: "0.07em",
+                color: peach,
+                marginBottom: 6,
+                textTransform: "uppercase",
+              }}
+            >
+              They follow up
+            </div>
+            <div
+              style={{
+                fontSize: 16,
+                fontWeight: 700,
+                lineHeight: 1.35,
+                marginBottom: 12,
+              }}
+            >
+              You said the monthly cycle counts were yours. Tell me about one count that did not match — what did you do next?
+            </div>
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: 800,
+                letterSpacing: "0.07em",
+                color: mute,
+                marginBottom: 8,
+                textTransform: "uppercase",
+              }}
+            >
+              How to say it
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+              {PRACTICE_TIPS.map((tip, i) => {
+                const tIn = interpolate(frame, [76 + i * 8, 86 + i * 8], [0, 1], {
+                  extrapolateLeft: "clamp",
+                  extrapolateRight: "clamp",
+                  easing: Easing.bezier(0.16, 1, 0.3, 1),
+                });
+                return (
+                  <div
+                    key={tip}
+                    style={{
+                      opacity: tIn,
+                      transform: `translateX(${(1 - tIn) * 10}px)`,
+                      fontSize: 14,
+                      lineHeight: 1.35,
+                      color: ink,
+                      paddingLeft: 10,
+                      borderLeft: `3px solid ${i === 0 ? peach : colors.teal}`,
+                    }}
+                  >
+                    {tip}
+                  </div>
+                );
+              })}
+            </div>
+            <div
+              style={{
+                opacity: interpolate(frame, [98, 108], [0, 1], {
+                  extrapolateLeft: "clamp",
+                  extrapolateRight: "clamp",
+                }),
+                marginTop: 10,
+                fontSize: 12,
+                color: mute,
+                fontWeight: 600,
+              }}
+            >
+              Every line uses wording the worker confirmed on Evidence.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        style={{
+          opacity: pdfIn,
+          transform: `translateY(${(1 - pdfIn) * 10}px)`,
+          marginTop: 10,
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+        }}
+      >
+        <div
+          style={{
+            background: "#fff",
+            color: navy,
+            fontSize: 14,
+            fontWeight: 700,
+            borderRadius: 8,
+            padding: "8px 14px",
+            border: `1px solid ${colors.border}`,
+          }}
+        >
+          Save Interview Board as PDF
+        </div>
+        <div style={{ fontSize: 13, color: mute, fontWeight: 600 }}>
+          Secondary — they still walk out holding the board.
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Official ESCO occupation search, recorded from
+ * https://esco.ec.europa.eu/en/classification/occupation_main
+ * Search occupations → warehouse supervisor → warehouse manager.
+ */
+const ESCO_BEATS = [
+  {
+    src: "recordings/stills/esco-autocomplete.png",
+    caption: "1 · Open Occupations · search warehouse supervisor",
+    pos: "center 30%",
+  },
+  {
+    src: "recordings/stills/esco-occupation.png",
+    caption: "2 · Open warehouse manager from the list",
+    pos: "center 28%",
+  },
+  {
+    src: "recordings/stills/esco-search.png",
+    caption: "3 · Pin it · supervisor is an ESCO alternative label",
+    pos: "center 18%",
+  },
+] as const;
+
+const EscoSearchMock: React.FC<{ frame: number; length: number }> = ({
+  frame,
+  length,
+}) => {
+  const cuts = [0, Math.round(length * 0.38), Math.round(length * 0.64), length];
+  let active = 0;
+  for (let i = 0; i < ESCO_BEATS.length; i++) {
+    if (frame >= cuts[i]) active = i;
+  }
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        height: 656,
+        background: colors.bg,
+        overflow: "hidden",
+        fontFamily: fontSans,
+      }}
+    >
+      {ESCO_BEATS.map((beat, i) => {
+        const start = cuts[i];
+        const end = cuts[i + 1];
+        const fade = 4;
+        const op = interpolate(
+          frame,
+          i === 0
+            ? [start, start + fade, end - fade, end]
+            : [start, start + fade, end - fade, end],
+          [0, 1, 1, i === ESCO_BEATS.length - 1 ? 1 : 0],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+        );
+        const zoom = interpolate(frame, [start, end], [1.0, 1.04], {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+        });
+        return (
+          <Img
+            key={beat.src}
+            src={staticFile(beat.src)}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: beat.pos,
+              opacity: op,
+              transform: `scale(${zoom})`,
+            }}
+          />
+        );
+      })}
+
+      <div
+        style={{
+          position: "absolute",
+          left: 18,
+          right: 18,
+          top: 16,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: 12,
+        }}
+      >
+        <div
+          style={{
+            background: colors.code,
+            color: "#fff",
+            fontSize: 12,
+            fontWeight: 800,
+            letterSpacing: "0.08em",
+            borderRadius: 999,
+            padding: "6px 12px",
+          }}
+        >
+          CODE · ESCO v1.2
+        </div>
+        <div
+          style={{
+            background: "rgba(16,43,63,0.88)",
+            color: "#fff",
+            fontSize: 14,
+            fontWeight: 700,
+            borderRadius: 8,
+            padding: "8px 12px",
+            maxWidth: 720,
+          }}
+        >
+          {ESCO_BEATS[active].caption}
+        </div>
+      </div>
+
+      <div
+        style={{
+          position: "absolute",
+          left: 18,
+          right: 18,
+          bottom: 16,
+          background: "rgba(16,43,63,0.9)",
+          color: "#E4ECEA",
+          fontFamily: fontMono,
+          fontSize: 13,
+          borderRadius: 8,
+          padding: "10px 14px",
+          letterSpacing: "-0.01em",
+        }}
+      >
+        GET /esco/api/search?text=warehouse+supervisor&type=occupation&selectedVersion=v1.2.0
+      </div>
+    </div>
+  );
+};
+
 const RecordingPanel: React.FC<{ src: string; still?: string }> = ({
   src,
   still,
@@ -1365,11 +1917,18 @@ export const AiVignetteV2: React.FC<{
   length: number;
 }> = ({ kind, length }) => {
   const frame = useCurrentFrame();
-  const opacity = interpolate(frame, [0, 8, length - 8, length], [0, 1, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const scale = interpolate(frame, [0, 10], [0.96, 1], {
+  const fade = Math.min(18, Math.round(length * 0.16));
+  const opacity = interpolate(
+    frame,
+    [0, fade, length - fade, length],
+    [0, 1, 1, 0],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: Easing.inOut(Easing.quad),
+    },
+  );
+  const scale = interpolate(frame, [0, 12], [0.9, 0.92], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.bezier(0.16, 1, 0.3, 1),
@@ -1385,11 +1944,18 @@ export const AiVignetteV2: React.FC<{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        paddingTop: 36,
+        paddingBottom: 118,
         opacity,
         fontFamily: fontSans,
       }}
     >
-      <BrowserChrome title={TITLES[kind]} scale={scale} flush={Boolean(recording)}>
+      <BrowserChrome
+        title={TITLES[kind]}
+        scale={scale}
+        flush={Boolean(recording) || kind === "esco-search"}
+        badge={kind === "esco-search" ? "CODE" : "AI"}
+      >
         {recording ? (
           <RecordingPanel src={recording} still={still} />
         ) : (
@@ -1401,11 +1967,17 @@ export const AiVignetteV2: React.FC<{
             {kind === "fold-answers" && (
               <FoldAnswersMock frame={frame} length={length} />
             )}
+            {kind === "esco-search" && (
+              <EscoSearchMock frame={frame} length={length} />
+            )}
             {kind === "pick-2-routes" && (
               <Pick2RoutesMock frame={frame} length={length} />
             )}
             {kind === "star-board" && (
               <StarBoardMock frame={frame} length={length} />
+            )}
+            {kind === "practice-helper" && (
+              <PracticeHelperMock frame={frame} length={length} />
             )}
           </>
         )}
